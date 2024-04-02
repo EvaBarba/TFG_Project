@@ -1,0 +1,82 @@
+<!-- views/users/new.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New User</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="mb-0" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Create New User</h2>
+        <form action="/users" method="POST">
+            <br>
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <div class="input-group">
+                    <input type="password" id="password" name="password" class="form-control" required>
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" id="passwordToggle">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+             <!-- Agregar campo de selección de rol -->
+             <div class="form-group">
+                <label for="role">Role:</label>
+                <select id="role" name="role" class="form-control" required>
+                    <option value="" disabled selected>Select Role</option>
+                    <option value="client">Client</option>
+                    <option value="consultant">Consultant</option>
+                    <option value="coordinator">Coordinator</option>
+                    <option value="operator">Operator</option>
+                    <option value="technician">Technician</option>
+                    <option value="interpreter">Interpreter</option>
+                </select>
+            </div>
+
+            <br>
+
+            <!-- Botón para crear el nuevo usuario -->
+            <button type="submit" class="btn btn-primary">Create User</button>
+
+            <!-- Botón para volver atrás -->
+            <a href="/users" class="btn btn-outline-dark">Cancel</a>
+
+        </form>
+    </div>
+
+    <!-- Bootstrap JS (opcional, solo si necesitas funcionalidades de Bootstrap) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+<!-- Boton visibilidad contraseña -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const passwordInput = document.getElementById('password');
+        const passwordToggle = document.getElementById('passwordToggle');
+    
+        passwordToggle.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            passwordToggle.classList.toggle('active');
+        });
+    });
+    </script>
+    

@@ -1,0 +1,145 @@
+<!-- views/users/editProfile.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit User Profile</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="mb-0" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Edit User Profile</h2>
+        <form method="post" action="/users/<%= user.id %>/profile?_method=PUT">
+        <div class="row">
+            <!-- Columna izquierda -->
+            
+            <div class="col-md-6">
+                
+                <br>
+                <table class="table table-borderless mt-4">
+                    <tr>
+                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Username:</th>
+                        <td>
+                            <input type="text" class="form-control" id="username" name="username" value="<%= user.username %>">
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Role:</th>
+                        <td><%= userRole %></td>
+                    </tr>
+                    <tr>
+                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Email:</th>
+                        <td><%= user.email %></td>
+                    </tr>
+                    <tr>
+                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Password:</th>
+                        <td>
+                            <div class="row">
+                                <div class="col-md-12"> <!-- Dos tercios del ancho -->
+                                    <div class="input-group">
+                                        <input type="password" class="form-control" id="password" name="password" value="<%= user.password %>">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary toggle-password" type="button" id="passwordToggle">
+                                                <i class="fa fa-eye" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                </tr>
+                <% if (user.admin_id) { %>
+                    <tr>
+                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Is Admin:</th>
+                        <td>Yes</td>
+                    </tr>
+                <% } else { %>
+                    <tr>
+                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Is Admin:</th>
+                        <td>No</td>
+                    </tr>
+                <% } %>
+
+                </table>
+                <br>
+            </div>
+
+            <!-- Columna derecha -->
+            <div class="col-md-6">
+                <br>
+                <br>
+                <% if (userRole === 'Interpreter') { %>
+                    <h4 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Reputation</h4>
+                    <table class="table table-borderless mt-4">
+                        <tr>
+                            <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Value:</th>
+                            <td>PENDIENTE</td>
+                        </tr>
+                        <tr>
+                            <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Votes sent:</th>
+                            <td>PENDIENTE</td>
+                        </tr>
+                        <tr>
+                            <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Votes received:</th>
+                            <td>PENDIENTE</td>
+                        </tr>
+
+                    </table>
+
+                <% } else { %>
+                    <h4 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Likes</h4>
+                    <table class="table table-borderless mt-4">
+                        <tr>
+                            <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Value:</th>
+                            <td>PENDIENTE</td>
+                        </tr>
+                        <tr>
+                            <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Votes sent:</th>
+                            <td>PENDIENTE</td>
+                        </tr>
+                        <tr>
+                            <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Votes received:</th>
+                            <td>PENDIENTE</td>
+                        </tr>
+                    </table>
+                <% } %>
+            </div>
+        </div>
+
+        <!-- Botones -->
+        <div class="mt-3">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <a href="javascript:history.go(-1)" class="btn btn-secondary">Cancel</a>
+        </div>
+    </div>
+
+    </form>
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Botón mostrar password -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById('password');
+            const passwordToggle = document.getElementById('passwordToggle');
+        
+            passwordToggle.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                passwordToggle.classList.toggle('active');
+            });
+        });
+    </script>
+
+
+
+</body>
+</html>

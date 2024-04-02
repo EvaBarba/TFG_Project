@@ -1,0 +1,39 @@
+{
+  "name": "TFG_Project",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "super": "supervisor ./bin/www",
+    "migrate": "sequelize db:migrate --url sqlite://$(pwd)/bd.sqlite",
+    "seed": "sequelize db:seed:all --url sqlite://$(pwd)/bd.sqlite",
+    "migrate_win": "sequelize db:migrate --url sqlite://%cd%/bd.sqlite",
+    "seed_win": "sequelize db:seed:all --url sqlite://%cd%/bd.sqlite",
+    "migrate_env": "sequelize db:migrate --url $DATABASE_URL",
+    "seed_env": "sequelize db:seed:all --url $DATABASE_URL"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.2",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "~1.4.4",
+    "cookieconsent": "^3.1.1",
+    "debug": "~2.6.9",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-partials": "^0.3.0",
+    "express-session": "^1.17.3",
+    "http-errors": "~1.6.3",
+    "iso-639-1": "^3.1.2",
+    "method-override": "^3.0.0",
+    "morgan": "~1.9.1",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.9.1",
+    "sequelize": "^6.37.1",
+    "serve-favicon": "^2.5.0",
+    "sqlite3": "^5.1.4"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.6.2",
+    "supervisor": "^0.12.0"
+  }
+}

@@ -1,0 +1,47 @@
+<!-- views/users/operators.ejs -->
+
+<div class="card">
+    <div class="card-header">
+        <h2 class="mb-0" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">List of Operators</h2>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-sm">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% operators.forEach(operator => { %>
+                    <tr>
+                        <td><%= operator.id %></td>
+                        <td><a href="/users/<%= operator.id %>" style="color: blue;"><%= operator.User.username %></a></td>
+                        <td><%= operator.User.email %></td>
+                        <td>
+                            <div class="btn-group">
+                                <a href="/users/<%= operator.id %>/timeslots" class="btn btn-outline-dark btn-sm btn-white mr-1">TimeSlots</a>
+                                <a href="/users/<%= operator.id %>/edit" class="btn btn-outline-dark btn-sm btn-white mr-1">Edit</a>
+                                <a href="/users/<%= operator.id %>/delete" class="btn btn-outline-dark btn-sm btn-white">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+            
+            <div>
+
+                <!-- Botón para crear usuario -->
+                <a href="/users/new" class="btn btn-success">New User</a>
+
+                <!-- Botón para volver atrás -->
+                <a href="/users" class="btn btn-outline-dark">Back</a>
+
+            </div>
+        </div>
+    </div>
+</div>

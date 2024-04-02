@@ -1,0 +1,270 @@
+<!-- views/rooms/index.ejs -->
+
+<% rooms.forEach(room => { %>
+    <div class="card mb-3">
+        <div class="card-header" id="roomHeader<%= room.id %>">
+            <h4 class="card-title" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; font-weight: bold; letter-spacing: 1px;">ROOM <%= room.id %>: <%= room.name %></h4>
+        </div>
+        <div class="card-body" style="display: none;" id="roomDetails<%= room.id %>">
+            <!-- Detalles de la habitación -->
+            <br>
+            <table class="table table-borderless mt-8">
+                <tr>
+                    <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 15%;">Description:</th>
+                    <td><%= room.description %></td>
+                </tr>
+                <tr>
+                    <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 15%;">Date:</th>
+                    <td><%= room.date.toLocaleDateString() %></td>
+                </tr>
+                <tr>
+                    <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 15%;">Language:</th>
+                    <td><%= room.language %></td>
+                </tr>
+                <tr>
+                    <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 15%;">Licode Room:</th>
+                    <td><%= room.licode_room %></td>
+                </tr>
+                <tr>
+                    <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 15%;">Start Time:</th>
+                    <td><%= room.time_start %></td>
+                </tr>
+                <tr>
+                    <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 15%;">Finish Time:</th>
+                    <td><%= room.time_finish %></td>
+                </tr>
+                <tr>
+                    <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 15%;">Place:</th>
+                    <td><%= room.place %></td>
+                </tr>
+                <tr>
+                    <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 15%;">AI Enabled:</th>
+                    <td><%= room.ai_enabled ? 'Yes' : 'No' %></td>
+                </tr>
+                <tr>
+                    <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 15%;">On Air:</th>
+                    <td><%= room.on_air %></td>
+                </tr>
+                <tr>
+                    <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 15%;">Educational:</th>
+                    <td><%= room.educational ? 'Yes' : 'No' %></td>
+                </tr>
+                <tr>
+                    <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 15%;">Zoom URL:</th>
+                    <td><%= room.zoom_url %></td>
+                </tr>
+                <tr>
+                    <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 15%;">Assigned VRC:</th>
+                    <td><%= room.assigned_vrc %></td>
+                </tr>
+
+            </table>
+
+
+            <!-- Botones editar y eliminar room -->
+            <div>
+                <a href="/rooms/<%= room.id %>/edit" class="btn btn-primary">Edit Room</a>
+                <a href="/rooms/<%= room.id %>/delete" class="btn btn-danger">Delete Room</a>
+            </div>
+
+            <br>
+
+
+            <!-- Tabla roles asignados -->
+            <table class="table mt-3">
+                <thead class="thead-dark">
+                    <tr>
+                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Role</th>
+                        <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">ID</th>
+                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Username</th>
+                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Email</th>
+                        <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Manage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Consultant</td>
+                        <% if (room.consultantOfRoom) { %>
+                            <td style="text-align: center"><%= room.consultantOfRoom.id %></td>
+                            <td><%= room.consultantOfRoom.User.username %></td>
+                            <td><%= room.consultantOfRoom.User.email %></td>
+                            <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectConsultant" class="btn btn-secondary btn-sm">Change</a></td>
+                        <% } else { %>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectConsultant" class="btn btn-primary btn-sm">Select</a></td>
+                        <% } %>
+                    </tr>
+                    <tr>
+                        <td>Coordinator</td>
+                        <% if (room.coordinatorOfRoom) { %>
+                            <td style="text-align: center"><%= room.coordinatorOfRoom.id %></td>
+                            <td><%= room.coordinatorOfRoom.User.username %></td>
+                            <td><%= room.coordinatorOfRoom.User.email %></td>
+                            <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectConsultant" class="btn btn-secondary btn-sm">Change</a></td>
+                        <% } else { %>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectConsultant" class="btn btn-primary btn-sm">Select</a></td>
+                        <% } %>
+                    </tr>
+                    <tr>
+                        <td>Operator</td>
+                        <% if (room.operatorOfRoom) { %>
+                            <td style="text-align: center"><%= room.operatorOfRoom.id %></td>
+                            <td><%= room.operatorOfRoom.User.username %></td>
+                            <td><%= room.operatorOfRoom.User.email %></td>
+                            <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectConsultant" class="btn btn-secondary btn-sm">Change</a></td>
+                        <% } else { %>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectConsultant" class="btn btn-primary btn-sm">Select</a></td>
+                        <% } %>
+                    </tr>
+                    <tr>
+                        <td>Technician</td>
+                        <% if (room.technicianOfRoom) { %>
+                            <td style="text-align: center"><%= room.technicianOfRoom.id %></td>
+                            <td><%= room.technicianOfRoom.User.username %></td>
+                            <td><%= room.technicianOfRoom.User.email %></td>
+                            <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectConsultant" class="btn btn-secondary btn-sm">Change</a></td>
+                        <% } else { %>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectConsultant" class="btn btn-primary btn-sm">Select</a></td>
+                        <% } %>
+                    </tr>
+                </tbody>
+                
+            </table>
+
+            <br>
+
+            <!-- Desplegable para booths -->
+            <div class="accordion" id="accordionBooths<%= room.id %>">
+                <% room.boothsDetails.forEach(booth => { %>
+                    <div class="card">
+                        <div class="card-header" id="boothHeading<%= booth.id %>">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#boothCollapse<%= booth.id %>" aria-expanded="true" aria-controls="boothCollapse<%= booth.id %>" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">
+                                    Booth <%= booth.id %>
+                                </button>
+                                <!-- Botones editar y eliminar booth -->
+                                <div class="float-right">
+                                    <a href="/rooms/<%= room.id %>/booths/<%= booth.id %>/edit" class="btn btn-primary btn-sm">Edit</a>
+                                    <a href="/rooms/<%= room.id %>/booths/<%= booth.id %>/delete" class="btn btn-danger btn-sm">Delete</a>
+                                </div>
+                            </h2>
+                            
+                        </div>
+
+                        <div id="boothCollapse<%= booth.id %>" class="collapse" aria-labelledby="boothHeading<%= booth.id %>" data-parent="#accordionBooths<%= room.id %>">
+                            <div class="card-body">
+                                
+                                <table class="table table-borderless mt-8">
+                                    <tr>
+                                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 20%;">Language:</th>
+                                        <td><%= booth.language %></td>
+                                    </tr>
+                                    <tr>
+                                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 20%;">Language To:</th>
+                                        <td><%= booth.language_a %></td>
+                                    </tr>
+                                    <tr>
+                                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 20%;">Signs:</th>
+                                        <td><%= booth.signs ? 'Yes' : 'No' %></td>
+                                    </tr>
+                                    <tr>
+                                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 20%;">Deaf:</th>
+                                        <td><%= booth.deaf ? 'Yes' : 'No' %></td>
+                                    </tr>
+                                    <tr>
+                                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 20%;">Single:</th>
+                                        <td><%= booth.single ? 'Yes' : 'No' %></td>
+                                    </tr>
+                                    <tr>
+                                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 20%;">Speech to Text:</th>
+                                        <td><%= booth.speech_to_text ? 'Yes' : 'No' %></td>
+                                    </tr>
+
+                                    <!-- Interpreters -->
+                                    <% if (booth.interpreters && booth.interpreters.length > 0) { %> 
+                                        <% booth.interpreters.forEach(function(interpreter, index) { %>
+                                            <tr>
+                                                <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 20%;">Interpreter <%= index + 1 %>:</th>
+                                                <td>
+                                                    <a href="/users/<%= interpreter.User.id %>/profile" style="color: blue;"><%= interpreter.User.username %></a>
+                                                </td>
+                                            </tr>
+                                        <% }); %>
+                                        <th><a href="/rooms/<%= room.id %>/selectInterpreter" class="btn btn-secondary btn-sm">Manage</a></th>
+                                        <td></td>
+                                    
+                                    <% } else { %>
+                                        <tr>
+                                            <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 20%;">Interpreters...</th>
+                                            <td colspan="2">
+                                                <a href="/rooms/<%= room.id %>/selectInterpreter" class="btn btn-primary btn-sm">Add Interpreters</a>
+                                            </td>
+                                        </tr>
+                                    <% } %>
+
+                                </table>                                
+
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                <% }); %>
+            </div>
+            <!-- BUTTON: new booth -->
+            <br>
+            <div>
+                <a href="/rooms/<%= room.id %>/booths/new" class="btn btn-success">New Booth</a>
+            </div>
+        </div>
+    </div>
+<% }); %>
+
+<br>
+
+<!-- BUTTON: new room -->
+<div>
+    <a href="/rooms/new" class="btn btn-success">New Room</a>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+
+
+<!-- Encabezados desplegables -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Obtener todos los encabezados de tarjeta
+        var cardHeaders = document.querySelectorAll('.card-header');
+
+        // Iterar sobre cada encabezado de tarjeta y agregar un evento de clic
+        cardHeaders.forEach(function(header) {
+            header.addEventListener('click', function() {
+                // Obtener el cuerpo de la tarjeta asociada al encabezado
+                var cardBody = this.nextElementSibling;
+
+                // Alternar la visibilidad del cuerpo de la tarjeta
+                if (cardBody.style.display === 'none' || cardBody.style.display === '') {
+                    cardBody.style.display = 'block';
+                } else {
+                    cardBody.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>

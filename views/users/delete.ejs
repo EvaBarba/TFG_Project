@@ -1,0 +1,38 @@
+<!-- views/users/delete.ejs -->
+
+<h1 class="mb-0" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Delete User Confirmation</h1>
+
+<br>
+
+<form method="post" action="/users/<%= user.id %>?_method=DELETE">
+    <div class="form-group">
+        <label for="id">ID:</label>
+        <input type="text" class="form-control" id="id" name="id" value="<%= user.id %>" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" class="form-control" id="email" name="email" value="<%= user.email %>" readonly>
+    </div>
+
+    <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" class="form-control" id="username" name="username" value="<%= user.username %>" readonly>
+    </div>
+
+    <div class="role">
+        <label for="role">Role:</label>
+        <input type="text" class="form-control" id="role" name="role" value="<%= userRole %>" readonly>
+    </div>
+
+    <br>
+    <br>
+    
+    <div>
+        <p>Are you sure you want to delete this user?</p>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-danger">Confirm deletion</button>
+        <a href="javascript:history.go(-1)" class="btn btn-outline-dark">Cancel</a>
+    </div>
+</form>

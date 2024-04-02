@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Rep</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/style.css"/>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">App_Rep</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/users">Users</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/reputations">Reputations</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/rooms">Rooms</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <% if (!locals.loginUser) { %>
+                <li class="nav-item">
+                    <a class="nav-link" href="/signUp">Sign up</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/session/new">Log in</a>
+                </li>
+
+            <% } else { %>
+                <li class="nav-item">
+                    <a class="nav-link" href="/users/<%= loginUser.id %>"><%= loginUser.email %></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login?_method=DELETE">Logout</a>
+                </li>
+            <% } %>
+        </ul>
+    </div>
+    
+</nav>
+
+<div class="container mt-4">
+    <%- body %>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>

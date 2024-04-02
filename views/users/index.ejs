@@ -1,0 +1,156 @@
+<!-- views/users/index.ejs -->
+
+<!-- TABLE: List of users -->
+<div class="card">
+    <div class="card-header">
+        <h2 class="mb-0" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">List of Users</h2>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-sm">
+                <thead class="thead-dark">
+                    <tr>
+                        <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">ID</th>
+                        <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Username</th>
+                        <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Email</th>
+                        <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Password Update</th>
+                        <!-- <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Verify Key Email</th> -->
+                        <!-- <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Verify Key Expire</th> -->
+                        <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Enabled</th>
+                        <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Extra</th>
+                        <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">IsAdmin</th>
+                        <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Admin ID</th>
+                        <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Role</th>
+                        <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% users.forEach(user => { %>
+                    <tr>
+                        <td style="text-align: center;"><%= user.id %></td>
+                        <td><a href="/users/<%= user.id %>" style="color: blue;"><%= user.username %></a></td>
+                        <td><%= user.email %></td>
+                        <td style="text-align: center;"><%= user.passwordUpdate.toLocaleDateString() %> <%= user.passwordUpdate.toLocaleTimeString() %></td>
+                        <!-- <td><%= user.verifyKeyEmail %></td> -->
+                        <!-- <td style="text-align: center;"><%= user.verifyKeyExpire.toLocaleDateString() %> <%= user.verifyKeyExpire.toLocaleTimeString() %></td> -->
+                        <td style="text-align: center;"><%= user.enabled %></td>
+                        <td style="text-align: center;"><%= user.extra %></td>
+                        <td style="text-align: center;">
+                            <% if (user.admin_id) { %>
+                            <span class="badge badge-success">Yes</span>
+                            <% } else { %>
+                            <span class="badge badge-danger">No</span>
+                            <% } %>
+                        </td>
+
+                        <td style="text-align: center;"><%= user.admin_id %></td>
+
+                        <td style="text-align: center;">
+                            <% if (user.clients) { %>
+                                <span>Client</span>
+                            <% } else if (user.consultants) { %>
+                                <span>Consultant</span>
+                            <% } else if (user.coordinators) { %>
+                                <span>Coordinator</span>
+                            <% } else if (user.operators) { %>
+                                <span>Operator</span>
+                            <% } else if (user.technicians) { %>
+                                <span>Technician</span>
+                            <% } else if (user.interpreters) { %>
+                                <span>Interpreter</span>
+                            <% } else { %>
+                                <span>Not defined</span>
+                            <% } %>
+                        </td>
+                        
+                        <td>
+                            <div class="btn-group">
+                                <a href="/users/<%= user.id %>/timeslots" class="btn btn-outline-dark btn-sm btn-white mr-1">TimeSlots</a>
+                                <a href="/users/<%= user.id %>/edit" class="btn btn-outline-dark btn-sm btn-white mr-1">Edit</a>
+                                <a href="/users/<%= user.id %>/delete" class="btn btn-outline-dark btn-sm btn-white">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+            <!-- BUTTON: new user -->
+            <div>
+                <a href="/users/new" class="btn btn-success">New User</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br>
+<br>
+
+<!-- TABLE: Roles -->
+<div class="card">
+    <div class="card-header">
+        <h2 class="mb-0" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Roles</h2>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-sm">
+                <thead class="thead-dark">
+                    <tr>
+                        <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">ID</th>
+                        <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Username</th>
+                        <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Email</th>
+                        <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Admin</th>
+                        <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Client</th>
+                        <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Consultant</th>
+                        <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Coordinator</th>
+                        <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Operator</th>
+                        <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Technician</th>
+                        <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Interpreter</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% users.forEach(user => { %>
+                    <tr>
+                        <td style="text-align: center;"><%= user.id %></td>
+                        <td><a href="/users/<%= user.id %>/profile" style="color: blue;"><%= user.username %></a></td>
+                        <td><%= user.email %></td>
+                        <td style="text-align: center;"><% if (user.Admins) { %><span class="badge badge-success">Yes</span><% } %></td>
+                        <td style="text-align: center;"><% if (user.clients) { %><span class="badge badge-success">Yes</span><% } %></td>
+                        <td style="text-align: center;"><% if (user.consultants) { %><span class="badge badge-success">Yes</span><% } %></td>
+                        <td style="text-align: center;"><% if (user.coordinators) { %><span class="badge badge-success">Yes</span><% } %></td>
+                        <td style="text-align: center;"><% if (user.operators) { %><span class="badge badge-success">Yes</span><% } %></td>
+                        <td style="text-align: center;"><% if (user.technicians) { %><span class="badge badge-success">Yes</span><% } %></td>
+                        <td style="text-align: center;"><% if (user.interpreters) { %><span class="badge badge-success">Yes</span><% } %></td>
+                        <!-- <td><%= user.Admins ? 'yes' : '' %></td>
+                        <td><%= user.clients ? 'yes' : '' %></td>
+                        <td><%= user.consultants ? 'yes' : '' %></td>
+                        <td><%= user.coordinators ? 'yes' : '' %></td>
+                        <td><%= user.operators ? 'yes' : '' %></td>
+                        <td><%= user.technicians ? 'yes' : '' %></td>
+                        <td><%= user.interpreters ? 'yes' : '' %></td> -->
+                    </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+
+        <br>
+         <!-- Botones para filtrar por rol -->
+        <h3 class="mb-0" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; font-weight: bold; letter-spacing: 1px;">Filter by Role</h3>
+            <br>
+            <div class="btn-group">
+                <a href="/users/consultants" class="btn btn-outline-dark">Consultants</a>
+                <a href="/users/coordinators" class="btn btn-outline-dark">Coordinators</a>
+                <a href="/users/operators" class="btn btn-outline-dark">Operators</a>
+                <a href="/users/technicians" class="btn btn-outline-dark">Technicians</a>
+                <a href="/users/interpreters" class="btn btn-outline-dark">Interpreters</a>
+            </div>    
+        </div>
+
+    </div>
+</div>
+
+
+<br>
+<br>
+<br>
+<br>

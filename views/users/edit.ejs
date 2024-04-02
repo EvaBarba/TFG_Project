@@ -1,0 +1,123 @@
+<!-- views/users/edit.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit User</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="mb-0" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Edit User</h2>
+
+        <form method="post" action="/users/<%= user.id %>?_method=PUT">
+            <div class="form-group">
+                <br>
+                <label for="id">ID:</label>
+                <input type="text" class="form-control" id="id" name="id" value="<%= user.id %>" readonly>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" value="<%= user.email %>" readonly>
+            </div>
+
+
+            
+            <div class="form-group">
+                <label for="role">Role:</label>
+                <div class="input-group">
+                    <!-- Campo de solo lectura para el role actual -->
+                    <input type="text" class="form-control" id="role" name="role" value="<%= userRole %>" readonly>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" class="form-control" id="username" name="username" value="<%= user.username %>" required>
+            </div>
+          
+            <div class="form-group">
+                <label for="password" class="form-label">Password:</label>
+                <div class="input-group">
+                    <input type="password" class="form-control" id="password" name="password" value="<%= user.password %>" required>
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary toggle-password" type="button" id="passwordToggle">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>            
+            
+            <div class="form-group">
+                <label for="salt">Salt:</label>
+                <input type="text" class="form-control" id="salt" name="salt" value="<%= user.salt %>">
+            </div>
+            <div class="form-group">
+                <label for="passwordUpdate">Password Update:</label>
+                <input type="text" class="form-control" id="passwordUpdate" name="passwordUpdate" value="<%= user.passwordUpdate %>" readonly>
+            </div>
+            <div class="form-group">
+                <label for="verifyKeyEmail">Verify Key Email:</label>
+                <input type="text" class="form-control" id="verifyKeyEmail" name="verifyKeyEmail" value="<%= user.verifyKeyEmail %>">
+            </div>
+            <div class="form-group">
+                <label for="verifyKeyExpire">Verify Key Expire:</label>
+                <input type="text" class="form-control" id="verifyKeyExpire" name="verifyKeyExpire" value="<%= user.verifyKeyExpire %>" readonly>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="enabled" name="enabled" <%= user.enabled ? 'checked' : '' %>>
+                <label class="form-check-label" for="enabled">Enabled</label>
+            </div>
+            <div class="form-group">
+                <label for="extra">Extra:</label>
+                <textarea class="form-control" id="extra" name="extra"><%= JSON.stringify(user.extra) %></textarea>
+            </div>
+            <div class="form-group">
+                <label>Admin:</label>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" id="admin_yes" name="admin" value="yes" <%= user.admin_id ? 'checked' : '' %>>
+                    <label class="form-check-label" for="admin_yes">Yes</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" id="admin_no" name="admin" value="no" <%= user.admin_id ? '' : 'checked' %>>
+                    <label class="form-check-label" for="admin_no">No</label>
+                </div>
+            </div>
+
+            <!-- Botón para guardar cambios -->
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+
+            <!-- Botón para ir atrás -->
+            <a href="javascript:history.go(-1)" class="btn btn-outline-dark">Cancel</a>
+            
+        </form>
+        <br>
+        <br>
+    </div>
+
+    <!-- Bootstrap JS (opcional, solo si necesitas funcionalidades de Bootstrap) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+
+<!-- Boton visibilidad contraseña -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const passwordInput = document.getElementById('password');
+        const passwordToggle = document.getElementById('passwordToggle');
+    
+        passwordToggle.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            passwordToggle.classList.toggle('active');
+        });
+    });
+</script>
+    
+
+
+
