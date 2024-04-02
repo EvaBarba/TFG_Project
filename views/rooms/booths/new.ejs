@@ -1,0 +1,103 @@
+<!-- views/rooms/new.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Booth</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="mb-0" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Create New Booth</h2>
+        <form action="/rooms/<%= room.id %>/booths" method="POST">
+            <br>
+            
+            <!-- Room Details (String) -->
+            <div class="form-group">
+                <label for="room">Room Details:</label>
+                <input type="text" class="form-control" id="room" name="room" value="Room <%= room.id %>: <%= room.name %>" readonly>
+            </div>
+
+            <!-- Language (String) -->
+            <div class="form-group">
+                <label for="language">Language:</label>
+                <input type="text" class="form-control" id="language" name="language" value="<%= room.language %>" readonly>
+            </div>
+
+
+            <!-- Language (String) -->
+            <div class="form-group">
+                <label for="language_a">Language to:</label>
+                <select class="form-control" id="language_a" name="language_a" required>
+                    <option value="" selected disabled> - Select Language - </option>
+                    <% languages.forEach(language => { %>
+                        <option value="<%= language.name %>" <% if (booth.language_a === language.name) { %> selected <% } %>><%= language.name %></option>
+                    <% }); %>
+                </select>
+            </div>
+
+            <br>
+
+            <!-- Signs (Boolean) -->
+            <div class="form-group">
+                <label for="signs">Signs:</label>
+                <select class="form-control" id="signs" name="signs" required>
+                    <option value="" selected disabled> - Select an option - </option>
+                    <option value="true" ? ' selected' : '' %>>Yes</option>
+                    <option value="false" ? ' selected' : '' %>>No</option>
+                </select>
+            </div>
+
+            <!-- Deaf (Boolean) -->
+            <div class="form-group">
+                <label for="deaf">Deaf:</label>
+                <select class="form-control" id="deaf" name="deaf" required>
+                    <option value="" selected disabled> - Select an option - </option>
+                    <option value="true" ? ' selected' : '' %>>Yes</option>
+                    <option value="false" ? ' selected' : '' %>>No</option>
+                </select>
+            </div>
+
+            <!-- Single (Boolean) -->
+            <div class="form-group">
+                <label for="single">Single:</label>
+                <select class="form-control" id="single" name="single" required>
+                    <option value="" selected disabled> - Select an option - </option>
+                    <option value="true" ? ' selected' : '' %>>Yes</option>
+                    <option value="false" ? ' selected' : '' %>>No</option>
+                </select>
+            </div>
+
+            <!-- Speech to text (Boolean) -->
+            <div class="form-group">
+                <label for="speech_to_text">Speech to text:</label>
+                <select class="form-control" id="speech_to_text" name="speech_to_text" required>
+                    <option value="" selected disabled> - Select an option - </option>
+                    <option value="true" ? ' selected' : '' %>>Yes</option>
+                    <option value="false" ? ' selected' : '' %>>No</option>
+                </select>
+            </div>
+
+            <br>
+
+            <!-- Botón para crear room -->
+            <button type="submit" class="btn btn-primary">Create Booth</button>
+
+            <!-- Botón para volver atrás -->
+            <a href="/rooms" class="btn btn-outline-dark">Cancel</a>
+
+        </form>
+    </div>
+
+    <!-- Bootstrap JS (opcional, solo si necesitas funcionalidades de Bootstrap) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+<br>
+<br>
+<br>
+
+    

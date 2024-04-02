@@ -7,6 +7,7 @@ const sessionController = require('../controllers/session_controller');
 const userController = require('../controllers/user_controller');
 const reputationController = require('../controllers/reputation_controller');
 const roomController = require('../controllers/room_controller');
+const boothController = require('../controllers/booth_controller');
 const rolesController = require('../controllers/roles_controller');
 
 //-----------------------------------------------------------
@@ -57,12 +58,12 @@ router.get('/', function (req, res, next) {
 router.param('userId', userController.load);
 
 // GET all: List of users
-router.get('/users',                      
+router.get('/users',
   //sessionController.loginRequired,
   userController.index);
 
 // SHOW User
-router.get('/users/:userId(\\d+)',        
+router.get('/users/:userId(\\d+)',
   //sessionController.loginRequired,
   userController.show);
 
@@ -163,11 +164,44 @@ router.put('/rooms/:roomId(\\d+)',
 
 // Delete Room Confirmation
 router.get('/rooms/:roomId(\\d+)/delete',
-roomController.showDeleteConfirmation);
+  roomController.showDeleteConfirmation);
 
 // Delete Room
 router.delete('/rooms/:roomId(\\d+)',
-roomController.destroy);
+  roomController.destroy);
+
+
+// Routes for the resource /booths ---------------------------------------
+
+// Autoload
+router.param('boothId',
+  boothController.load);
+
+// CREATE New Booth (Sign up form)
+router.get('/rooms/:roomId(\\d+)/booths/new',
+  boothController.new);
+
+// POST: Register Booth (after new)
+router.post('/rooms/:roomId(\\d+)/booths',
+  boothController.create);
+
+// // Edit Booth
+// router.get('/rooms/:roomId(\\d+)/booths/:boothId(\\d+)/edit',
+//   roomController.edit);
+
+// // Update Room (after edit)
+// router.put('/rooms/:roomId(\\d+)',
+//   roomController.update);
+
+// // Delete Room Confirmation
+// router.get('/rooms/:roomId(\\d+)/delete',
+//   roomController.showDeleteConfirmation);
+
+// // Delete Room
+// router.delete('/rooms/:roomId(\\d+)/booths/:boothId(\\d+)',
+//   roomController.destroy);
+
+
 
 
 module.exports = router;
