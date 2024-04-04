@@ -90,7 +90,7 @@ exports.create = async function (req, res, next) {
             req.flash('error', errorMessage);
             const errorMessages = req.flash('error');
             console.log("errorMessages: " + errorMessages);
-            return res.render('rooms/new', { reqName: req.body.name, error_msg: errorMessages });
+            return res.render('rooms/new', { error_msg: errorMessages });
         }
 
         // Comprobar que la fecha de finalización sea posterior a la de iniciación

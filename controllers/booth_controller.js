@@ -28,10 +28,10 @@ exports.new = async function (req, res, next) {
     try {
         // Obtener el ID de la habitación de req.params.roomId
         const roomId = req.params.roomId;
-
+        console.log("Desde new, ID room: " + roomId)
         // Obtener la habitación correspondiente al ID
         const room = await models.Room.findByPk(roomId);
-
+        console.log("Desde new, Room completa: " + room)
         // Crear un objeto booth con los campos iniciales
         var booth = {
             language_a: "",
@@ -51,19 +51,26 @@ exports.new = async function (req, res, next) {
 exports.create = async function (req, res, next) {
     try {
 
-        // Obtener el siguiente ID disponible para la nueva booth
-        const availableId = await findAvailableBoothId();
-
         // Obtener el ID de la habitación de req.params.roomId
         const roomId = req.params.roomId;
 
         // Obtener la habitación correspondiente al ID
         const room = await models.Room.findByPk(roomId);
 
+        if (room.language === req.body.language_a) {
+            const errorMessage = 'The language to be translated cannot be the same as the original language.';
+            req.flash('error', errorMessage);
+            const errorMessages = req.flash('error');
+            console.log("errorMessages: " + errorMessages);
+            return res.render('rooms/booths/new', { booth: req.booth, room: room, error_msg: errorMessages });
+        }
+
+        // Obtener el siguiente ID disponible para la nueva booth
+        const availableId = await findAvailableBoothId();
 
         const booth = await models.Booth.create({
             id: availableId,
-            language: req.body.language,
+            language: room.language,
             language_a: req.body.language_a,
             signs: req.body.signs,
             deaf: req.body.deaf,
@@ -73,7 +80,7 @@ exports.create = async function (req, res, next) {
         });
 
         req.flash('success', 'Booth successfully created.');
-        return res.redirect('/rooms/');
+        return res.redirect('/rooms');
     } catch (error) {
         if (error instanceof Sequelize.ValidationError) {
             req.flash('error', 'Errors in the form:');
@@ -81,6 +88,7 @@ exports.create = async function (req, res, next) {
                 req.flash('error', error.errors[i].message);
             }
             res.render('rooms/booths/new', { booth: req.body });
+
         } else {
             next(error);
         }

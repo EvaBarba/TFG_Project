@@ -14,6 +14,15 @@
         <form action="/rooms/<%= room.id %>/booths" method="POST">
             <br>
             
+            <!-- Mensajes error por language -->
+            <% if (typeof error_msg !== 'undefined' && error_msg.length > 0) { %>
+                <div class="alert alert-danger" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold;">
+                    <% error_msg.forEach(function(msg) { %>
+                        <%= msg %><br>
+                    <% }); %>
+                </div>
+            <% } %>
+
             <!-- Room Details (String) -->
             <div class="form-group">
                 <label for="room">Room Details:</label>
@@ -26,22 +35,13 @@
                 <input type="text" class="form-control" id="language" name="language" value="<%= room.language %>" readonly>
             </div>
 
-            <!-- Mensajes error por language -->
-            <% if (typeof error_msg !== 'undefined' && error_msg.length > 0) { %>
-                <div class="alert alert-danger" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold;">
-                    <% error_msg.forEach(function(msg) { %>
-                        <%= msg %><br>
-                    <% }); %>
-                </div>
-            <% } %>
-
-            <!-- Language (String) -->
+            <!-- Language a (String) -->
             <div class="form-group">
-                <label for="language">Language:</label>
-                <select class="form-control" id="language" name="language" required>
+                <label for="language_a">Language to:</label>
+                <select class="form-control" id="language_a" name="language_a" required>
                     <option value="" selected disabled> - Select Language - </option>
                     <% allLanguages.forEach(language => { %>
-                        <option value="<%= language.name %>" <% if (room.language === language.name) { %> selected <% } %>><%= language.name %></option>
+                        <option value="<%= language.name %>"><%= language.name %></option>
                     <% }); %>
                 </select>
             </div>
