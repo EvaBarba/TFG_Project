@@ -21,34 +21,6 @@
                 <label for="id">ID:</label>
                 <input type="text" class="form-control" id="id" name="id" value="<%= room.id %>" readonly>
             </div>
-            
-            <!-- Name (String) -->
-            <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" class="form-control" id="name" name="name" value="<%= room.name %>" required>
-            </div>
-
-            <!-- Description (Text) -->
-            <div class="form-group">
-                <label for="description">Description:</label>
-                <textarea class="form-control" id="description" name="description" rows="3" required><%= room.description %></textarea>
-            </div>
-
-            <!-- Licode Room (String) -->
-            <div class="form-group">
-                <label for="licode_room">Licode Room:</label>
-                <input type="text" class="form-control" id="licode_room" name="licode_room" value="<%= room.licode_room %>">
-            </div>
-
-            <br>
-
-            <% if (typeof error_msg !== 'undefined' && error_msg.length > 0) { %>
-                <div class="alert alert-danger" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold;">
-                    <% error_msg.forEach(function(msg) { %>
-                        <%= msg %><br>
-                    <% }); %>
-                </div>
-            <% } %>
 
             <div class="card mb-3">
                 <div class="card-header" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">
@@ -61,7 +33,7 @@
                         <label for="language">Language:</label>
                         <select class="form-control" id="language" name="language" required>
                             <option value="" selected disabled> - Select Language - </option>
-                            <% languages.forEach(language => { %>
+                            <% allLanguages.forEach(language => { %>
                                 <option value="<%= language.name %>" <% if (room.language === language.name) { %> selected <% } %>><%= language.name %></option>
                             <% }); %>
                         </select>

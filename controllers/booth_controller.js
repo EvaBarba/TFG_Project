@@ -41,9 +41,7 @@ exports.new = async function (req, res, next) {
             speech_to_text: false,
         };
 
-        const languages = await obtainLanguages();
-
-        res.render('rooms/booths/new', { room: room, booth: booth, languages: languages });
+        res.render('rooms/booths/new', { room: room, booth: booth });
     } catch (error) {
         next(error);
     }
@@ -110,7 +108,6 @@ async function findAvailableBoothId() {
 // // GET /booths/:boothId/edit
 // exports.edit = async function (req, res, next) {
 //     try {
-//         const languages = await obtainLanguages();
 //         res.render('booths/edit', { booth: req.booth, languages: languages });
 //     } catch (error) {
 //         next(error);
@@ -241,41 +238,3 @@ async function findAvailableBoothId() {
 // };
 
 
-
-
-
-
-
-
-// Obtener todos los languages
-async function obtainLanguages() {
-
-    // Obtener todos los códigos de idioma
-    const languageCodes = iso6391.getAllCodes();
-
-    // Obtener todos los nombres de idioma
-    const languageNames = iso6391.getAllNames();
-
-    // Combina los códigos y los nombres en un objeto
-    const languages = languageCodes.map((code, index) => ({
-        code,
-        name: languageNames[index]
-    }));
-
-    const sortedLanguages = languages.sort((a, b) => {
-        const nameA = a.name.toUpperCase();
-        const nameB = b.name.toUpperCase();
-
-        if (nameA < nameB) {
-            return -1;
-        }
-        if (nameA > nameB) {
-            return 1;
-        }
-        return 0;
-    });
-
-    // console.log(sortedLanguages);
-
-    return sortedLanguages;
-}

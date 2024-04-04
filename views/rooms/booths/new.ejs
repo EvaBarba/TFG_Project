@@ -26,14 +26,22 @@
                 <input type="text" class="form-control" id="language" name="language" value="<%= room.language %>" readonly>
             </div>
 
+            <!-- Mensajes error por language -->
+            <% if (typeof error_msg !== 'undefined' && error_msg.length > 0) { %>
+                <div class="alert alert-danger" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold;">
+                    <% error_msg.forEach(function(msg) { %>
+                        <%= msg %><br>
+                    <% }); %>
+                </div>
+            <% } %>
 
             <!-- Language (String) -->
             <div class="form-group">
-                <label for="language_a">Language to:</label>
-                <select class="form-control" id="language_a" name="language_a" required>
+                <label for="language">Language:</label>
+                <select class="form-control" id="language" name="language" required>
                     <option value="" selected disabled> - Select Language - </option>
-                    <% languages.forEach(language => { %>
-                        <option value="<%= language.name %>" <% if (booth.language_a === language.name) { %> selected <% } %>><%= language.name %></option>
+                    <% allLanguages.forEach(language => { %>
+                        <option value="<%= language.name %>" <% if (room.language === language.name) { %> selected <% } %>><%= language.name %></option>
                     <% }); %>
                 </select>
             </div>
@@ -82,7 +90,7 @@
 
             <br>
 
-            <!-- Botón para crear room -->
+            <!-- Botón para crear booth -->
             <button type="submit" class="btn btn-primary">Create Booth</button>
 
             <!-- Botón para volver atrás -->

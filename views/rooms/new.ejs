@@ -25,7 +25,7 @@
                 <label for="language">Language:</label>
                 <select class="form-control" id="language" name="language" required>
                     <option value="" selected disabled> - Select Language - </option>
-                    <% languages.forEach(language => { %>
+                    <% allLanguages.forEach(language => { %>
                         <option value="<%= language.name %>" <% if (room.language === language.name) { %> selected <% } %>><%= language.name %></option>
                     <% }); %>
                 </select>

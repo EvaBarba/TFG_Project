@@ -71,15 +71,27 @@ exports.new = async function (req, res, next) {
         assigned_vrc: ""
     };
 
-    const languages = await obtainLanguages();
-
-    res.render('rooms/new', { room: room, languages: languages });
+    res.render('rooms/new', { room: room });
 };
 
 // POST /rooms
 exports.create = async function (req, res, next) {
     try {
+        
+        // Comprobar si la fecha es posterior a la fecha actual
+        const currentDate = new Date();
+        const inputDate = new Date(req.body.date);
 
+        if (inputDate < currentDate) {
+            req.flash('error', 'The date must be later than the current date.');
+            return res.render('rooms/new', { room: req.room, error_msg: req.flash('error') });
+        }
+
+        // Comprobar que la fecha de finalización sea posterior a la de iniciación
+        if (req.body.time_finish < req.body.time_start) {
+            req.flash('error', 'End date cannot be earlier than start date.');
+            return res.render('rooms/new', { room: req.room, error_msg: req.flash('error') });
+        }
         // Encuentra el primer ID disponible que no está en uso
         const availableId = await findAvailableRoomId();
 
@@ -99,21 +111,6 @@ exports.create = async function (req, res, next) {
             zoom_url: req.body.zoom_url,
             assigned_vrc: req.body.assigned_vrc
         });
-
-        // Comprobar si la fecha es posterior a la fecha actual
-        const currentDate = new Date();
-        const inputDate = new Date(req.body.date);
-
-        if (inputDate < currentDate) {
-            req.flash('error', 'The date must be later than the current date.');
-            return res.render('rooms/new', { room: req.room, error_msg: req.flash('error') });
-        }
-
-        // Comprobar que la fecha de finalización sea posterior a la de iniciación
-        if (req.body.time_finish < req.body.time_start) {
-            req.flash('error', 'End date cannot be earlier than start date.');
-            return res.render('rooms/new', { room: req.room, error_msg: req.flash('error') });
-        }
 
         req.flash('success', 'Room successfully created.');
         return res.redirect('/rooms/');
@@ -146,12 +143,7 @@ async function findAvailableRoomId() {
 
 // GET /rooms/:roomId/edit
 exports.edit = async function (req, res, next) {
-    try {
-        const languages = await obtainLanguages();
-        res.render('rooms/edit', { room: req.room, languages: languages });
-    } catch (error) {
-        next(error);
-    }
+    res.render('rooms/edit', { room: req.room });
 };
 
 
@@ -277,42 +269,3 @@ exports.destroy = async function (req, res, next) {
     }
 };
 
-
-
-
-
-
-
-
-// Obtener todos los languages
-async function obtainLanguages() {
-
-    // Obtener todos los códigos de idioma
-    const languageCodes = iso6391.getAllCodes();
-
-    // Obtener todos los nombres de idioma
-    const languageNames = iso6391.getAllNames();
-
-    // Combina los códigos y los nombres en un objeto
-    const languages = languageCodes.map((code, index) => ({
-        code,
-        name: languageNames[index]
-    }));
-
-    const sortedLanguages = languages.sort((a, b) => {
-        const nameA = a.name.toUpperCase();
-        const nameB = b.name.toUpperCase();
-
-        if (nameA < nameB) {
-            return -1;
-        }
-        if (nameA > nameB) {
-            return 1;
-        }
-        return 0;
-    });
-
-    // console.log(sortedLanguages);
-
-    return sortedLanguages;
-}

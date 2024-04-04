@@ -9,6 +9,7 @@ const methodOverride = require('method-override');
 const partials = require('express-partials');
 const flash = require('connect-flash');
 const session = require('express-session');
+const MW_languages = require('./helpers/MW_languages');
 
 
 // Importar el modelo de Sequelize
@@ -16,6 +17,9 @@ const db = require('./models');
 
 // Creacion de la aplicacion express
 const app = express();
+
+// Middleware para definir los idiomas globales
+app.use(MW_languages);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
