@@ -185,21 +185,21 @@ router.get('/rooms/:roomId(\\d+)/booths/new',
 router.post('/rooms/:roomId(\\d+)/booths',
   boothController.create);
 
-// // Edit Booth
-// router.get('/rooms/:roomId(\\d+)/booths/:boothId(\\d+)/edit',
-//   roomController.edit);
+// Edit Booth
+router.get('/rooms/:roomId(\\d+)/booths/:boothId(\\d+)/edit',
+  boothController.edit);
 
-// // Update Room (after edit)
-// router.put('/rooms/:roomId(\\d+)',
-//   roomController.update);
+// Update Room (after edit)
+router.put('/rooms/:roomId(\\d+)/booths/:boothId(\\d+)',
+  boothController.update);
 
-// // Delete Room Confirmation
-// router.get('/rooms/:roomId(\\d+)/delete',
-//   roomController.showDeleteConfirmation);
+// Delete Room Confirmation
+router.get('/rooms/:roomId(\\d+)/booths/:boothId(\\d+)/delete',
+  boothController.showDeleteConfirmation);
 
-// // Delete Room
-// router.delete('/rooms/:roomId(\\d+)/booths/:boothId(\\d+)',
-//   roomController.destroy);
+// Delete Room
+router.delete('/rooms/:roomId(\\d+)/booths/:boothId(\\d+)',
+  boothController.destroy);
 
 
 

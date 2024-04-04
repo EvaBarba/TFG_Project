@@ -4,128 +4,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Room</title>
+    <title>Edit Booth</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container mt-5">
-        <h2 class="mb-0" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Edit Room</h2>
+        <h2 class="mb-0" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Edit Booth</h2>
 
         <br>      
 
-        <form method="post" action="/rooms/<%= room.id %>?_method=PUT">          
+        <form method="post" action="/rooms/<%= room.id %>/booths/<%= booth.id %>?_method=PUT">          
             
+            <!-- Room Details (String) -->
+            <div class="form-group">
+                <label for="room">Room Details:</label>
+                <input type="text" class="form-control" id="room" name="room" value="Room <%= room.id %>: <%= room.name %>" readonly>
+            </div>
+
             <!-- ID (INT) -->
             <div class="form-group">
-                <label for="id">ID:</label>
-                <input type="text" class="form-control" id="id" name="id" value="<%= room.id %>" readonly>
+                <label for="id">Booth ID:</label>
+                <input type="text" class="form-control" id="id" name="id" value="<%= booth.id %>" readonly>
             </div>
 
-            <div class="card mb-3">
-                <div class="card-header" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">
-                    IMPORTANT EVENT DETAILS
-                </div>
-                <div class="card-body">
-
-                    <!-- Language (String) -->
-                    <div class="form-group">
-                        <label for="language">Language:</label>
-                        <select class="form-control" id="language" name="language" required>
-                            <option value="" selected disabled> - Select Language - </option>
-                            <% allLanguages.forEach(language => { %>
-                                <option value="<%= language.name %>" <% if (room.language === language.name) { %> selected <% } %>><%= language.name %></option>
-                            <% }); %>
-                        </select>
-                    </div>
-
-
-                    <!-- Date (Date) -->
-                    <div class="form-group">
-                        <label for="date">Date:</label>
-                        <input type="date" class="form-control" id="date" name="date" value="<%= room.date.toISOString().split('T')[0] %>" required>
-                    </div>
-            
-                    <!-- Time Start (Time) -->
-                    <div class="form-group">
-                        <label for="time_start">Start Time: </label>
-                        <select class="form-control" id="time_start" name="time_start" required>
-                            <% for (let hour = 0; hour <= 23; hour++) { %>
-                                <% let formattedHour = (hour < 10) ? '0' + hour : hour; %>
-                                <% let selected = (room.time_start && room.time_start === formattedHour + ':00:00') ? ' selected' : ''; %>
-                                <option value="<%= formattedHour %>:00" <%= selected %>><%= formattedHour %>:00</option>
-                            <% } %>
-                        </select>
-                    </div>
-            
-                    <!-- Time Finish (Time) -->
-                    <div class="form-group">
-                        <label for="time_finish">Finish Time: </label>
-                        <select class="form-control" id="time_finish" name="time_finish" required>
-                            <% for (let hour = 0; hour <= 23; hour++) { %>
-                                <% let formattedHour = (hour < 10) ? '0' + hour : hour; %>
-                                <% let selected = (room.time_finish && room.time_finish === formattedHour + ':00:00') ? ' selected' : ''; %>
-                                <option value="<%= formattedHour %>:00" <%= selected %>><%= formattedHour %>:00</option>
-                            <% } %>
-                        </select>
-                    </div>
-                </div>
+            <!-- Language (String) -->
+            <div class="form-group">
+                <label for="language">Language:</label>
+                <input type="text" class="form-control" id="language" name="language" value="<%= booth.language %>" readonly>
             </div>
-            
 
             <br>
 
-            <!-- Place (String) -->
+            <!-- Language a (String) -->
             <div class="form-group">
-                <label for="place">Place:</label>
-                <input type="text" class="form-control" id="place" name="place" value="<%= room.place %>">
-            </div>
-
-            <!-- AI Enabled (Boolean) -->
-            <div class="form-group">
-                <label for="ai_enabled">AI Enabled:</label>
-                <select class="form-control" id="ai_enabled" name="ai_enabled" required>
-                    <!-- <option value="" <%= (room.ai_enabled === null) ? 'selected' : '' %>>Not defined</option> -->
-                    <option value="true" <%= (room.ai_enabled === true) ? 'selected' : '' %>>Yes</option>
-                    <option value="false" <%= (room.ai_enabled === false) ? 'selected' : '' %>>No</option>
+                <label for="language_a">Language to:</label>
+                <select class="form-control" id="language_a" name="language_a" required>
+                    <option value="" selected disabled> - Select Language - </option>
+                    <% allLanguages.forEach(language => { %>
+                        <option value="<%= language.name %>" <% if (booth.language_a === language.name) { %> selected <% } %>><%= language.name %></option>
+                    <% }); %>
                 </select>
             </div>
-            
-
-            <!-- On Air (String) -->
+                    
+            <!-- Signs (Boolean) -->
             <div class="form-group">
-                <label for="on_air">On Air:</label>
-                <input type="text" class="form-control" id="on_air" name="on_air" value="<%= room.on_air %>">
-            </div>
-
-            <!-- Educational (Boolean) -->
-            <div class="form-group">
-                <label for="educational">Educational:</label>
-                <select class="form-control" id="educational" name="educational" required>
-                    <!-- <option value=""<%= (room.educational === null) ? ' selected' : '' %>>Not defined</option> -->
-                    <option value="true"<%= (room.educational === true) ? ' selected' : '' %>>Yes</option>
-                    <option value="false"<%= (room.educational === false) ? ' selected' : '' %>>No</option>
+                <label for="signs">Signs:</label>
+                <select class="form-control" id="signs" name="signs" required>
+                    <option value="true"<%= (booth.signs === true) ? ' selected' : '' %>>Yes</option>
+                    <option value="false"<%= (booth.signs === false) ? ' selected' : '' %>>No</option>
                 </select>
             </div>
 
-            <!-- Zoom URL (String) -->
+            <!-- Deaf (Boolean) -->
             <div class="form-group">
-                <label for="zoom_url">Zoom URL:</label>
-                <input type="text" class="form-control" id="zoom_url" name="zoom_url" value="<%= room.zoom_url %>" pattern="https?://.+">
-                <small id="zoom_url_help" class="form-text text-muted">Please enter a valid URL starting with 'http://' or 'https://'.</small>
-            </div>
-            
-            <!-- <div class="form-group">
-                <label for="zoom_url">Zoom URL:</label>
-                <input type="text" class="form-control" id="zoom_url" name="zoom_url" value="<%= room.zoom_url %>">
-            </div> -->
-            
-            <!-- Assigned VRC (String) -->
-            <div class="form-group">
-                <label for="assigned_vrc">Assigned VRC:</label>
-                <input type="text" class="form-control" id="assigned_vrc" name="assigned_vrc" value="<%= room.assigned_vrc %>">
+                <label for="deaf">Deaf:</label>
+                <select class="form-control" id="deaf" name="deaf" required>
+                    <option value="true"<%= (booth.deaf === true) ? ' selected' : '' %>>Yes</option>
+                    <option value="false"<%= (booth.deaf === false) ? ' selected' : '' %>>No</option>
+                </select>
             </div>
 
+            <!-- Single (Boolean) -->
+            <div class="form-group">
+                <label for="single">Single:</label>
+                <select class="form-control" id="single" name="single" required>
+                    <option value="true"<%= (booth.single === true) ? ' selected' : '' %>>Yes</option>
+                    <option value="false"<%= (booth.single === false) ? ' selected' : '' %>>No</option>
+                </select>
+            </div>
+
+            <!-- Speech to text (Boolean) -->
+            <div class="form-group">
+                <label for="speech_to_text">Speech to text:</label>
+                <select class="form-control" id="speech_to_text" name="speech_to_text" required>
+                    <option value="true"<%= (booth.speech_to_text === true) ? ' selected' : '' %>>Yes</option>
+                    <option value="false"<%= (booth.speech_to_text === false) ? ' selected' : '' %>>No</option>
+                </select>
+            </div>
 
             <br>
             

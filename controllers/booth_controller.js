@@ -28,10 +28,10 @@ exports.new = async function (req, res, next) {
     try {
         // Obtener el ID de la habitación de req.params.roomId
         const roomId = req.params.roomId;
-        console.log("Desde new, ID room: " + roomId)
+
         // Obtener la habitación correspondiente al ID
         const room = await models.Room.findByPk(roomId);
-        console.log("Desde new, Room completa: " + room)
+
         // Crear un objeto booth con los campos iniciales
         var booth = {
             language_a: "",
@@ -57,6 +57,7 @@ exports.create = async function (req, res, next) {
         // Obtener la habitación correspondiente al ID
         const room = await models.Room.findByPk(roomId);
 
+        // El lenguaje al que se traduce no puede ser el mismo que el original
         if (room.language === req.body.language_a) {
             const errorMessage = 'The language to be translated cannot be the same as the original language.';
             req.flash('error', errorMessage);
@@ -113,136 +114,116 @@ async function findAvailableBoothId() {
 
 
 
-// // GET /booths/:boothId/edit
-// exports.edit = async function (req, res, next) {
-//     try {
-//         res.render('booths/edit', { booth: req.booth, languages: languages });
-//     } catch (error) {
-//         next(error);
-//     }
-// };
+// GET /booths/:boothId/edit
+exports.edit = async function (req, res, next) {
+
+    // Obtener el ID de la habitación de req.params.roomId
+    const roomId = req.params.roomId;
+
+    // Obtener la habitación correspondiente al ID
+    const room = await models.Room.findByPk(roomId);
+
+    res.render('rooms/booths/edit', { booth: req.booth, room: room });
+};
 
 
-// // PUT /booths/:boothId
-// exports.update = async function (req, res, next) {
+// PUT /booths/:boothId
+exports.update = async function (req, res, next) {
 
-//     try {
-//         // Actualiza los campos de la booth
-//         req.booth.name = req.body.name;
-//         req.booth.description = req.body.description;
-//         req.booth.date = req.body.date;
-//         req.booth.language = req.body.language;
-//         req.booth.licode_booth = req.body.licode_booth;
-//         req.booth.place = req.body.place;
-//         req.booth.ai_enabled = req.body.ai_enabled;
-//         req.booth.on_air = req.body.on_air;
-//         req.booth.educational = req.body.educational;
-//         req.booth.zoom_url = req.body.zoom_url;
+    try {
 
-//         // Validaciones de campos obligatorios
-//         const requiredFields = ['name', 'date', 'language', 'time_start', 'time_finish'];
-//         for (const field of requiredFields) {
-//             if (!req.body[field]) {
-//                 req.flash('error', `The ${field} field cannot be empty.`);
-//                 return res.render('booths/edit', { booth: req.booth });
-//             }
-//         }
+        // Obtener el ID de la habitación de req.params.roomId
+        const roomId = req.params.roomId;
 
-//         // Comprobar si la fecha es posterior a la fecha actual
-//         const currentDate = new Date();
-//         const inputDate = new Date(req.body.date);
+        // Obtener la habitación correspondiente al ID
+        const room = await models.Room.findByPk(roomId);
 
-//         if (inputDate < currentDate) {
-//             req.flash('error', 'The date must be later than the current date.');
-//             return res.render('booths/edit', { booth: req.booth, error_msg: req.flash('error') });
-//         }
+        // Actualiza los campos de la booth
+        req.booth.language_a = req.body.language_a;
+        req.booth.signs = req.body.signs;
+        req.booth.deaf = req.body.deaf;
+        req.booth.single = req.body.single;
+        req.booth.speech_to_text = req.body.speech_to_text;
 
-//         // Comprobar que la fecha de finalización sea posterior a la de iniciación
-//         if (req.body.time_finish < req.body.time_start) {
-//             req.flash('error', 'End date cannot be earlier than start date.');
-//             return res.render('booths/edit', { booth: req.booth, error_msg: req.flash('error') });
-//         } else {
-//             req.booth.time_start = req.body.time_start;
-//             req.booth.time_finish = req.body.time_finish;
-//         }
+        // Validaciones de campos obligatorios
+        const requiredFields = [ 'language', 'language_a' ];
+        for (const field of requiredFields) {
+            if (!req.body[field]) {
+                req.flash('error', `The ${field} field cannot be empty.`);
+                return res.render('rooms/booths/edit', { booth: req.booth });
+            }
+        }
 
+        if (room.language === req.body.language_a) {
+            const errorMessage = 'The language to be translated cannot be the same as the original language.';
+            req.flash('error', errorMessage);
+            const errorMessages = req.flash('error');
+            console.log("errorMessages: " + errorMessages);
+            return res.render('rooms/booths/edit', { booth: req.booth, room: room, error_msg: errorMessages });
+        }
 
+        // Guarda el usuario con los nuevos datos
+        await req.booth.save();
 
-//         // Guarda el usuario con los nuevos datos
-//         await req.booth.save();
-
-//         // Redirecciona a la página de detalles del usuario
-//         req.flash('success', 'booth successfully updated.');
-//         res.redirect('/booths');
-//     } catch (error) {
-//         // Maneja los errores
-//         if (error instanceof Sequelize.ValidationError) {
-//             req.flash('error', 'Errors in the form:');
-//             for (var i in error.errors) {
-//                 req.flash('error', error.errors[i].message);
-//             }
-//             res.render('booths/edit', { booth: req.booth });
-//         } else {
-//             next(error);
-//         }
-//     }
-// };
+        // Redirecciona a la página de detalles del usuario
+        req.flash('success', 'Booth successfully updated.');
+        res.redirect('/rooms');
+    } catch (error) {
+        // Maneja los errores
+        if (error instanceof Sequelize.ValidationError) {
+            req.flash('error', 'Errors in the form:');
+            for (var i in error.errors) {
+                req.flash('error', error.errors[i].message);
+            }
+            res.render('rooms/booths/edit', { booth: req.booth });
+        } else {
+            next(error);
+        }
+    }
+};
 
 
+// GET /booths/:boothId/delete
+exports.showDeleteConfirmation = async function (req, res, next) {
+    try {
 
-// // GET /booths/:boothId/delete
-// exports.showDeleteConfirmation = async function (req, res, next) {
-//     try {
-//         const booth = await models.Booth.findByPk(req.params.boothId, {
-//             include: [
-//                 { model: models.Booth, as: 'boothsDetails', include: { model: models.Interpreter, as: 'interpreters', include: { model: models.User, as: 'User' } } }
-//             ]
-//         });
+        // Obtener el ID de la habitación de req.params.roomId
+        const roomId = req.params.roomId;
 
-//         if (!booth) {
-//             res.status(404).send('Sala no encontrada');
-//             return;
-//         }
+        // Obtener la habitación correspondiente al ID
+        const room = await models.Room.findByPk(roomId);
 
-//         res.render('booths/delete', { booth: booth });
-//     } catch (error) {
-//         next(error);
-//     }
-// };
+        const booth = await models.Booth.findByPk(req.params.boothId, {
+            include: [
+                {  model: models.Interpreter, as: 'interpreters', include: { model: models.User, as: 'User' } }
+            ]
+        });
+
+        if (!booth) {
+            res.status(404).send('Booth not found');
+            return;
+        }
+
+        res.render('rooms/booths/delete', { booth: booth, room: room });
+    } catch (error) {
+        next(error);
+    }
+};
 
 
-// // DELETE /users/:userId
-// exports.destroy = async function (req, res, next) {
-//     try {
-//         const booth = await models.Booth.findByPk(req.params.boothId, {
-//             include: [
-//                 { model: models.Booth, as: 'boothsDetails' }
-//             ]
-//         });
-
-//         if (!booth) {
-//             res.status(404).send('Booth not found');
-//             return;
-//         }
-
-//         // Elimina las asignaciones de cabinas asociadas a la sala
-//         await models.Boothassignment.destroy({
-//             where: {
-//                 booth_id: booth.boothsDetails.map(booth => booth.id)
-//             }
-//         });
-
-//         // Elimina las cabinas asociadas a la sala
-//         await Promise.all(booth.boothsDetails.map(booth => booth.destroy()));
-
-//         // Elimina la sala
-//         await booth.destroy();
-
-//         req.flash('success', 'Booth successfully eliminated.');
-//         res.redirect('/booths');
-//     } catch (error) {
-//         next(error);
-//     }
-// };
-
+// DELETE /booths/:boothId
+exports.destroy = async function (req, res, next) {
+    try {
+        const booth = await models.Booth.findByPk(req.params.boothId);
+        if (!booth) {
+            res.status(404).send('Booth not found');
+            return;
+        }
+        await booth.destroy();
+        req.flash('success', 'Booth successfully eliminated');
+        res.redirect('/rooms');
+    } catch (error) {
+        next(error);
+    }
+};
 
