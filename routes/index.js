@@ -146,6 +146,11 @@ router.param('roomId',
 router.get('/rooms',
   roomController.index);
 
+// SHOW User
+router.get('/rooms/:roomId(\\d+)',
+  //sessionController.loginRequired,
+  roomController.show);
+
 // CREATE New Room (Sign up form)
 router.get('/rooms/new',
   roomController.new);

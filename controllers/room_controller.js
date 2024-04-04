@@ -51,26 +51,41 @@ exports.index = function (req, res, next) {
         });
 };
 
+// GET /rooms/:roomId
+exports.show = async function (req, res, next) {
+
+    const room = await models.Room.findByPk(req.params.roomId, {
+        include: [
+            { model: models.Consultant, as: 'consultantOfRoom', include: { model: models.User, as: 'User' } },
+            { model: models.Coordinator, as: 'coordinatorOfRoom', include: { model: models.User, as: 'User' } },
+            { model: models.Operator, as: 'operatorOfRoom', include: { model: models.User, as: 'User' } },
+            { model: models.Technician, as: 'technicianOfRoom', include: { model: models.User, as: 'User' } },
+            { model: models.Booth, as: 'boothsDetails', include: { model: models.Interpreter, as: 'interpreters', include: { model: models.User, as: 'User' } } }
+        ]
+    });
+
+    res.render('rooms/show', { room: room });
+};
 
 
 // GET /rooms/new
 exports.new = async function (req, res, next) {
     try {
-                var room = {
-                name: "",
-                description: "",
-                date: "",
-                language: "",
-                licode_room: "",
-                time_start: "",
-                time_finish: "",
-                place: "",
-                ai_enabled: false,
-                on_air: "",
-                educational: false,
-                zoom_url: "",
-                assigned_vrc: ""
-            };
+        var room = {
+            name: "",
+            description: "",
+            date: "",
+            language: "",
+            licode_room: "",
+            time_start: "",
+            time_finish: "",
+            place: "",
+            ai_enabled: false,
+            on_air: "",
+            educational: false,
+            zoom_url: "",
+            assigned_vrc: ""
+        };
         res.render('rooms/new', { room: room });
     } catch (error) {
         next(error);
@@ -80,7 +95,7 @@ exports.new = async function (req, res, next) {
 // POST /rooms
 exports.create = async function (req, res, next) {
     try {
-        
+
         // Comprobar si la fecha es posterior a la fecha actual
         const currentDate = new Date();
         const inputDate = new Date(req.body.date);

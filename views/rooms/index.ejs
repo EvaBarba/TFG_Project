@@ -2,14 +2,23 @@
 
 <% rooms.forEach(room => { %>
     <div class="card mb-3">
-        <div class="card-header" id="roomHeader<%= room.id %>">
+        <div class="card-header d-flex justify-content-between align-items-center" id="roomHeader<%= room.id %>">
             <h4 class="card-title" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; font-weight: bold; letter-spacing: 1px;">ROOM <%= room.id %>: <%= room.name %></h4>
-        </div>
+            <a href="/rooms/<%= room.id %>" class="btn btn-secondary btn-sm ml-auto">View</a>
+        </div>        
         <div class="card-body" style="display: none;" id="roomDetails<%= room.id %>">
             <!-- Detalles de la habitación -->
             <br>
 
-            <h5 class="card-title text-center" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; font-weight: bold; letter-spacing: 1px;">DETAILS</h5>
+            <div class="d-flex justify-content-between align-items-center" id="roomHeader<%= room.id %>">
+                <h4 class="card-title text-center" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; font-weight: bold; letter-spacing: 1px; margin-bottom: 0;">SUMMARY DETAILS</h4>
+                <div>
+                    <a href="/rooms/<%= room.id %>/edit" class="btn btn-primary btn-sm">Edit Room</a>
+                    <a href="/rooms/<%= room.id %>/delete" class="btn btn-danger btn-sm ml-2">Delete Room</a>
+                </div>
+            </div>            
+
+            <br>
 
             <table class="table table-borderless mt-8">
                 <tr>
@@ -25,10 +34,6 @@
                     <td><%= room.language %></td>
                 </tr>
                 <tr>
-                    <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 15%;">Licode Room:</th>
-                    <td><%= room.licode_room %></td>
-                </tr>
-                <tr>
                     <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 15%;">Start Time:</th>
                     <td><%= room.time_start %></td>
                 </tr>
@@ -40,42 +45,14 @@
                     <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 15%;">Place:</th>
                     <td><%= room.place %></td>
                 </tr>
-                <tr>
-                    <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 15%;">AI Enabled:</th>
-                    <td><%= room.ai_enabled ? 'Yes' : 'No' %></td>
-                </tr>
-                <tr>
-                    <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 15%;">On Air:</th>
-                    <td><%= room.on_air %></td>
-                </tr>
-                <tr>
-                    <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 15%;">Educational:</th>
-                    <td><%= room.educational ? 'Yes' : 'No' %></td>
-                </tr>
-                <tr>
-                    <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 15%;">Zoom URL:</th>
-                    <td><%= room.zoom_url %></td>
-                </tr>
-                <tr>
-                    <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 15%;">Assigned VRC:</th>
-                    <td><%= room.assigned_vrc %></td>
-                </tr>
 
             </table>
 
-
-            <!-- Botones editar y eliminar room -->
-            <div>
-                <a href="/rooms/<%= room.id %>/edit" class="btn btn-primary">Edit Room</a>
-                <a href="/rooms/<%= room.id %>/delete" class="btn btn-danger">Delete Room</a>
-            </div>
-
-            <br>
             <br>
 
             <!-- Tabla roles asignados -->
 
-            <h5 class="card-title text-center" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; font-weight: bold; letter-spacing: 1px;">STAFF</h5>
+            <h4 class="card-title text-center" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; font-weight: bold; letter-spacing: 1px;">STAFF</h4>
 
             <table class="table mt-3">
                 <thead class="thead-dark">
@@ -152,91 +129,57 @@
 
             <!-- Desplegable para booths -->
 
-            <h5 class="card-title text-center" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; font-weight: bold; letter-spacing: 1px;">BOOTHS</h5>
+            <h4 class="card-title text-center" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; font-weight: bold; letter-spacing: 1px;">BOOTHS</h4>
 
-            <div class="accordion" id="accordionBooths<%= room.id %>">
-                <% room.boothsDetails.forEach(booth => { %>
-                    <div class="card">
-                        <div class="card-header" id="boothHeading<%= booth.id %>">
-                            <h2 class="mb-0">
-                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#boothCollapse<%= booth.id %>" aria-expanded="true" aria-controls="boothCollapse<%= booth.id %>" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">
-                                    Booth <%= booth.id %>
-                                </button>
-                                <!-- Botones editar y eliminar booth -->
-                                <div class="float-right">
-                                    <a href="/rooms/<%= room.id %>/booths/<%= booth.id %>/edit" class="btn btn-primary btn-sm">Edit</a>
-                                    <a href="/rooms/<%= room.id %>/booths/<%= booth.id %>/delete" class="btn btn-danger btn-sm">Delete</a>
-                                </div>
-                            </h2>
-                            
-                        </div>
-
-                        <div id="boothCollapse<%= booth.id %>" class="collapse" aria-labelledby="boothHeading<%= booth.id %>" data-parent="#accordionBooths<%= room.id %>">
-                            <div class="card-body">
-                                
-                                <table class="table table-borderless mt-8">
-                                    <tr>
-                                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 20%;">Language:</th>
-                                        <td><%= booth.language %></td>
-                                    </tr>
-                                    <tr>
-                                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 20%;">Language To:</th>
-                                        <td><%= booth.language_a %></td>
-                                    </tr>
-                                    <tr>
-                                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 20%;">Signs:</th>
-                                        <td><%= booth.signs ? 'Yes' : 'No' %></td>
-                                    </tr>
-                                    <tr>
-                                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 20%;">Deaf:</th>
-                                        <td><%= booth.deaf ? 'Yes' : 'No' %></td>
-                                    </tr>
-                                    <tr>
-                                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 20%;">Single:</th>
-                                        <td><%= booth.single ? 'Yes' : 'No' %></td>
-                                    </tr>
-                                    <tr>
-                                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 20%;">Speech to Text:</th>
-                                        <td><%= booth.speech_to_text ? 'Yes' : 'No' %></td>
-                                    </tr>
-
-                                    <!-- Interpreters -->
-                                    <% if (booth.interpreters && booth.interpreters.length > 0) { %> 
-                                        <% booth.interpreters.forEach(function(interpreter, index) { %>
-                                            <tr>
-                                                <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 20%;">Interpreter <%= index + 1 %>:</th>
-                                                <td>
-                                                    <a href="/users/<%= interpreter.User.id %>/profile" style="color: blue;"><%= interpreter.User.username %></a>
-                                                </td>
-                                            </tr>
-                                        <% }); %>
-                                        <th><a href="/rooms/<%= room.id %>/selectInterpreter" class="btn btn-secondary btn-sm">Manage</a></th>
-                                        <td></td>
-                                    
-                                    <% } else { %>
-                                        <tr>
-                                            <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 20%;">Interpreters...</th>
-                                            <td colspan="2">
-                                                <a href="/rooms/<%= room.id %>/selectInterpreter" class="btn btn-primary btn-sm">Add Interpreters</a>
-                                            </td>
-                                        </tr>
-                                    <% } %>
-
-                                </table>                                
-
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                <% }); %>
+            <div class="form-group">
+                <p class="mb-0">Number of booths associated with this room: <b><%= room.boothsDetails.length %></b></p>
             </div>
-            <!-- BUTTON: new booth -->
             
-            <div>
-                <a href="/rooms/<%= room.id %>/booths/new" class="btn btn-success btn-sm">New Booth</a>
+            <div class="form-group">
+                <table class="table mt-3">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Booths</th>
+                            <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Language To</th>
+                            <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Interpreters</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+            
+                    <tbody>
+                        <% room.boothsDetails.forEach(booth => { %>
+                            <tr>
+                                <td>Booth <%= booth.id %></td>
+                                <td><%= booth.language_a %></td>
+                                <td>
+                                    <% 
+                                        const interpreters = booth.interpreters.map(interpreter => interpreter.User.username);
+                                    %>
+                                    <%= interpreters.join(', ') %>
+                                </td>
+                                <td>
+                                    <div class="float-right">
+                                        <a href="/rooms/<%= room.id %>/booths/<%= booth.id %>/edit" class="btn btn-primary btn-sm">Edit</a>
+                                        <a href="/rooms/<%= room.id %>/booths/<%= booth.id %>/delete" class="btn btn-danger btn-sm">Delete</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    </tbody>
+                </table>            
+                
+                <!-- BUTTON: new booth -->
+                <div>
+                    <a href="/rooms/<%= room.id %>/booths/new" class="btn btn-success btn-sm">New Booth</a>
+                </div>
+                
             </div>
+            
+            <br>
+            
         </div>
     </div>
+
 <% }); %>
 
 <br>
@@ -249,8 +192,7 @@
 <br>
 <br>
 <br>
-<br>
-<br>
+
 
 
 
