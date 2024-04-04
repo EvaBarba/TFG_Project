@@ -20,16 +20,17 @@
                 <input type="text" id="name" name="name" class="form-control" required>
             </div>
 
-            <!-- Language (String) -->
+           <!-- Language (String) -->
             <div class="form-group">
                 <label for="language">Language:</label>
                 <select class="form-control" id="language" name="language" required>
                     <option value="" selected disabled> - Select Language - </option>
                     <% allLanguages.forEach(language => { %>
-                        <option value="<%= language.name %>" <% if (room.language === language.name) { %> selected <% } %>><%= language.name %></option>
+                        <option value="<%= language.name %>"><%= language.name %></option>
                     <% }); %>
                 </select>
             </div>
+
 
             <!-- Mensajes error por fecha u hora -->
             <% if (typeof error_msg !== 'undefined' && error_msg.length > 0) { %>
@@ -53,8 +54,7 @@
                     <option value="" disabled selected> - Select an option - </option>
                     <% for (let hour = 0; hour <= 23; hour++) { %>
                         <% let formattedHour = (hour < 10) ? '0' + hour : hour; %>
-                        <% let selected = (room.time_start && room.time_start === formattedHour + ':00:00') ? ' selected' : ''; %>
-                        <option value="<%= formattedHour %>:00" <%= selected %>><%= formattedHour %>:00</option>
+                        <option value="<%= formattedHour %>:00"><%= formattedHour %>:00</option>
                     <% } %>
                 </select>
             </div>
@@ -66,8 +66,7 @@
                     <option value="" disabled selected> - Select an option - </option>
                     <% for (let hour = 0; hour <= 23; hour++) { %>
                         <% let formattedHour = (hour < 10) ? '0' + hour : hour; %>
-                        <% let selected = (room.time_finish && room.time_finish === formattedHour + ':00:00') ? ' selected' : ''; %>
-                        <option value="<%= formattedHour %>:00" <%= selected %>><%= formattedHour %>:00</option>
+                        <option value="<%= formattedHour %>:00"><%= formattedHour %>:00</option>
                     <% } %>
                 </select>
             </div>
@@ -77,7 +76,7 @@
             <!-- Place (String) -->
             <div class="form-group">
                 <label for="place">Place:</label>
-                <input type="text" class="form-control" id="place" name="place" value="<%= room.place %>" required>
+                <input type="text" class="form-control" id="place" name="place" required>
             </div>
 
             <br>
@@ -87,7 +86,7 @@
             <!-- Description (Text) -->
             <div class="form-group">
                 <label for="description">Description:</label>
-                <textarea class="form-control" id="description" name="description" rows="3" ><%= room.description %></textarea>
+                <textarea class="form-control" id="description" name="description" rows="3" ></textarea>
             </div>
 
             <!-- Licode Room (String) -->

@@ -42,13 +42,11 @@ app.use(session({
 // Configuración del middleware connect-flash
 app.use(flash());
 
-app.use((req, res, next) => {
-  res.locals.error_msg = req.flash('error');
-  res.locals.success = req.flash('success');
-  next();
-});
-
-
+// app.use((req, res, next) => {
+//   res.locals.error_msg = req.flash('error');
+//   res.locals.success = req.flash('success');
+//   next();
+// });
 
 app.use(methodOverride('_method', { methods: ['POST', 'GET'] }));
 app.use(express.static(path.join(__dirname, 'public')));

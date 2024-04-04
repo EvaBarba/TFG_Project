@@ -55,23 +55,26 @@ exports.index = function (req, res, next) {
 
 // GET /rooms/new
 exports.new = async function (req, res, next) {
-    var room = {
-        name: "",
-        description: "",
-        date: "",
-        language: "",
-        licode_room: "",
-        time_start: "",
-        time_finish: "",
-        place: "",
-        ai_enabled: false,
-        on_air: "",
-        educational: false,
-        zoom_url: "",
-        assigned_vrc: ""
-    };
-
-    res.render('rooms/new', { room: room });
+    try {
+                var room = {
+                name: "",
+                description: "",
+                date: "",
+                language: "",
+                licode_room: "",
+                time_start: "",
+                time_finish: "",
+                place: "",
+                ai_enabled: false,
+                on_air: "",
+                educational: false,
+                zoom_url: "",
+                assigned_vrc: ""
+            };
+        res.render('rooms/new', { room: room });
+    } catch (error) {
+        next(error);
+    }
 };
 
 // POST /rooms
@@ -83,18 +86,26 @@ exports.create = async function (req, res, next) {
         const inputDate = new Date(req.body.date);
 
         if (inputDate < currentDate) {
-            req.flash('error', 'The date must be later than the current date.');
-            return res.render('rooms/new', { room: req.room, error_msg: req.flash('error') });
+            const errorMessage = 'The date must be later than the current date.';
+            req.flash('error', errorMessage);
+            const errorMessages = req.flash('error');
+            console.log("errorMessages: " + errorMessages);
+            return res.render('rooms/new', { reqName: req.body.name, error_msg: errorMessages });
         }
 
         // Comprobar que la fecha de finalización sea posterior a la de iniciación
         if (req.body.time_finish < req.body.time_start) {
-            req.flash('error', 'End date cannot be earlier than start date.');
-            return res.render('rooms/new', { room: req.room, error_msg: req.flash('error') });
+            const errorMessage = 'End date cannot be earlier than start date.';
+            req.flash('error', errorMessage);
+            const errorMessages = req.flash('error');
+            console.log("errorMessages: " + errorMessages);
+            return res.render('rooms/new', { error_msg: errorMessages });
         }
+
         // Encuentra el primer ID disponible que no está en uso
         const availableId = await findAvailableRoomId();
 
+        // Crear la sala
         const room = await models.Room.create({
             id: availableId,
             name: req.body.name,
@@ -154,7 +165,6 @@ exports.update = async function (req, res, next) {
         // Actualiza los campos de la room
         req.room.name = req.body.name;
         req.room.description = req.body.description;
-        req.room.date = req.body.date;
         req.room.language = req.body.language;
         req.room.licode_room = req.body.licode_room;
         req.room.place = req.body.place;
@@ -177,14 +187,23 @@ exports.update = async function (req, res, next) {
         const inputDate = new Date(req.body.date);
 
         if (inputDate < currentDate) {
-            req.flash('error', 'The date must be later than the current date.');
-            return res.render('rooms/edit', { room: req.room, error_msg: req.flash('error') });
+            const errorMessage = 'The date must be later than the current date.';
+            req.flash('error', errorMessage);
+            const errorMessages = req.flash('error');
+            console.log("errorMessages: " + errorMessages);
+            return res.render('rooms/edit', { room: req.room, error_msg: errorMessages });
+        } else {
+            req.room.date = req.body.date;
         }
 
         // Comprobar que la fecha de finalización sea posterior a la de iniciación
         if (req.body.time_finish < req.body.time_start) {
-            req.flash('error', 'End date cannot be earlier than start date.');
-            return res.render('rooms/edit', { room: req.room, error_msg: req.flash('error') });
+            const errorMessage = 'End date cannot be earlier than start date.';
+            req.flash('error', errorMessage);
+            const errorMessages = req.flash('error');
+            console.log("errorMessages: " + errorMessages);
+            return res.render('rooms/edit', { room: req.room, error_msg: errorMessages });
+
         } else {
             req.room.time_start = req.body.time_start;
             req.room.time_finish = req.body.time_finish;
@@ -243,7 +262,7 @@ exports.destroy = async function (req, res, next) {
                 { model: models.Booth, as: 'boothsDetails' }
             ]
         });
-        
+
         if (!room) {
             res.status(404).send('Room not found');
             return;
