@@ -8,6 +8,9 @@
         <div class="card-body" style="display: none;" id="roomDetails<%= room.id %>">
             <!-- Detalles de la habitación -->
             <br>
+
+            <h5 class="card-title text-center" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; font-weight: bold; letter-spacing: 1px;">DETAILS</h5>
+
             <table class="table table-borderless mt-8">
                 <tr>
                     <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 15%;">Description:</th>
@@ -68,11 +71,11 @@
             </div>
 
             <br>
-
+            <br>
 
             <!-- Tabla roles asignados -->
 
-            <h5 class="card-title" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; font-weight: bold; letter-spacing: 1px;">STAFF</h5>
+            <h5 class="card-title text-center" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; font-weight: bold; letter-spacing: 1px;">STAFF</h5>
 
             <table class="table mt-3">
                 <thead class="thead-dark">
@@ -149,7 +152,7 @@
 
             <!-- Desplegable para booths -->
 
-            <h5 class="card-title" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; font-weight: bold; letter-spacing: 1px;">BOOTHS</h5>
+            <h5 class="card-title text-center" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; font-weight: bold; letter-spacing: 1px;">BOOTHS</h5>
 
             <div class="accordion" id="accordionBooths<%= room.id %>">
                 <% room.boothsDetails.forEach(booth => { %>
@@ -228,7 +231,7 @@
                 <% }); %>
             </div>
             <!-- BUTTON: new booth -->
-            <br>
+            
             <div>
                 <a href="/rooms/<%= room.id %>/booths/new" class="btn btn-success btn-sm">New Booth</a>
             </div>

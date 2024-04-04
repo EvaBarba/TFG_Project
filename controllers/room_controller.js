@@ -243,7 +243,7 @@ exports.showDeleteConfirmation = async function (req, res, next) {
         });
 
         if (!room) {
-            res.status(404).send('Sala no encontrada');
+            res.status(404).send('Room not found');
             return;
         }
 
@@ -254,7 +254,7 @@ exports.showDeleteConfirmation = async function (req, res, next) {
 };
 
 
-// DELETE /users/:userId
+// DELETE /rooms/:roomId
 exports.destroy = async function (req, res, next) {
     try {
         const room = await models.Room.findByPk(req.params.roomId, {
@@ -281,7 +281,7 @@ exports.destroy = async function (req, res, next) {
         // Elimina la sala
         await room.destroy();
 
-        req.flash('success', 'Room successfully eliminated.');
+        req.flash('success', 'Room successfully eliminated');
         res.redirect('/rooms');
     } catch (error) {
         next(error);
