@@ -176,6 +176,40 @@ router.delete('/rooms/:roomId(\\d+)',
   roomController.destroy);
 
 
+// Select Consultant
+router.get('/rooms/:roomId(\\d+)/selectConsultant',
+  roomController.selectConsultant);
+
+// Update Consultant (after select)
+router.put('/rooms/:roomId(\\d+)/selectConsultant',
+  roomController.updateConsultant);
+
+// Select Coordinator
+router.get('/rooms/:roomId(\\d+)/selectCoordinator',
+  roomController.selectCoordinator);
+
+// Update Coordinator (after select)
+router.put('/rooms/:roomId(\\d+)/selectCoordinator',
+  roomController.updateCoordinator);
+
+  // Select Operator
+router.get('/rooms/:roomId(\\d+)/selectOperator',
+roomController.selectOperator);
+
+// Update Operator (after select)
+router.put('/rooms/:roomId(\\d+)/selectOperator',
+roomController.updateOperator);
+
+// Select Technician
+router.get('/rooms/:roomId(\\d+)/selectTechnician',
+  roomController.selectTechnician);
+
+// Update Technician (after select)
+router.put('/rooms/:roomId(\\d+)/selectTechnician',
+  roomController.updateTechnician);
+
+
+
 // Routes for the resource /booths ---------------------------------------
 
 // Autoload

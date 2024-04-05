@@ -303,3 +303,199 @@ exports.destroy = async function (req, res, next) {
     }
 };
 
+
+// -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+// GET /consultants
+exports.selectConsultant = async function (req, res, next) {
+    try {
+        // Obtener el consultor actual asociado a la habitación
+        const roomId = req.params.roomId;
+        const room = await models.Room.findByPk(roomId, {
+            include: [{ model: models.Consultant, as: 'consultantOfRoom', include: { model: models.User, as: 'User' } }]
+        });
+
+        const currentConsultant = room ? room.consultantOfRoom : null;
+
+        // Obtener todos los consultores
+        const allConsultants = await models.Consultant.findAll({
+            include: [{ model: models.User, as: 'User' }],
+            order: ['id']
+        });
+
+        // Renderizar la vista con ambos conjuntos de datos
+        res.render('rooms/selectConsultant', { currentConsultant: currentConsultant, allConsultants: allConsultants, room: room });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Controlador para actualizar el consultor de la habitación
+exports.updateConsultant = async function (req, res, next) {
+    try {
+        // Obtener el consultor actual asociado a la habitación
+        const roomId = req.params.roomId;
+        const room = await models.Room.findByPk(roomId, {
+            include: [{ model: models.Consultant, as: 'consultantOfRoom', include: { model: models.User, as: 'User' } }]
+        });
+
+        // Asignar el nuevo consultor a la habitación
+        req.room.consultant_id = req.body.consultantId;
+
+        // Guarda los cambios
+        await req.room.save();
+
+        // Redirecciona a la página de detalles de la habitación u otra página según sea necesario
+        res.redirect('/rooms/' + roomId + '/selectConsultant');
+    } catch (error) {
+        next(error);
+    }
+};
+
+
+
+
+// GET /coordinator
+exports.selectCoordinator = async function (req, res, next) {
+    try {
+        // Obtener el consultor actual asociado a la habitación
+        const roomId = req.params.roomId;
+        const room = await models.Room.findByPk(roomId, {
+            include: [{ model: models.Coordinator, as: 'coordinatorOfRoom', include: { model: models.User, as: 'User' } }]
+        });
+
+        const currentCoordinator = room ? room.coordinatorOfRoom : null;
+
+        // Obtener todos los consultores
+        const allCoordinators = await models.Coordinator.findAll({
+            include: [{ model: models.User, as: 'User' }],
+            order: ['id']
+        });
+
+        // Renderizar la vista con ambos conjuntos de datos
+        res.render('rooms/selectCoordinator', { currentCoordinator: currentCoordinator, allCoordinators: allCoordinators, room: room });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Controlador para actualizar el consultor de la habitación
+exports.updateCoordinator = async function (req, res, next) {
+    try {
+        // Obtener el consultor actual asociado a la habitación
+        const roomId = req.params.roomId;
+        const room = await models.Room.findByPk(roomId, {
+            include: [{ model: models.Coordinator, as: 'coordinatorOfRoom', include: { model: models.User, as: 'User' } }]
+        });
+
+        // Asignar el nuevo consultor a la habitación
+        req.room.coordinator_id = req.body.coordinatorId;
+
+        // Guarda los cambios
+        await req.room.save();
+
+        // Redirecciona a la página de detalles de la habitación u otra página según sea necesario
+        res.redirect('/rooms/' + roomId + '/selectCoordinator');
+    } catch (error) {
+        next(error);
+    }
+};
+
+
+
+
+// GET /operators
+exports.selectOperator = async function (req, res, next) {
+    try {
+        // Obtener el consultor actual asociado a la habitación
+        const roomId = req.params.roomId;
+        const room = await models.Room.findByPk(roomId, {
+            include: [{ model: models.Operator, as: 'operatorOfRoom', include: { model: models.User, as: 'User' } }]
+        });
+
+        const currentOperator = room ? room.operatorOfRoom : null;
+
+        // Obtener todos los consultores
+        const allOperators = await models.Operator.findAll({
+            include: [{ model: models.User, as: 'User' }],
+            order: ['id']
+        });
+
+        // Renderizar la vista con ambos conjuntos de datos
+        res.render('rooms/selectOperator', { currentOperator: currentOperator, allOperators: allOperators, room: room });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Controlador para actualizar el consultor de la habitación
+exports.updateOperator = async function (req, res, next) {
+    try {
+        // Obtener el consultor actual asociado a la habitación
+        const roomId = req.params.roomId;
+        const room = await models.Room.findByPk(roomId, {
+            include: [{ model: models.Operator, as: 'operatorOfRoom', include: { model: models.User, as: 'User' } }]
+        });
+
+        // Asignar el nuevo consultor a la habitación
+        req.room.operator_id = req.body.operatorId;
+        
+        // Guarda los cambios
+        await req.room.save();
+
+        // Redirecciona a la página de detalles de la habitación u otra página según sea necesario
+        res.redirect('/rooms/' + roomId + '/selectOperator');
+    } catch (error) {
+        next(error);
+    }
+};
+
+
+
+
+// GET /technicians
+exports.selectTechnician = async function (req, res, next) {
+    try {
+        // Obtener el consultor actual asociado a la habitación
+        const roomId = req.params.roomId;
+        const room = await models.Room.findByPk(roomId, {
+            include: [{ model: models.Technician, as: 'technicianOfRoom', include: { model: models.User, as: 'User' } }]
+        });
+
+        const currentTechnician = room ? room.technicianOfRoom : null;
+
+        // Obtener todos los consultores
+        const allTechnicians = await models.Technician.findAll({
+            include: [{ model: models.User, as: 'User' }],
+            order: ['id']
+        });
+
+        // Renderizar la vista con ambos conjuntos de datos
+        res.render('rooms/selectTechnician', { currentTechnician: currentTechnician, allTechnicians: allTechnicians, room: room });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Controlador para actualizar el consultor de la habitación
+exports.updateTechnician = async function (req, res, next) {
+    try {
+        // Obtener el consultor actual asociado a la habitación
+        const roomId = req.params.roomId;
+        const room = await models.Room.findByPk(roomId, {
+            include: [{ model: models.Technician, as: 'technicianOfRoom', include: { model: models.User, as: 'User' } }]
+        });
+
+        // Asignar el nuevo consultor a la habitación
+        req.room.technician_id = req.body.technicianId;
+        
+        // Guarda los cambios
+        await req.room.save();
+
+        // Redirecciona a la página de detalles de la habitación u otra página según sea necesario
+        res.redirect('/rooms/' + roomId + '/selectTechnician');
+    } catch (error) {
+        next(error);
+    }
+};

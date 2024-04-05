@@ -1,0 +1,139 @@
+<!-- views/rooms/selectTechnician.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Technician</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<form method="post" action="/rooms/<%= room.id %>/selectTechnician?_method=PUT"> 
+
+<!-- Campo oculto para almacenar el technicianId -->
+<input type="hidden" id="technicianId" name="technicianId">
+
+<!-- Modal -->
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="confirmModalLabel">Confirm Selection</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to select this technician as the new technician?
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="submit" class="btn btn-primary" name="updateTechnician">Update Technician</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h3 class="card-title text-center" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; font-weight: bold; letter-spacing: 1px;">ROOM <%= room.id %>: <%= room.name %></h3>
+
+<br>
+
+
+<!-- Tabla de consultor actual -->
+<% if (currentTechnician) { %>
+
+    <h5 class="card-title" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; font-weight: bold; letter-spacing: 1px;">CURRENT CONSULTANT</h5>
+
+    <table class="table mt-3">
+
+        <thead class="thead-dark">
+            <tr>
+                <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">ID</th>
+                <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Username</th>
+                <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Email</th>
+                <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Likes</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        
+            <tr>
+                <td style="text-align: center;"><%= currentTechnician.id %></td>
+                <td><%= currentTechnician.User.username %></td>
+                <td><%= currentTechnician.User.email %></td>
+                <td style="text-align: center;">likes</td>
+            </tr>
+        </tbody>
+
+    </table>
+    <hr class="my-4">
+    <br>
+<% } %>
+    
+
+
+<!-- Tabla de todos los consultores -->
+
+<h5 class="card-title" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; font-weight: bold; letter-spacing: 1px;">ALL CONSULTANTS</h5>
+
+<table class="table mt-3">
+
+    <thead class="thead-dark">
+        <tr>
+            <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">ID</th>
+            <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Username</th>
+            <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Email</th>
+            <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Likes</th>
+            <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Choose</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <% allTechnicians.forEach(function(technician) { %>
+            <tr <% if (currentTechnician && technician.id === currentTechnician.id) { %> style="background-color: #f0f0f0;" <% } %>>
+                <td style="text-align: center;"><%= technician.id %></td>
+                <td><%= technician.User.username %></td>
+                <td><%= technician.User.email %></td>
+                <td style="text-align: center;">likes</td>
+                <td style="text-align: center;">
+                    <% if (!(currentTechnician && technician.id === currentTechnician.id)) { %>
+                        <button type="button" class="btn btn-primary btn-sm selectButton" data-toggle="modal" data-target="#confirmModal">Select</button>
+                    <% } %>
+                </td>
+            </tr>
+        <% }); %>
+    </tbody>
+
+</table>
+
+<!-- Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<br>
+
+<!-- Botón para ir atrás -->
+<div class="text-center">
+    <a href="javascript:history.go(-1)" class="btn btn-outline-dark">Back</a>
+</div>
+
+<br>
+<br>
+<br>
+
+<!-- Script para capturar el consultor seleccionado y actualizar el campo oculto -->
+<script>
+    $(document).ready(function() {
+        $('.selectButton').click(function() {
+            var technicianId = $(this).closest('tr').find('td:eq(0)').text().trim(); // Obtener el ID del consultor y eliminar espacios en blanco
+            $('#technicianId').val(technicianId); // Actualizar el valor del campo oculto con el ID del consultor
+            var username = $(this).closest('tr').find('td:eq(1)').text().trim(); // Obtener el nombre del consultor y eliminar espacios en blanco
+            $('#confirmModal .modal-body').text("Are you sure you want to select " + username + " as the new technician?");
+        });
+    });
+</script>
+
+

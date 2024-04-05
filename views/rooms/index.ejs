@@ -85,12 +85,12 @@
                             <td style="text-align: center"><%= room.coordinatorOfRoom.id %></td>
                             <td><%= room.coordinatorOfRoom.User.username %></td>
                             <td><%= room.coordinatorOfRoom.User.email %></td>
-                            <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectConsultant" class="btn btn-secondary btn-sm">Change</a></td>
+                            <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectCoordinator" class="btn btn-secondary btn-sm">Change</a></td>
                         <% } else { %>
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectConsultant" class="btn btn-primary btn-sm">Select</a></td>
+                            <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectCoordinator" class="btn btn-primary btn-sm">Select</a></td>
                         <% } %>
                     </tr>
                     <tr>
@@ -99,12 +99,12 @@
                             <td style="text-align: center"><%= room.operatorOfRoom.id %></td>
                             <td><%= room.operatorOfRoom.User.username %></td>
                             <td><%= room.operatorOfRoom.User.email %></td>
-                            <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectConsultant" class="btn btn-secondary btn-sm">Change</a></td>
+                            <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectOperator" class="btn btn-secondary btn-sm">Change</a></td>
                         <% } else { %>
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectConsultant" class="btn btn-primary btn-sm">Select</a></td>
+                            <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectOperator" class="btn btn-primary btn-sm">Select</a></td>
                         <% } %>
                     </tr>
                     <tr>
@@ -113,12 +113,12 @@
                             <td style="text-align: center"><%= room.technicianOfRoom.id %></td>
                             <td><%= room.technicianOfRoom.User.username %></td>
                             <td><%= room.technicianOfRoom.User.email %></td>
-                            <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectConsultant" class="btn btn-secondary btn-sm">Change</a></td>
+                            <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectTechnician" class="btn btn-secondary btn-sm">Change</a></td>
                         <% } else { %>
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectConsultant" class="btn btn-primary btn-sm">Select</a></td>
+                            <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectTechnician" class="btn btn-primary btn-sm">Select</a></td>
                         <% } %>
                     </tr>
                 </tbody>
