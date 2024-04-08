@@ -5,7 +5,6 @@ var router = express.Router();
 // Import controllers
 const sessionController = require('../controllers/session_controller');
 const userController = require('../controllers/user_controller');
-const reputationController = require('../controllers/reputation_controller');
 const roomController = require('../controllers/room_controller');
 const boothController = require('../controllers/booth_controller');
 const rolesController = require('../controllers/roles_controller');
@@ -127,12 +126,6 @@ router.get('/users/:userId(\\d+)/editProfile',
 
 router.put('/users/:userId(\\d+)/profile',
   rolesController.updateProfile);
-
-
-// Routes for the resource /reputations --> ELIMINAR
-router.get('/reputations',              // List of interpreters with reputation
-  //sessionController.loginRequired,
-  reputationController.index);
 
 
 
