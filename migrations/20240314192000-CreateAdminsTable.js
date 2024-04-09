@@ -3,31 +3,26 @@
 'use strict';
 
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.createTable(
-      'Admins',
-      {
-        id: {
-          type: Sequelize.INTEGER,
-          autoIncrement: true,
-          allowNull: false,
-          primaryKey: true,
-          unique: true,
-        },
-        superadmin: {
-          type: Sequelize.BOOLEAN
-        },
-        educational: {
-          type: Sequelize.BOOLEAN
-        }
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.createTable('Admins', {
+      id: {
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        allowNull: false,
+        primaryKey: true,
+        unique: true,
       },
-      {
-        sync: { force: true }
-      }
-    );
+      superadmin: {
+        type: Sequelize.BOOLEAN,
+      },
+      educational: {
+        type: Sequelize.BOOLEAN,
+      },
+    });
   },
 
-  async down(queryInterface, Sequelize) {
+  down: async (queryInterface, Sequelize) => {
     await queryInterface.dropTable('Admins');
   }
 };
+

@@ -16,6 +16,7 @@ const Reputation = require('./reputation');
 const Room = require('./room');
 const Booth = require('./booth');
 const Boothassignment = require('./boothAssignment');
+const Like = require('./like');
 
 
 // Configuration of the Connection to the DATABASE
@@ -58,8 +59,8 @@ Room.belongsTo(Coordinator, { foreignKey: 'coordinator_id', as: 'coordinatorOfRo
 Operator.hasMany(Room, { foreignKey: 'operator_id', as: 'operatorRoomDetails' });
 Room.belongsTo(Operator, { foreignKey: 'operator_id', as: 'operatorOfRoom' });
 
-Technician.hasMany(Room, { foreignKey: 'technicial_id', as: 'technicianRoomDetails' });
-Room.belongsTo(Technician, { foreignKey: 'technicial_id', as: 'technicianOfRoom' });
+Technician.hasMany(Room, { foreignKey: 'technician_id', as: 'technicianRoomDetails' });
+Room.belongsTo(Technician, { foreignKey: 'technician_id', as: 'technicianOfRoom' });
 
 // Relationships for booth: 1-to-N (room-booth) --------------------------------------
 Room.hasMany(Booth, { foreignKey: 'room_id', as: 'boothsDetails' });
@@ -77,7 +78,7 @@ Interpreter.belongsToMany(Booth, {as: 'booths', through: 'Boothassignment', fore
 
 
 // DATABASE Object
-const db = { sequelize, User, Admin, Client, Consultant, Coordinator, Interpreter, Operator, Technician, Reputation, Room, Booth, Boothassignment };
+const db = { sequelize, User, Admin, Client, Consultant, Coordinator, Interpreter, Operator, Technician, Reputation, Room, Booth, Boothassignment, Like };
 
 // Close the Sequelize connection when the Node.js process is closed
 process.on('exit', () => {

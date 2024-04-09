@@ -59,7 +59,7 @@ Room.init(
             type: DataTypes.STRING
         },
 
-        technicial_id: {
+        technician_id: {
             type: DataTypes.INTEGER,
             references: {
                 model: Technician,

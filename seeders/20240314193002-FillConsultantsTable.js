@@ -3,14 +3,12 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
 
-    // Delete old registers
-    await queryInterface.bulkDelete('Consultants', null, {});
-
-    // Add new registers
     await queryInterface.bulkInsert('Consultants', [
-      {
-        id: 2
-      }
+      { id: 2 },
+      { id: 3 },
+      { id: 7 },
+      { id: 14 },
+      { id: 20 },
     ]);
   },
   down: async (queryInterface, Sequelize) => {

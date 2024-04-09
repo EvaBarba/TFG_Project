@@ -27,7 +27,7 @@ Reputation.init(
       },
     },
     value: {
-      type: DataTypes.DOUBLE,  // (PENDIENTE) tipo DOUBLE mejor??
+      type: DataTypes.DOUBLE,
     },
   },
   {

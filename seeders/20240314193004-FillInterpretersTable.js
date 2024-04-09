@@ -3,13 +3,17 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
 
-    // Add new registers to the Interpreters table
     await queryInterface.bulkInsert('Interpreters', [
-      { id: 4 },
-      { id: 5 },
-      { id: 6 },
-      { id: 7 },
-      { id: 8 }
+      { id: 10 },
+      { id: 15 },
+      { id: 16 },
+      { id: 19 },
+      { id: 24 },
+      { id: 29 },
+      { id: 30 },
+      { id: 31 },
+      { id: 32 },
+      { id: 33 },
     ]);
   },
 

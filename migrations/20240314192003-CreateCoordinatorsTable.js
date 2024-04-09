@@ -1,10 +1,10 @@
-// migrations/20240314192004-CreateInterpretersTable.js
+// migrations/20240314192003-CreateCoordinatorsTable.js
 
 'use strict';
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Interpreters', {
+    await queryInterface.createTable('Coordinators', {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -14,11 +14,10 @@ module.exports = {
           key: 'id',
         },
       },
-
     });
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Interpreters');
+    await queryInterface.dropTable('Coordinators');
   }
 };

@@ -3,32 +3,33 @@
 'use strict';
 
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.createTable(
-      'Boothassignment',
-      {
-        interpreter_id: {
-          type: Sequelize.INTEGER,
-          references: {
-            model: 'Interpreters',
-            key: 'id',
-          },
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.createTable('Boothassignments', {
+      interpreter_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Interpreters',
+          key: 'id',
         },
-        booth_id: {
-          type: Sequelize.INTEGER,
-          references: {
-            model: 'Booths',
-            key: 'id',
-          },
-        }
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
-      {
-        sync: { force: true }
-      }
-    );
+      booth_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Booths',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      },
+    });
   },
 
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Boothassignment');
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.dropTable('Boothassignments');
   }
 };
+

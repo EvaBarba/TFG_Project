@@ -217,7 +217,7 @@ exports.updateProfile = async function (req, res, next) {
 
 
 
-// Función para eliminar al usuario de la tabla del antiguo role
+// Función para comprobar el role
 async function checkRole(userId) {
 
     var userRole = 'Not defined';

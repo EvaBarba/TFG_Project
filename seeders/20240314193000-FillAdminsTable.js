@@ -2,14 +2,6 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-
-    // Delete all references in the Users table
-    await queryInterface.bulkUpdate('Users', { admin_id: null }, {});
-
-    // Delete old registers
-    await queryInterface.bulkDelete('Admins', null, {});
-    
-    // Add new registers
     await queryInterface.bulkInsert('Admins', [
       {
         id: 1,
