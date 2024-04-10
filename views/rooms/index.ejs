@@ -13,7 +13,9 @@
             <div class="d-flex justify-content-between align-items-center" id="roomHeader<%= room.id %>">
                 <h4 class="card-title text-center" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; font-weight: bold; letter-spacing: 1px; margin-bottom: 0;">SUMMARY DETAILS</h4>
                 <div>
-                    <a href="/rooms/<%= room.id %>/edit" class="btn btn-primary btn-sm">Edit Room</a>
+                    <% if (room.date > new Date()) { %>
+                        <a href="/rooms/<%= room.id %>/edit" class="btn btn-primary btn-sm">Edit Room</a>
+                    <% } %>
                     <a href="/rooms/<%= room.id %>/delete" class="btn btn-danger btn-sm ml-2">Delete Room</a>
                 </div>
             </div>            
@@ -61,7 +63,9 @@
                         <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">ID</th>
                         <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Username</th>
                         <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Email</th>
-                        <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Manage</th>
+                        <% if (room.date > new Date()) { %>
+                            <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Manage</th>
+                        <% } %>
                     </tr>
                 </thead>
                 <tbody>
@@ -71,12 +75,16 @@
                             <td style="text-align: center"><%= room.consultantOfRoom.id %></td>
                             <td><%= room.consultantOfRoom.User.username %></td>
                             <td><%= room.consultantOfRoom.User.email %></td>
-                            <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectConsultant" class="btn btn-secondary btn-sm">Change</a></td>
+                            <% if (room.date > new Date()) { %>
+                                <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectConsultant" class="btn btn-secondary btn-sm">Change</a></td>
+                            <% } %>
                         <% } else { %>
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectConsultant" class="btn btn-primary btn-sm">Select</a></td>
+                            <% if (room.date > new Date()) { %>
+                                <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectConsultant" class="btn btn-primary btn-sm">Select</a></td>
+                            <% } %>
                         <% } %>
                     </tr>
                     <tr>
@@ -85,12 +93,16 @@
                             <td style="text-align: center"><%= room.coordinatorOfRoom.id %></td>
                             <td><%= room.coordinatorOfRoom.User.username %></td>
                             <td><%= room.coordinatorOfRoom.User.email %></td>
-                            <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectCoordinator" class="btn btn-secondary btn-sm">Change</a></td>
+                            <% if (room.date > new Date()) { %>
+                                <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectCoordinator" class="btn btn-secondary btn-sm">Change</a></td>
+                            <% } %>
                         <% } else { %>
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectCoordinator" class="btn btn-primary btn-sm">Select</a></td>
+                            <% if (room.date > new Date()) { %>
+                                <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectCoordinator" class="btn btn-primary btn-sm">Select</a></td>
+                            <% } %>
                         <% } %>
                     </tr>
                     <tr>
@@ -99,12 +111,16 @@
                             <td style="text-align: center"><%= room.operatorOfRoom.id %></td>
                             <td><%= room.operatorOfRoom.User.username %></td>
                             <td><%= room.operatorOfRoom.User.email %></td>
-                            <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectOperator" class="btn btn-secondary btn-sm">Change</a></td>
+                            <% if (room.date > new Date()) { %>
+                                <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectOperator" class="btn btn-secondary btn-sm">Change</a></td>
+                            <% } %>
                         <% } else { %>
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectOperator" class="btn btn-primary btn-sm">Select</a></td>
+                            <% if (room.date > new Date()) { %>
+                                <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectOperator" class="btn btn-primary btn-sm">Select</a></td>
+                            <% } %>
                         <% } %>
                     </tr>
                     <tr>
@@ -113,12 +129,16 @@
                             <td style="text-align: center"><%= room.technicianOfRoom.id %></td>
                             <td><%= room.technicianOfRoom.User.username %></td>
                             <td><%= room.technicianOfRoom.User.email %></td>
-                            <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectTechnician" class="btn btn-secondary btn-sm">Change</a></td>
+                            <% if (room.date > new Date()) { %>
+                                <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectTechnician" class="btn btn-secondary btn-sm">Change</a></td>
+                            <% } %>
                         <% } else { %>
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectTechnician" class="btn btn-primary btn-sm">Select</a></td>
+                            <% if (room.date > new Date()) { %>
+                                <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectTechnician" class="btn btn-primary btn-sm">Select</a></td>
+                            <% } %>
                         <% } %>
                     </tr>
                 </tbody>
@@ -127,7 +147,7 @@
 
             <br>
 
-            <!-- Desplegable para booths -->
+            <!-- Tabla para booths -->
 
             <h4 class="card-title text-center" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; font-weight: bold; letter-spacing: 1px;">BOOTHS</h4>
 
@@ -158,10 +178,12 @@
                                     <%= interpreters.join(', ') %>
                                 </td>
                                 <td>
-                                    <div class="float-right">
-                                        <a href="/rooms/<%= room.id %>/booths/<%= booth.id %>/edit" class="btn btn-primary btn-sm">Edit</a>
-                                        <a href="/rooms/<%= room.id %>/booths/<%= booth.id %>/delete" class="btn btn-danger btn-sm">Delete</a>
-                                    </div>
+                                    <% if (room.date > new Date()) { %>
+                                        <div class="float-right">
+                                            <a href="/rooms/<%= room.id %>/booths/<%= booth.id %>/edit" class="btn btn-primary btn-sm">Edit</a>
+                                            <a href="/rooms/<%= room.id %>/booths/<%= booth.id %>/delete" class="btn btn-danger btn-sm">Delete</a>
+                                        </div>
+                                    <% } %>
                                 </td>
                             </tr>
                         <% }); %>
@@ -170,7 +192,9 @@
                 
                 <!-- BUTTON: new booth -->
                 <div>
-                    <a href="/rooms/<%= room.id %>/booths/new" class="btn btn-success btn-sm">New Booth</a>
+                    <% if (room.date > new Date()) { %>
+                        <a href="/rooms/<%= room.id %>/booths/new" class="btn btn-success btn-sm">New Booth</a>
+                    <% } %>
                 </div>
                 
             </div>
