@@ -18,5 +18,13 @@ node migrate.js
 - To execute seeders run:
 node seed.js
 
+- To undo seeders run:
+node undoSeeders.js
+
 - To iniciate the aplication run:
 npm start
+
+
+NOTE: to update the seeders
+1. node undoSeeders.js
+2. node seed.js

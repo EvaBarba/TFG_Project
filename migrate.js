@@ -7,8 +7,8 @@ const sequelize = require('./config/database');
 
 // Lista de nombres de archivos de migración en el orden deseado
 const migrationFiles = [
-    '20240314192009-CreateUsersTable.js',
     '20240314192000-CreateAdminsTable.js',
+    '20240314192009-CreateUsersTable.js',
     '20240314192001-CreateClientsTable',
     '20240314192002-CreateConsultantsTable.js',
     '20240314192003-CreateCoordinatorsTable.js',
