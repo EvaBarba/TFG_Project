@@ -1,0 +1,93 @@
+<!-- views/languages/index.ejs -->
+
+<!-- TABLE: List of languages -->
+<div class="card">
+    <div class="card-header">
+        <h2 class="mb-0" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">List of languages</h2>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-sm">
+                
+                <thead class="thead-dark">
+                    <tr>
+                        <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">ID</th>
+                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Language from</th>
+                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Language to</th>
+                        <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Total of interpreters</th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    <% languages.forEach(language => { %>
+                        <tr>
+                            <td style="text-align: center;"><%= language.id %></td>
+                            <td><%= language.language_from %></td>
+                            <td><%= language.language_to %></td>
+                            <td style="text-align: center;">
+                                <% if (language.interpreters.length > 0) { %>
+                                    <span><%= language.interpreters.length %></span>
+                                <% } else { %>
+                                    <span>None</span>
+                                <% } %>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+                
+            </table>
+
+            <div>
+                <a href="/languages/new" class="btn btn-success btn-sm">New Language</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<br>
+<br>
+
+
+<!-- TABLE: List of interpreters -->
+<div class="card">
+    <div class="card-header">
+        <h2 class="mb-0" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">List of interpreters</h2>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-sm">
+                
+                <thead class="thead-dark">
+                    <tr>
+                        <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Language ID</th>
+                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Language from</th>
+                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Language to</th>
+                        <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Interpreter ID</th>
+                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Interpreter</th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    <% languages.forEach(language => { %>
+                        <% language.interpreters.forEach(interpreter => { %>
+                            <tr>
+                                <td style="text-align: center;"><%= language.id %></td>
+                                <td><%= language.language_from %></td>
+                                <td><%= language.language_to %></td>
+                                <td><%= interpreter.id %></td>
+                                <td><a href="/users/<%= interpreter.id %>/profile" style="color: blue;"><%= interpreter.User.username %></a></td>
+                            </tr>
+                        <% }); %>
+                    <% }); %>
+                </tbody>
+                
+            </table>
+
+            <div>
+                <a href="/languages/new" class="btn btn-success btn-sm">New Language</a>
+            </div>
+
+        </div>
+    </div>
+</div>

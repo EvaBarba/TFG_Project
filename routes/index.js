@@ -8,6 +8,7 @@ const userController = require('../controllers/user_controller');
 const roomController = require('../controllers/room_controller');
 const boothController = require('../controllers/booth_controller');
 const rolesController = require('../controllers/roles_controller');
+const languageController = require('../controllers/language_controller');
 
 //-----------------------------------------------------------
 // Autologout
@@ -129,6 +130,23 @@ router.put('/users/:userId(\\d+)/profile',
 
 
 
+// Routes for the resource /language ---------------------------------------
+
+// GET all: List of users
+router.get('/languages',
+  //sessionController.loginRequired,
+  languageController.index);
+
+// CREATE New Language (Sign up form)
+router.get('/languages/new',
+  languageController.newLanguage);
+
+// POST: Register Language (after new)
+router.post('/languages',
+  languageController.createLanguage);
+
+
+
 // Routes for the resource /rooms ---------------------------------------
 
 // Autoload
@@ -185,13 +203,13 @@ router.get('/rooms/:roomId(\\d+)/selectCoordinator',
 router.put('/rooms/:roomId(\\d+)/selectCoordinator',
   roomController.updateCoordinator);
 
-  // Select Operator
+// Select Operator
 router.get('/rooms/:roomId(\\d+)/selectOperator',
-roomController.selectOperator);
+  roomController.selectOperator);
 
 // Update Operator (after select)
 router.put('/rooms/:roomId(\\d+)/selectOperator',
-roomController.updateOperator);
+  roomController.updateOperator);
 
 // Select Technician
 router.get('/rooms/:roomId(\\d+)/selectTechnician',

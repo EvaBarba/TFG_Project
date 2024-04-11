@@ -1,211 +1,222 @@
 <!-- views/rooms/index.ejs -->
 
-<% rooms.forEach(room => { %>
-    <div class="card mb-3">
-        <div class="card-header d-flex justify-content-between align-items-center" id="roomHeader<%= room.id %>">
-            <h4 class="card-title" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; font-weight: bold; letter-spacing: 1px;">ROOM <%= room.id %>: <%= room.name %></h4>
-            <a href="/rooms/<%= room.id %>" class="btn btn-secondary btn-sm ml-auto">View</a>
-        </div>        
-        <div class="card-body" style="display: none;" id="roomDetails<%= room.id %>">
-            <!-- Detalles de la habitación -->
-            <br>
+<!-- Botones de filtrado -->
+<div class="btn-group mb-3 d-flex justify-content-center">
+    <button type="button" class="btn btn-outline-dark filter-btn" data-filter="all">All</button>
+    <button type="button" class="btn btn-outline-dark filter-btn" data-filter="upcoming">Upcoming Events</button>
+    <button type="button" class="btn btn-outline-dark filter-btn" data-filter="finished">Finished Events</button>
+</div>
 
-            <div class="d-flex justify-content-between align-items-center" id="roomHeader<%= room.id %>">
-                <h4 class="card-title text-center" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; font-weight: bold; letter-spacing: 1px; margin-bottom: 0;">SUMMARY DETAILS</h4>
-                <div>
-                    <% if (room.date > new Date()) { %>
-                        <a href="/rooms/<%= room.id %>/edit" class="btn btn-primary btn-sm">Edit Room</a>
-                    <% } %>
-                    <a href="/rooms/<%= room.id %>/delete" class="btn btn-danger btn-sm ml-2">Delete Room</a>
-                </div>
-            </div>            
+<!-- Contenedor de las rooms -->
+<div id="rooms-container">
+    <% rooms.forEach(room => { %>
+        <div class="card mb-3">
+            <div class="card-header d-flex justify-content-between align-items-center" id="roomHeader<%= room.id %>">
+                <h4 class="card-title" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; font-weight: bold; letter-spacing: 1px;">ROOM <%= room.id %>: <%= room.name %></h4>
+                <a href="/rooms/<%= room.id %>" class="btn btn-secondary btn-sm ml-auto">View</a>
+            </div>        
+            <div class="card-body" style="display: none;" id="roomDetails<%= room.id %>">
+                <!-- Detalles de la habitación -->
+                <br>
 
-            <br>
-
-            <table class="table table-borderless mt-8">
-                <tr>
-                    <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 15%;">Description:</th>
-                    <td><%= room.description %></td>
-                </tr>
-                <tr>
-                    <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 15%;">Date:</th>
-                    <td><%= room.date.toLocaleDateString() %></td>
-                </tr>
-                <tr>
-                    <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 15%;">Language:</th>
-                    <td><%= room.language %></td>
-                </tr>
-                <tr>
-                    <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 15%;">Start Time:</th>
-                    <td><%= room.time_start %></td>
-                </tr>
-                <tr>
-                    <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 15%;">Finish Time:</th>
-                    <td><%= room.time_finish %></td>
-                </tr>
-                <tr>
-                    <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 15%;">Place:</th>
-                    <td><%= room.place %></td>
-                </tr>
-
-            </table>
-
-            <br>
-
-            <!-- Tabla roles asignados -->
-
-            <h4 class="card-title text-center" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; font-weight: bold; letter-spacing: 1px;">STAFF</h4>
-
-            <table class="table mt-3">
-                <thead class="thead-dark">
-                    <tr>
-                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Role</th>
-                        <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">ID</th>
-                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Username</th>
-                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Email</th>
+                <div class="d-flex justify-content-between align-items-center" id="roomHeader<%= room.id %>">
+                    <h4 class="card-title text-center" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; font-weight: bold; letter-spacing: 1px; margin-bottom: 0;">SUMMARY DETAILS</h4>
+                    <div>
                         <% if (room.date > new Date()) { %>
-                            <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Manage</th>
+                            <a href="/rooms/<%= room.id %>/edit" class="btn btn-primary btn-sm">Edit Room</a>
                         <% } %>
-                    </tr>
-                </thead>
-                <tbody>
+                        <a href="/rooms/<%= room.id %>/delete" class="btn btn-danger btn-sm ml-2">Delete Room</a>
+                    </div>
+                </div>            
+
+                <br>
+
+                <table class="table table-borderless mt-8">
                     <tr>
-                        <td>Consultant</td>
-                        <% if (room.consultantOfRoom) { %>
-                            <td style="text-align: center"><%= room.consultantOfRoom.id %></td>
-                            <td><%= room.consultantOfRoom.User.username %></td>
-                            <td><%= room.consultantOfRoom.User.email %></td>
-                            <% if (room.date > new Date()) { %>
-                                <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectConsultant" class="btn btn-secondary btn-sm">Change</a></td>
-                            <% } %>
-                        <% } else { %>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <% if (room.date > new Date()) { %>
-                                <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectConsultant" class="btn btn-primary btn-sm">Select</a></td>
-                            <% } %>
-                        <% } %>
+                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 15%;">Description:</th>
+                        <td><%= room.description %></td>
                     </tr>
                     <tr>
-                        <td>Coordinator</td>
-                        <% if (room.coordinatorOfRoom) { %>
-                            <td style="text-align: center"><%= room.coordinatorOfRoom.id %></td>
-                            <td><%= room.coordinatorOfRoom.User.username %></td>
-                            <td><%= room.coordinatorOfRoom.User.email %></td>
-                            <% if (room.date > new Date()) { %>
-                                <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectCoordinator" class="btn btn-secondary btn-sm">Change</a></td>
-                            <% } %>
-                        <% } else { %>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <% if (room.date > new Date()) { %>
-                                <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectCoordinator" class="btn btn-primary btn-sm">Select</a></td>
-                            <% } %>
-                        <% } %>
+                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 15%;">Date:</th>
+                        <td class="room-date" data-date="<%= room.date %>"><%= room.date.toLocaleDateString() %></td>
+
                     </tr>
                     <tr>
-                        <td>Operator</td>
-                        <% if (room.operatorOfRoom) { %>
-                            <td style="text-align: center"><%= room.operatorOfRoom.id %></td>
-                            <td><%= room.operatorOfRoom.User.username %></td>
-                            <td><%= room.operatorOfRoom.User.email %></td>
-                            <% if (room.date > new Date()) { %>
-                                <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectOperator" class="btn btn-secondary btn-sm">Change</a></td>
-                            <% } %>
-                        <% } else { %>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <% if (room.date > new Date()) { %>
-                                <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectOperator" class="btn btn-primary btn-sm">Select</a></td>
-                            <% } %>
-                        <% } %>
+                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 15%;">Language:</th>
+                        <td><%= room.language %></td>
                     </tr>
                     <tr>
-                        <td>Technician</td>
-                        <% if (room.technicianOfRoom) { %>
-                            <td style="text-align: center"><%= room.technicianOfRoom.id %></td>
-                            <td><%= room.technicianOfRoom.User.username %></td>
-                            <td><%= room.technicianOfRoom.User.email %></td>
-                            <% if (room.date > new Date()) { %>
-                                <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectTechnician" class="btn btn-secondary btn-sm">Change</a></td>
-                            <% } %>
-                        <% } else { %>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <% if (room.date > new Date()) { %>
-                                <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectTechnician" class="btn btn-primary btn-sm">Select</a></td>
-                            <% } %>
-                        <% } %>
+                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 15%;">Start Time:</th>
+                        <td><%= room.time_start %></td>
                     </tr>
-                </tbody>
-                
-            </table>
+                    <tr>
+                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 15%;">Finish Time:</th>
+                        <td><%= room.time_finish %></td>
+                    </tr>
+                    <tr>
+                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 15%;">Place:</th>
+                        <td><%= room.place %></td>
+                    </tr>
 
-            <br>
+                </table>
 
-            <!-- Tabla para booths -->
+                <br>
 
-            <h4 class="card-title text-center" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; font-weight: bold; letter-spacing: 1px;">BOOTHS</h4>
+                <!-- Tabla roles asignados -->
 
-            <div class="form-group">
-                <p class="mb-0">Number of booths associated with this room: <b><%= room.boothsDetails.length %></b></p>
-            </div>
-            
-            <div class="form-group">
+                <h4 class="card-title text-center" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; font-weight: bold; letter-spacing: 1px;">STAFF</h4>
+
                 <table class="table mt-3">
                     <thead class="thead-dark">
                         <tr>
-                            <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Booths</th>
-                            <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Language To</th>
-                            <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Interpreters</th>
-                            <th></th>
+                            <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Role</th>
+                            <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">ID</th>
+                            <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Username</th>
+                            <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Email</th>
+                            <% if (room.date > new Date()) { %>
+                                <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Manage</th>
+                            <% } %>
                         </tr>
                     </thead>
-            
                     <tbody>
-                        <% room.boothsDetails.forEach(booth => { %>
-                            <tr>
-                                <td>Booth <%= booth.id %></td>
-                                <td><%= booth.language_a %></td>
-                                <td>
-                                    <% 
-                                        const interpreters = booth.interpreters.map(interpreter => interpreter.User.username);
-                                    %>
-                                    <%= interpreters.join(', ') %>
-                                </td>
-                                <td>
-                                    <% if (room.date > new Date()) { %>
-                                        <div class="float-right">
-                                            <a href="/rooms/<%= room.id %>/booths/<%= booth.id %>/edit" class="btn btn-primary btn-sm">Edit</a>
-                                            <a href="/rooms/<%= room.id %>/booths/<%= booth.id %>/delete" class="btn btn-danger btn-sm">Delete</a>
-                                        </div>
-                                    <% } %>
-                                </td>
-                            </tr>
-                        <% }); %>
+                        <tr>
+                            <td>Consultant</td>
+                            <% if (room.consultantOfRoom) { %>
+                                <td style="text-align: center"><%= room.consultantOfRoom.id %></td>
+                                <td><%= room.consultantOfRoom.User.username %></td>
+                                <td><%= room.consultantOfRoom.User.email %></td>
+                                <% if (room.date > new Date()) { %>
+                                    <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectConsultant" class="btn btn-secondary btn-sm">Change</a></td>
+                                <% } %>
+                            <% } else { %>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <% if (room.date > new Date()) { %>
+                                    <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectConsultant" class="btn btn-primary btn-sm">Select</a></td>
+                                <% } %>
+                            <% } %>
+                        </tr>
+                        <tr>
+                            <td>Coordinator</td>
+                            <% if (room.coordinatorOfRoom) { %>
+                                <td style="text-align: center"><%= room.coordinatorOfRoom.id %></td>
+                                <td><%= room.coordinatorOfRoom.User.username %></td>
+                                <td><%= room.coordinatorOfRoom.User.email %></td>
+                                <% if (room.date > new Date()) { %>
+                                    <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectCoordinator" class="btn btn-secondary btn-sm">Change</a></td>
+                                <% } %>
+                            <% } else { %>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <% if (room.date > new Date()) { %>
+                                    <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectCoordinator" class="btn btn-primary btn-sm">Select</a></td>
+                                <% } %>
+                            <% } %>
+                        </tr>
+                        <tr>
+                            <td>Operator</td>
+                            <% if (room.operatorOfRoom) { %>
+                                <td style="text-align: center"><%= room.operatorOfRoom.id %></td>
+                                <td><%= room.operatorOfRoom.User.username %></td>
+                                <td><%= room.operatorOfRoom.User.email %></td>
+                                <% if (room.date > new Date()) { %>
+                                    <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectOperator" class="btn btn-secondary btn-sm">Change</a></td>
+                                <% } %>
+                            <% } else { %>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <% if (room.date > new Date()) { %>
+                                    <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectOperator" class="btn btn-primary btn-sm">Select</a></td>
+                                <% } %>
+                            <% } %>
+                        </tr>
+                        <tr>
+                            <td>Technician</td>
+                            <% if (room.technicianOfRoom) { %>
+                                <td style="text-align: center"><%= room.technicianOfRoom.id %></td>
+                                <td><%= room.technicianOfRoom.User.username %></td>
+                                <td><%= room.technicianOfRoom.User.email %></td>
+                                <% if (room.date > new Date()) { %>
+                                    <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectTechnician" class="btn btn-secondary btn-sm">Change</a></td>
+                                <% } %>
+                            <% } else { %>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <% if (room.date > new Date()) { %>
+                                    <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectTechnician" class="btn btn-primary btn-sm">Select</a></td>
+                                <% } %>
+                            <% } %>
+                        </tr>
                     </tbody>
-                </table>            
-                
-                <!-- BUTTON: new booth -->
-                <div>
-                    <% if (room.date > new Date()) { %>
-                        <a href="/rooms/<%= room.id %>/booths/new" class="btn btn-success btn-sm">New Booth</a>
-                    <% } %>
+                    
+                </table>
+
+                <br>
+
+                <!-- Tabla para booths -->
+
+                <h4 class="card-title text-center" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; font-weight: bold; letter-spacing: 1px;">BOOTHS</h4>
+
+                <div class="form-group">
+                    <p class="mb-0">Number of booths associated with this room: <b><%= room.boothsDetails.length %></b></p>
                 </div>
                 
+                <div class="form-group">
+                    <table class="table mt-3">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Booths</th>
+                                <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Language To</th>
+                                <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Interpreters</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                
+                        <tbody>
+                            <% room.boothsDetails.forEach(booth => { %>
+                                <tr>
+                                    <td>Booth <%= booth.id %></td>
+                                    <td><%= booth.language_a %></td>
+                                    <td>
+                                        <% 
+                                            const interpreters = booth.interpreters.map(interpreter => interpreter.User.username);
+                                        %>
+                                        <%= interpreters.join(', ') %>
+                                    </td>
+                                    <td>
+                                        <% if (room.date > new Date()) { %>
+                                            <div class="float-right">
+                                                <a href="/rooms/<%= room.id %>/booths/<%= booth.id %>/edit" class="btn btn-primary btn-sm">Edit</a>
+                                                <a href="/rooms/<%= room.id %>/booths/<%= booth.id %>/delete" class="btn btn-danger btn-sm">Delete</a>
+                                            </div>
+                                        <% } %>
+                                    </td>
+                                </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>            
+                    
+                    <!-- BUTTON: new booth -->
+                    <div>
+                        <% if (room.date > new Date()) { %>
+                            <a href="/rooms/<%= room.id %>/booths/new" class="btn btn-success btn-sm">New Booth</a>
+                        <% } %>
+                    </div>
+                    
+                </div>
+                
+                <br>
+                
             </div>
-            
-            <br>
-            
         </div>
-    </div>
 
-<% }); %>
-
+    <% }); %>
+</div>
+    
 <br>
 
 <!-- BUTTON: new room -->
@@ -243,3 +254,79 @@
         });
     });
 </script>
+
+
+<!-- Filtrar rooms -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Obtener todos los botones de filtro
+      var filterButtons = document.querySelectorAll('.filter-btn');
+    
+      // Iterar sobre cada botón de filtro y agregar un evento de clic
+      filterButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+          // Obtener el filtro asociado al botón
+          var filter = this.dataset.filter;
+    
+          // Obtener todas las cartas de las salas
+          var rooms = document.querySelectorAll('.card');
+    
+          // Crear una lista para almacenar las salas que cumplen con el filtro
+          var filteredRooms = [];
+    
+         // Iterar sobre cada carta de sala
+        rooms.forEach(function(room) {
+            // Obtener la fecha de la sala actual y convertirla a un objeto Date
+            var dateRoomString = room.querySelector('.room-date').dataset.date;
+            var dateRoom = new Date(dateRoomString);
+
+            switch(filter) {
+                case 'all':
+                    // Agregar todas las salas
+                    filteredRooms.push(room);
+                    break;
+                case 'upcoming':
+                    // Obtener la fecha actual
+                    var currentDate = new Date();
+                    // Agregar las salas cuya fecha sea posterior a la fecha actual
+                    if (dateRoom > currentDate) {
+                        filteredRooms.push(room);
+                    }
+                    break;
+                case 'finished':
+                    // Obtener la fecha actual
+                    var currentDate = new Date();
+                    // Agregar las salas cuya fecha sea anterior o igual a la fecha actual
+                    if (dateRoom <= currentDate) {
+                        filteredRooms.push(room);
+                    }
+                    break;
+            }
+        });
+
+
+
+    
+          // Mostrar u ocultar las salas según el filtro
+          rooms.forEach(function(room) {
+            if (filteredRooms.includes(room)) {
+              room.style.display = 'block';
+            } else {
+              room.style.display = 'none';
+            }
+          });
+        });
+      });
+    
+      // Agregar evento "change" al elemento de filtro
+      var filterSelect = document.querySelector('#filter-select');
+    
+      filterSelect.addEventListener('change', function() {
+        var filter = this.value;
+        // Llama a la función de filtrado con el nuevo valor
+        filterRooms(filter);
+      });
+    });
+    </script>
+    
+    

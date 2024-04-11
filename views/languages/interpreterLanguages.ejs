@@ -1,0 +1,68 @@
+<!-- views/languages/new.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Language</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="mb-0" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Select Language</h2>
+        <form action="/languages" method="POST">
+            <br>
+
+            <!-- Mensajes error por languages -->
+            <% if (typeof error_msg !== 'undefined' && error_msg.length > 0) { %>
+                <div class="alert alert-danger" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold;">
+                    <% error_msg.forEach(function(msg) { %>
+                        <%= msg %><br>
+                    <% }); %>
+                </div>
+            <% } %>
+
+           <!-- Language From (String) -->
+            <div class="form-group">
+                <label for="language_from">Language From:</label>
+                <select class="form-control" id="language_from" name="language_from" required>
+                    <option value="" selected disabled> - Select Language - </option>
+                    <% allLanguages.forEach(language => { %>
+                        <option value="<%= language.name %>"><%= language.name %></option>
+                    <% }); %>
+                </select>
+            </div>
+
+            <!-- Language To (String) -->
+            <div class="form-group">
+                <label for="language_to">Language To:</label>
+                <select class="form-control" id="language_to" name="language_to" required>
+                    <option value="" selected disabled> - Select Language - </option>
+                    <% allLanguages.forEach(language => { %>
+                        <option value="<%= language.name %>"><%= language.name %></option>
+                    <% }); %>
+                </select>
+            </div>
+
+            <br>
+
+            <!-- Botón para crear language -->
+            <button type="submit" class="btn btn-primary">Create Language</button>
+
+            <!-- Botón para volver atrás -->
+            <a href="/languages" class="btn btn-outline-dark">Cancel</a>
+
+        </form>
+    </div>
+
+    <!-- Bootstrap JS (opcional, solo si necesitas funcionalidades de Bootstrap) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+<br>
+<br>
+<br>
+
+    

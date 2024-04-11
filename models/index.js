@@ -29,23 +29,23 @@ User.belongsTo(Admin, { foreignKey: 'admin_id', as: 'Admins' });
 Admin.hasMany(User, { foreignKey: 'admin_id', as: 'users' });
 
 // Relationships for Roles: 1-to-1 (User-role) ---------------------------------------
-User.hasOne(Client, { foreignKey: 'id', as: 'clients' });
-Client.belongsTo(User, { foreignKey: 'id', as: 'User' });
+User.hasOne(Client, { foreignKey: 'id', as: 'clients', onDelete: 'CASCADE' });
+Client.belongsTo(User, { foreignKey: 'id', as: 'User', onDelete: 'CASCADE' });
 
-User.hasOne(Consultant, { foreignKey: 'id', as: 'consultants' });
-Consultant.belongsTo(User, { foreignKey: 'id', as: 'User' });
+User.hasOne(Consultant, { foreignKey: 'id', as: 'consultants', onDelete: 'CASCADE' });
+Consultant.belongsTo(User, { foreignKey: 'id', as: 'User', onDelete: 'CASCADE' });
 
-User.hasOne(Coordinator, { foreignKey: 'id', as: 'coordinators' });
-Coordinator.belongsTo(User, { foreignKey: 'id', as: 'User' });
+User.hasOne(Coordinator, { foreignKey: 'id', as: 'coordinators', onDelete: 'CASCADE' });
+Coordinator.belongsTo(User, { foreignKey: 'id', as: 'User', onDelete: 'CASCADE' });
 
-User.hasOne(Interpreter, { foreignKey: 'id', as: 'interpreters' });
-Interpreter.belongsTo(User, { foreignKey: 'id', as: 'User' });
+User.hasOne(Interpreter, { foreignKey: 'id', as: 'interpreters', onDelete: 'CASCADE' });
+Interpreter.belongsTo(User, { foreignKey: 'id', as: 'User', onDelete: 'CASCADE' });
 
-User.hasOne(Operator, { foreignKey: 'id', as: 'operators' });
-Operator.belongsTo(User, { foreignKey: 'id', as: 'User' });
+User.hasOne(Operator, { foreignKey: 'id', as: 'operators', onDelete: 'CASCADE' });
+Operator.belongsTo(User, { foreignKey: 'id', as: 'User', onDelete: 'CASCADE' });
 
-User.hasOne(Technician, { foreignKey: 'id', as: 'technicians' });
-Technician.belongsTo(User, { foreignKey: 'id', as: 'User' });
+User.hasOne(Technician, { foreignKey: 'id', as: 'technicians', onDelete: 'CASCADE' });
+Technician.belongsTo(User, { foreignKey: 'id', as: 'User', onDelete: 'CASCADE' });
 
 // Relationships for reputation: 1-to-1 (reputation-interpreter) ---------------------
 Interpreter.hasOne(Reputation, { foreignKey: 'interpreter_id', as: 'reputation' });
@@ -73,7 +73,7 @@ Booth.belongsTo(Room, { foreignKey: 'room_id' });
 Booth.belongsToMany(Interpreter, { as: 'interpreters', through: 'Boothassignment', foreignKey: 'boothId', otherKey: 'interpreterId' });
 Interpreter.belongsToMany(Booth, { as: 'booths', through: 'Boothassignment', foreignKey: 'interpreterId', otherKey: 'boothId' });
 
-// Relationships for interpreter: N-to-M (interpreter-languageknown-language) ---------
+// Relationships for languages: N-to-M (interpreter-languageknown-language) ---------
 Language.belongsToMany(Interpreter, { as: 'interpreters', through: 'Languageknown', foreignKey: 'languageId', otherKey: 'interpreterId' });
 Interpreter.belongsToMany(Language, { as: 'languages', through: 'Languageknown', foreignKey: 'interpreterId', otherKey: 'languageId' });
 

@@ -125,12 +125,17 @@ exports.getTechnicians = function (req, res, next) {
 };
 
 
+// PERFILES --------------------------------------------------------------------------------------------------------------
 
 // Controlador para mostrar el perfil de un usuario
 exports.profile = async function (req, res, next) {
     try {
         // Obtener el usuario desde la base de datos
-        const user = await models.User.findByPk(req.params.userId);
+        const user = await models.User.findByPk(req.params.userId, {
+            include: [
+                { model: models.Interpreter, as: 'interpreters', include: { model: models.Language, as: 'languages' } }
+            ],
+        });
 
         // Verificar si el usuario es un intérprete para obtener detalles adicionales
         let interpreterReputation = '';

@@ -55,7 +55,7 @@ exports.index = function (req, res, next) {
 
 // GET /users/:userId
 exports.show = async function (req, res, next) {
-    
+
     userRole = await checkRole(req.user.id);
     res.render('users/show', { user: req.user, userRole: userRole });
 };
@@ -315,6 +315,15 @@ exports.destroy = async function (req, res, next) {
             res.status(404).send('Usuario no encontrado');
             return;
         }
+
+        // Buscar roles relacionados con el usuario y eliminarlos
+        await models.Client.destroy({ where: { id: user.id } });
+        await models.Consultant.destroy({ where: { id: user.id } });
+        await models.Coordinator.destroy({ where: { id: user.id } });
+        await models.Operator.destroy({ where: { id: user.id } });
+        await models.Technician.destroy({ where: { id: user.id } });
+        await models.Interpreter.destroy({ where: { id: user.id } });
+
         await user.destroy();
         req.flash('success', 'Usuario eliminado con éxito.');
         res.redirect('/users');
@@ -355,32 +364,6 @@ async function checkRole(userId) {
     if (await models.Interpreter.findOne({ where: { id: userId } })) {
         userRole = 'Interpreter';
     }
-    
+
     return userRole;
 }
-
-
-
-
-
-
-
-
-
-
-// // DELETE /users/:userId
-// exports.destroy = function (req, res, next) {
-//     req.user.destroy()
-//         .then(function () {
-//             // Borrando usuario logeado.
-//             if (req.session.user && req.session.user.id === req.user.id) {
-//                 // borra la sesión y redirige a /
-//                 delete req.session.user;
-//             }
-//             req.flash('success', 'Usuario eliminado con éxito.');
-//             res.redirect('/users');
-//         })
-//         .catch(function (error) {
-//             next(error);
-//         });
-// };
