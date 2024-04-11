@@ -21,6 +21,7 @@ const seederFiles = [
     '20240314193011-FillBoothsTable.js',
     '20240314193013-FillBoothAssignmentsTable.js',
     '20240314193014-FillLikesTable.js',
+    '20240314193015-FillLanguagesTable.js',
 ];
 
 console.log('Start seeding...');
@@ -49,6 +50,7 @@ async function seed() {
                 migrations: [seederFile],
                 method: 'up'
             });
+
             console.log(`Seeder ${seederFile} executed successfully.`);
         }
 

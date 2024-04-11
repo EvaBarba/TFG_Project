@@ -1,4 +1,4 @@
-// models/roles/client.js
+// models/client.js
 
 // Dependencies
 const { Sequelize, Model, DataTypes } = require('sequelize');

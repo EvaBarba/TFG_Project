@@ -20,26 +20,30 @@ const migrationFiles = [
     '20240314192011-CreateBoothsTable.js',
     '20240314192013-CreateBoothAssignmentsTable.js',
     '20240314192013-CreateBoothAssignmentsTable.js',
+    '20240314192014-CreateLikesTable.js',
+    '20240314192015-CreateLanguagesTable.js'
 ];
 
-const umzug = new Umzug({
-    migrations: {
-        path: path.join(__dirname, 'migrations'),
-        params: [
-            sequelize.getQueryInterface(),
-            Sequelize
-        ],
-        pattern: /\.js$/,
-    },
-    storage: 'sequelize',
-    storageOptions: {
-        sequelize: sequelize
-    },
-    logger: console,
-});
 
 (async () => {
     try {
+
+        const umzug = new Umzug({
+            migrations: {
+                path: path.join(__dirname, 'migrations'),
+                params: [
+                    sequelize.getQueryInterface(),
+                    Sequelize
+                ],
+                pattern: /\.js$/,
+            },
+            storage: 'sequelize',
+            storageOptions: {
+                sequelize: sequelize
+            },
+            logger: console,
+        });
+
         // Ejecutar las migraciones en el orden especificado
         for (const migrationFile of migrationFiles) {
             const migration = await umzug.up({ migrations: [migrationFile] });

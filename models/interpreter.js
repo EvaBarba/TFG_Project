@@ -1,4 +1,4 @@
-// models/roles/interpreter.js
+// models/interpreter.js
 
 // Dependencies
 const { Sequelize, Model, DataTypes } = require('sequelize');

@@ -1,4 +1,4 @@
-// models/roles/coordinator.js
+// models/coordinator.js
 
 // Dependencies
 const { Sequelize, Model, DataTypes } = require('sequelize');

@@ -11,7 +11,7 @@ module.exports = {
         language: 'Spanish',
         licode_room: 'room1',
         time_start: '09:00:00',
-        time_finish: '11:00:00',
+        time_finish: '12:00:00',
         place: 'Madrid',
         ai_enabled: true,
         on_air: 'Yes',

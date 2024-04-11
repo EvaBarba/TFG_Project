@@ -12,19 +12,22 @@ npm install iso-639-1
 - To create the database run:
 sequelize db:create
 
-- To execute migrations run:
+- To configure migrations and seeders:
+node configureDB.js
+
+
+OTHER WAY FOR EXECUTING AND UPDATING MIGRATIONS AND SEEDERS
+
+1. To execute migrations run:
 node migrate.js
 
-- To execute seeders run:
+2. To execute seeders run:
 node seed.js
 
-- To undo seeders run:
+3. To undo seeders run:
 node undoSeeders.js
+
+
 
 - To iniciate the aplication run:
 npm start
-
-
-NOTE: to update the seeders
-1. node undoSeeders.js
-2. node seed.js

@@ -1,4 +1,4 @@
-// migrations/20240314192014-CreateLikessTable.js
+// migrations/20240314192014-CreateLikesTable.js
 
 'use strict';
 
