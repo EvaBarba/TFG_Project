@@ -17,6 +17,8 @@ const Room = require('./room');
 const Booth = require('./booth');
 const Boothassignment = require('./boothAssignment');
 const Like = require('./like');
+const Language = require('./language');
+const Languageknown = require('./languageknown');
 
 
 // Configuration of the Connection to the DATABASE
@@ -68,17 +70,20 @@ Booth.belongsTo(Room, { foreignKey: 'room_id' });
 
 
 // Relationships for interpreter: N-to-M (interpreter-boothassignment-booth) ---------
-Booth.belongsToMany(Interpreter, {as: 'interpreters', through: 'Boothassignment', foreignKey: 'boothId', otherKey: 'interpreterId'});
-Interpreter.belongsToMany(Booth, {as: 'booths', through: 'Boothassignment', foreignKey: 'interpreterId', otherKey: 'boothId'});
+Booth.belongsToMany(Interpreter, { as: 'interpreters', through: 'Boothassignment', foreignKey: 'boothId', otherKey: 'interpreterId' });
+Interpreter.belongsToMany(Booth, { as: 'booths', through: 'Boothassignment', foreignKey: 'interpreterId', otherKey: 'boothId' });
+
+// Relationships for interpreter: N-to-M (interpreter-languageknown-language) ---------
+Language.belongsToMany(Interpreter, { as: 'interpreters', through: 'Languageknown', foreignKey: 'languageId', otherKey: 'interpreterId' });
+Interpreter.belongsToMany(Language, { as: 'languages', through: 'Languageknown', foreignKey: 'interpreterId', otherKey: 'languageId' });
 
 
 //(PENDIENTE) Relacion Like
-//(PENDIENTE) Relacion LanguageKnown
 
 
 
 // DATABASE Object
-const db = { sequelize, User, Admin, Client, Consultant, Coordinator, Interpreter, Operator, Technician, Reputation, Room, Booth, Boothassignment, Like };
+const db = { sequelize, User, Admin, Client, Consultant, Coordinator, Interpreter, Operator, Technician, Reputation, Room, Booth, Boothassignment, Like, Language, Languageknown };
 
 // Close the Sequelize connection when the Node.js process is closed
 process.on('exit', () => {

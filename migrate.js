@@ -21,7 +21,8 @@ const migrationFiles = [
     '20240314192013-CreateBoothAssignmentsTable.js',
     '20240314192013-CreateBoothAssignmentsTable.js',
     '20240314192014-CreateLikesTable.js',
-    '20240314192015-CreateLanguagesTable.js'
+    '20240314192015-CreateLanguagesTable.js',
+    '20240314192016-CreateLanguagesknownsTable.js'
 ];
 
 
