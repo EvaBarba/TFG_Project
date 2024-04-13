@@ -59,13 +59,16 @@
                     <div class="form-group">
                         <label for="language">Language:</label>
                         <select class="form-control" id="language" name="language" required>
-                            <option value="" selected disabled> - Select Language - </option>
                             <% allLanguages.forEach(language => { %>
                                 <option value="<%= language.name %>" <% if (room.language === language.name) { %> selected <% } %>><%= language.name %></option>
                             <% }); %>
                         </select>
                     </div>
+                    <div class="card-header" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a;  letter-spacing: 1px;">
+                        <b>IMPORTANT!</b> If you modify the language, the booths assigned to this room will be modified, changing their source language and eliminating all the interpreters assigned to them.
+                    </div>
 
+                    <br>
 
                     <!-- Date (Date) -->
                     <div class="form-group">

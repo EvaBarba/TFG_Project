@@ -145,6 +145,17 @@ router.get('/languages/new',
 router.post('/languages',
   languageController.createLanguage);
 
+// CREATE New Interpreter Language (Sign up form)
+router.get('/users/:userId(\\d+)/profile/newInterpreterLanguage',
+  languageController.newInterpreterLanguage);
+
+// POST: Register Interreter Language (after new)
+router.post('/users/:userId(\\d+)/profile',
+  languageController.createInterpreterLanguage);
+
+// Delete Languageknown
+router.post('/users/:userId/languages/:languageId/delete', languageController.destroyLanguageKnown);
+
 
 
 // Routes for the resource /rooms ---------------------------------------

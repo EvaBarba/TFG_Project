@@ -81,7 +81,7 @@ exports.create = async function (req, res, next) {
         });
 
         req.flash('success', 'Booth successfully created.');
-        return res.redirect('/rooms');
+        return res.redirect('/rooms/' + req.room.id);
     } catch (error) {
         if (error instanceof Sequelize.ValidationError) {
             req.flash('error', 'Errors in the form:');
@@ -132,6 +132,8 @@ exports.update = async function (req, res, next) {
 
     try {
 
+        const initialLanguage = req.booth.language_a;
+
         // Obtener el ID de la habitación de req.params.roomId
         const roomId = req.params.roomId;
 
@@ -162,12 +164,17 @@ exports.update = async function (req, res, next) {
             return res.render('rooms/booths/edit', { booth: req.booth, room: room, error_msg: errorMessages });
         }
 
+        // MODIFICACIONES SI SE CAMBIA EL LANGUAGE: eliminar interpretes
+        if (req.body.language_a !== initialLanguage) {
+            await models.Boothassignment.destroy({ where: { booth_id: req.booth.id } });
+        }
+
         // Guarda el usuario con los nuevos datos
         await req.booth.save();
 
         // Redirecciona a la página de detalles del usuario
         req.flash('success', 'Booth successfully updated.');
-        res.redirect('/rooms');
+        res.redirect('/rooms/' + req.room.id);
     } catch (error) {
         // Maneja los errores
         if (error instanceof Sequelize.ValidationError) {
@@ -221,7 +228,7 @@ exports.destroy = async function (req, res, next) {
         }
         await booth.destroy();
         req.flash('success', 'Booth successfully eliminated');
-        res.redirect('/rooms');
+        res.redirect('/rooms/' + req.room.id);
     } catch (error) {
         next(error);
     }

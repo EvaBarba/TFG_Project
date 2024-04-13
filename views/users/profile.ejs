@@ -130,6 +130,7 @@
                             <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">ID</th>
                             <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Language from</th>
                             <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Language to</th>
+                            <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; width: 10%;">Manage</th>                                
                         </tr>
                     </thead>
                     
@@ -139,6 +140,10 @@
                                 <td style="text-align: center;"><%= language.id %></td>
                                 <td><%= language.language_from %></td>
                                 <td><%= language.language_to %></td>
+                                <td style="text-align: center;">
+                                    <button class="btn btn-danger btn-sm" onclick='deleteLanguage("<%= user.id %>", "<%= language.id %>")'>Delete</button>
+
+                                </td>
                             </tr>
                         <% }); %>
                     </tbody>
@@ -146,7 +151,7 @@
                 </table>
     
                 <div>
-                    <a href="/languages/manage" class="btn btn-success btn-sm">New Language</a>
+                    <a href="/users/<%= user.id %>/profile/newInterpreterLanguage" class="btn btn-success btn-sm">New Language</a>
                 </div>
     
             </div>
@@ -189,3 +194,21 @@
 
 </body>
 </html>
+
+
+<script>
+    async function deleteLanguage(userId, languageId) {
+        try {
+            const response = await fetch(`/users/${userId}/languages/${languageId}/delete`, {
+                method: 'POST'
+            });
+            if (response.ok) {
+                location.reload(); // Refresca la página después de eliminar
+            } else {
+                console.error('Error deleting language');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+</script>

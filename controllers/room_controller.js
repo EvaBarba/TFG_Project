@@ -177,6 +177,9 @@ exports.edit = async function (req, res, next) {
 exports.update = async function (req, res, next) {
 
     try {
+
+        const initialLanguage = req.room.language;
+
         // Actualiza los campos de la room
         req.room.name = req.body.name;
         req.room.description = req.body.description;
@@ -224,14 +227,30 @@ exports.update = async function (req, res, next) {
             req.room.time_finish = req.body.time_finish;
         }
 
-
-
         // Guarda el usuario con los nuevos datos
         await req.room.save();
 
+        // MODIFICACIONES SI SE CAMBIA EL LANGUAGE: actualizar languge booths y eliminar interpretes
+        if (req.body.language !== initialLanguage) {
+            // Busca todas las booths relacionadas con la roomId
+            const booths = await models.Booth.findAll({ where: { room_id: req.room.id } });
+
+            // Actualiza el idioma de las booths relacionadas
+            for (const booth of booths) {
+                await models.Boothassignment.destroy({ where: { booth_id: booth.id } });
+
+                if (booth.language_a === req.body.language) {
+                    await booth.destroy();
+                } else {
+                    booth.language = req.body.language;
+                    await booth.save();
+                }
+            }
+        }
+
         // Redirecciona a la página de detalles del usuario
         req.flash('success', 'Room successfully updated.');
-        res.redirect('/rooms');
+        res.redirect('/rooms/' + req.room.id);
     } catch (error) {
         // Maneja los errores
         if (error instanceof Sequelize.ValidationError) {
@@ -440,7 +459,7 @@ exports.updateOperator = async function (req, res, next) {
 
         // Asignar el nuevo consultor a la habitación
         req.room.operator_id = req.body.operatorId;
-        
+
         // Guarda los cambios
         await req.room.save();
 
@@ -489,7 +508,7 @@ exports.updateTechnician = async function (req, res, next) {
 
         // Asignar el nuevo consultor a la habitación
         req.room.technician_id = req.body.technicianId;
-        
+
         // Guarda los cambios
         await req.room.save();
 

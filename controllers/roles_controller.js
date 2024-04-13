@@ -195,7 +195,7 @@ exports.updateProfile = async function (req, res, next) {
 
         // Redirecciona a la página de detalles del usuario
         req.flash('success', 'User successfully updated.');
-        res.redirect('/users/' + req.user.id +'/profile');
+        res.redirect('/users/' + req.user.id + '/profile');
     } catch (error) {
         // Maneja los errores
         if (error instanceof Sequelize.ValidationError) {

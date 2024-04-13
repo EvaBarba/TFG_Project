@@ -11,7 +11,7 @@
 <body>
     <div class="container mt-5">
         <h2 class="mb-0" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Select Language</h2>
-        <form action="/languages" method="POST">
+        <form action="/users/<%= user.id %>/profile" method="POST">
             <br>
 
             <!-- Mensajes error por languages -->
@@ -48,10 +48,10 @@
             <br>
 
             <!-- Botón para crear language -->
-            <button type="submit" class="btn btn-primary">Create Language</button>
+            <button type="submit" class="btn btn-primary">Add Language</button>
 
             <!-- Botón para volver atrás -->
-            <a href="/languages" class="btn btn-outline-dark">Cancel</a>
+            <a href="/users/<%= user.id %>/profile" class="btn btn-outline-dark">Cancel</a>
 
         </form>
     </div>

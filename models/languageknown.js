@@ -14,22 +14,24 @@ Languageknown.init(
     {
         interpreter_id: {
             type: DataTypes.INTEGER,
+            allowNull: false,
             references: {
-                model: Interpreter,
-                key: Interpreter.id,
+                model: 'Interpreter',
+                key: 'id',
             },
         },
         language_id: {
             type: DataTypes.INTEGER,
+            allowNull: false,
             references: {
-                model: Language,
-                key: Language.id,
+                model: 'Language',
+                key: 'id',
             },
         }
     },
     {
         sequelize,
-        modelName: 'Languageknown',       
+        modelName: 'Languageknown',
         timestamps: false,
     }
 );
