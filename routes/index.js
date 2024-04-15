@@ -250,18 +250,30 @@ router.post('/rooms/:roomId(\\d+)/booths',
 router.get('/rooms/:roomId(\\d+)/booths/:boothId(\\d+)/edit',
   boothController.edit);
 
-// Update Room (after edit)
+// Update Booth (after edit)
 router.put('/rooms/:roomId(\\d+)/booths/:boothId(\\d+)',
   boothController.update);
 
-// Delete Room Confirmation
+// Delete Booth Confirmation
 router.get('/rooms/:roomId(\\d+)/booths/:boothId(\\d+)/delete',
   boothController.showDeleteConfirmation);
 
-// Delete Room
+// Delete Booth
 router.delete('/rooms/:roomId(\\d+)/booths/:boothId(\\d+)',
   boothController.destroy);
 
+
+// Select Interpreter
+router.get('/rooms/:roomId(\\d+)/booths/:boothId(\\d+)/selectInterpreter',
+  boothController.selectBoothInterpreter);
+
+// Update Technician (after select)
+router.put('/rooms/:roomId(\\d+)/booths/:boothId(\\d+)/selectInterpreter',
+  boothController.updateBoothInterpreter);
+
+// Delete User
+router.delete('/rooms/:roomId(\\d+)/booths/:boothId(\\d+)/selectInterpreter',
+  boothController.deleteBoothInterpreter);
 
 
 

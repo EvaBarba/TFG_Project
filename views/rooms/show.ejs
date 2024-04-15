@@ -212,9 +212,9 @@
                                     <% if (room.date > new Date()) { %>
                                         <div class="float-right">
                                             <% if (booth.interpreters && booth.interpreters.length > 0) { %> 
-                                                <a href="/rooms/<%= room.id %>/selectInterpreter" class="btn btn-secondary btn-sm">Manage</a>
+                                                <a href="/rooms/<%= room.id %>/booths/<%= booth.id %>/selectInterpreter" class="btn btn-secondary btn-sm">Manage</a>
                                             <% } else { %>
-                                                <a href="/rooms/<%= room.id %>/selectInterpreter" class="btn btn-secondary btn-sm">Add Interpreters</a>
+                                                <a href="/rooms/<%= room.id %>/booths/<%= booth.id %>/selectInterpreter" class="btn btn-secondary btn-sm">Add Interpreters</a>
                                             <% } %>
                                             <a href="/rooms/<%= room.id %>/booths/<%= booth.id %>/edit" class="btn btn-primary btn-sm">Edit</a>
                                             <a href="/rooms/<%= room.id %>/booths/<%= booth.id %>/delete" class="btn btn-danger btn-sm">Delete</a>

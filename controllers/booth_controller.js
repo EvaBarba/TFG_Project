@@ -148,7 +148,7 @@ exports.update = async function (req, res, next) {
         req.booth.speech_to_text = req.body.speech_to_text;
 
         // Validaciones de campos obligatorios
-        const requiredFields = [ 'language', 'language_a' ];
+        const requiredFields = ['language', 'language_a'];
         for (const field of requiredFields) {
             if (!req.body[field]) {
                 req.flash('error', `The ${field} field cannot be empty.`);
@@ -202,7 +202,7 @@ exports.showDeleteConfirmation = async function (req, res, next) {
 
         const booth = await models.Booth.findByPk(req.params.boothId, {
             include: [
-                {  model: models.Interpreter, as: 'interpreters', include: { model: models.User, as: 'User' } }
+                { model: models.Interpreter, as: 'interpreters', include: { model: models.User, as: 'User' } }
             ]
         });
 
@@ -234,3 +234,114 @@ exports.destroy = async function (req, res, next) {
     }
 };
 
+
+
+// INTERPRETERS OF THE BOOTHS --------------------------------------------------------------------------------------------
+
+// GET /interpreters
+exports.selectBoothInterpreter = async function (req, res, next) {
+    try {
+        // Obtener el consultor actual asociado a la habitación
+        const roomId = req.params.roomId;
+        const room = await models.Room.findByPk(roomId);
+
+        const boothId = req.params.boothId;
+        const booth = await models.Booth.findByPk(boothId);
+
+        const boothLanguage = booth.language;
+        const boothLanguage_a = booth.language_a;
+
+        const assignments = await models.Boothassignment.findAll({ where: { booth_id: boothId } });
+
+        // Array para almacenar los intérpretes
+        let currentInterpreters = [];
+
+        for (const assignment of assignments) {
+            const interpreter = await models.Interpreter.findOne({
+                where: { id: assignment.interpreter_id },
+                include: [{ model: models.User, as: 'User' }, { model: models.Reputation, as: 'reputation' }]
+            });
+
+            if (interpreter) {
+                currentInterpreters.push(interpreter);
+            }
+        }
+
+        let possibleInterpretersSet = new Set();
+
+        // Obtener todos los intérpretes con ese lenguaje
+        const allInterpreters = await models.Interpreter.findAll({
+            include: [{ model: models.User, as: 'User' }, { model: models.Reputation, as: 'reputation' }],
+            order: [[{ model: models.Reputation, as: 'reputation' }, 'value', 'DESC']]
+        });
+
+        for (const candidateInterpreter of allInterpreters) {
+            const languagesOfInterpreter = await models.Languageknown.findAll({ where: { interpreter_id: candidateInterpreter.id } });
+            for (const language of languagesOfInterpreter) {
+                const languageOfInterpreter = await models.Language.findOne({ where: { id: language.language_id } });
+                if ((languageOfInterpreter.language_from === boothLanguage) && (languageOfInterpreter.language_to === boothLanguage_a)) {
+                    possibleInterpretersSet.add(candidateInterpreter); // Agregar el intérprete al conjunto
+                }
+            }
+        }
+
+        // Convertir el conjunto a un array
+        let possibleInterpreters = Array.from(possibleInterpretersSet);
+
+        // Renderizar la vista con ambos conjuntos de datos
+        res.render('rooms/booths/selectInterpreter', { currentInterpreters, possibleInterpreters, booth, room });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Controlador para actualizar el consultor de la habitación
+exports.updateBoothInterpreter = async function (req, res, next) {
+    try {
+        // Obtener el consultor actual asociado a la habitación
+        const roomId = req.params.roomId;
+        const room = await models.Room.findByPk(roomId);
+
+        const boothId = req.params.boothId;
+        const booth = await models.Booth.findByPk(boothId);
+
+        // Asignar el nuevo interprete a la habitación
+        const newInterpreterId = req.body.interpreterId;
+
+        const assignation = models.Boothassignment.build({
+            interpreter_id: newInterpreterId,
+            booth_id: boothId,
+        });
+
+        await assignation.save();
+
+        res.redirect('/rooms/' + roomId + '/booths/' + boothId + '/selectInterpreter');
+    } catch (error) {
+        next(error);
+    }
+};
+
+exports.deleteBoothInterpreter = async function (req, res, next) {
+    try {
+        // Obtener el consultor actual asociado a la habitación
+        const roomId = req.params.roomId;
+        const room = await models.Room.findByPk(roomId);
+
+        const boothId = req.params.boothId;
+        const booth = await models.Booth.findByPk(boothId);
+
+        const interpreterId = req.body.interpreterDeleteId;
+
+        console.log("Ejecutando eliminación ----------------------------------------------------");
+        console.log("boothId = " + boothId);
+        console.log("interpreterId = " + interpreterId);
+
+        await models.Boothassignment.destroy({ where: { interpreter_id: interpreterId, booth_id: boothId } });
+
+
+
+        res.redirect('/rooms/' + roomId + '/booths/' + boothId + '/selectInterpreter');
+    } catch (error) {
+        next(error);
+    }
+};

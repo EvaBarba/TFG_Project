@@ -116,9 +116,6 @@ exports.createInterpreterLanguage = async function (req, res, next) {
             }
         });
 
-        console.log("1 -------------------------------------------------------------------------------------------");
-        console.log("createInterpreterLanguage = " + req.body.language_from + req.body.language_to);
-
         let languageId;
 
         // Si el idioma ya existe, usa su ID
@@ -144,10 +141,7 @@ exports.createInterpreterLanguage = async function (req, res, next) {
         const languageKnown = models.Languageknown.build({
             interpreter_id: userId,
             language_id: languageId,
-        });
-
-        console.log("languageKnown interpreter_id = " + languageKnown.interpreter_id);
-        console.log("languageKnown language_id = " + languageKnown.language_id);
+        })
 
         await languageKnown.save();
 

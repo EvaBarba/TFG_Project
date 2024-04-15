@@ -49,7 +49,7 @@ Technician.belongsTo(User, { foreignKey: 'id', as: 'User', onDelete: 'CASCADE' }
 
 // Relationships for reputation: 1-to-1 (reputation-interpreter) ---------------------
 Interpreter.hasOne(Reputation, { foreignKey: 'interpreter_id', as: 'reputation' });
-Reputation.belongsTo(Interpreter, { foreignKey: 'interpreter_id', as: 'interpreter' });
+Reputation.belongsTo(Interpreter, { foreignKey: 'interpreter_id', as: 'interpreterReputation' });
 
 // Relationships for room: 1-to-N (role-room) ----------------------------------------
 Consultant.hasMany(Room, { foreignKey: 'consultant_id', as: 'consultantRoomDetails' });
@@ -70,12 +70,12 @@ Booth.belongsTo(Room, { foreignKey: 'room_id' });
 
 
 // Relationships for interpreter: N-to-M (interpreter-boothassignment-booth) ---------
-Booth.belongsToMany(Interpreter, { as: 'interpreters', through: 'Boothassignment', foreignKey: 'boothId', otherKey: 'interpreterId' });
-Interpreter.belongsToMany(Booth, { as: 'booths', through: 'Boothassignment', foreignKey: 'interpreterId', otherKey: 'boothId' });
+Booth.belongsToMany(Interpreter, { as: 'interpreters', through: 'Boothassignment', foreignKey: 'booth_id', otherKey: 'interpreter_id' });
+Interpreter.belongsToMany(Booth, { as: 'booths', through: 'Boothassignment', foreignKey: 'interpreter_id', otherKey: 'booth_id' });
 
 // Relationships for languages: N-to-M (interpreter-languageknown-language) ---------
-Language.belongsToMany(Interpreter, { as: 'interpreters', through: 'Languageknown', foreignKey: 'languageId', otherKey: 'interpreterId' });
-Interpreter.belongsToMany(Language, { as: 'languages', through: 'Languageknown', foreignKey: 'interpreterId', otherKey: 'languageId' });
+Language.belongsToMany(Interpreter, { as: 'interpreters', through: 'Languageknown', foreignKey: 'language_id', otherKey: 'interpreter_id' });
+Interpreter.belongsToMany(Language, { as: 'languages', through: 'Languageknown', foreignKey: 'interpreter_id', otherKey: 'language_id' });
 
 
 //(PENDIENTE) Relacion Like
