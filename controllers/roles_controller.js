@@ -133,26 +133,19 @@ exports.profile = async function (req, res, next) {
         // Obtener el usuario desde la base de datos
         const user = await models.User.findByPk(req.params.userId, {
             include: [
-                { model: models.Interpreter, as: 'interpreters', include: { model: models.Language, as: 'languages' } }
+                { model: models.Interpreter, as: 'interpreters', include: [{ model: models.Language, as: 'languages' }, { model: models.Reputation, as: 'reputation' }] },
+                { model: models.Like, as: 'likes' }
             ],
         });
-
-        // Verificar si el usuario es un intérprete para obtener detalles adicionales
-        let interpreterReputation = '';
-        let interpreterVotes = '';
-        if (user) {
-            const interpreter = await models.Interpreter.findOne({ where: { id: user.id } });
-            if (interpreter) {
-                interpreterReputation = interpreter.reputation;
-                interpreterVotes = interpreter.votes;
-            }
-        }
 
         // Obtener el rol del usuario
         userRole = await checkRole(user.id);
 
+        // Obtener likes
+        const likes = await models.Like.findAll({ where: { to_id: user.id  }});
+
         // Renderizar la vista del perfil con los datos del usuario
-        res.render('users/profile', { user, userRole, interpreterReputation, interpreterVotes });
+        res.render('users/profile', { user, userRole, likes });
     } catch (error) {
         // Manejar los errores
         next(error);

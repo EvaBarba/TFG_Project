@@ -53,7 +53,6 @@
                 <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">ID</th>
                 <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Username</th>
                 <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Email</th>
-                <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Likes</th>
             </tr>
         </thead>
 
@@ -63,7 +62,6 @@
                 <td style="text-align: center;"><%= currentOperator.id %></td>
                 <td><%= currentOperator.User.username %></td>
                 <td><%= currentOperator.User.email %></td>
-                <td style="text-align: center;">likes</td>
             </tr>
         </tbody>
 
@@ -85,7 +83,6 @@
             <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">ID</th>
             <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Username</th>
             <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Email</th>
-            <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Likes</th>
             <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Choose</th>
         </tr>
     </thead>
@@ -96,7 +93,6 @@
                 <td style="text-align: center;"><%= operator.id %></td>
                 <td><%= operator.User.username %></td>
                 <td><%= operator.User.email %></td>
-                <td style="text-align: center;">likes</td>
                 <td style="text-align: center;">
                     <% if (!(currentOperator && operator.id === currentOperator.id)) { %>
                         <button type="button" class="btn btn-primary btn-sm selectButton" data-toggle="modal" data-target="#confirmModal">Select</button>

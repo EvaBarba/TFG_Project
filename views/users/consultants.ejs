@@ -9,21 +9,20 @@
             <table class="table table-striped table-bordered table-sm">
                 <thead class="thead-dark">
                     <tr>
-                        <th>ID</th>
-                        <th>Username</th>
-                        <th>Email</th>
-                        <th>Actions</th>
+                        <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">ID</th>
+                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Username</th>
+                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Email</th>
+                        <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <% consultants.forEach(consultant => { %>
                     <tr>
-                        <td><%= consultant.id %></td>
+                        <td style="text-align: center;"><%= consultant.id %></td>
                         <td><a href="/users/<%= consultant.id %>" style="color: blue;"><%= consultant.User.username %></a></td>
                         <td><%= consultant.User.email %></td>
-                        <td>
+                        <td style="text-align: center;">
                             <div class="btn-group">
-                                <a href="/users/<%= consultant.id %>/timeslots" class="btn btn-outline-dark btn-sm btn-white mr-1">TimeSlots</a>
                                 <a href="/users/<%= consultant.id %>/edit" class="btn btn-outline-dark btn-sm btn-white mr-1">Edit</a>
                                 <a href="/users/<%= consultant.id %>/delete" class="btn btn-outline-dark btn-sm btn-white">Delete</a>
                             </div>

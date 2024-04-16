@@ -54,15 +54,10 @@
                     </tr>
 
                 </tr>
-                <% if (user.admin_id) { %>
+                <% if (userRole === 'Interpreter') { %>
                     <tr>
-                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Is Admin:</th>
-                        <td>Yes</td>
-                    </tr>
-                <% } else { %>
-                    <tr>
-                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Is Admin:</th>
-                        <td>No</td>
+                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Reputation:</th>
+                        <td><%= user.email %></td>
                     </tr>
                 <% } %>
 
@@ -72,44 +67,9 @@
 
             <!-- Columna derecha -->
             <div class="col-md-6">
-                <br>
-                <br>
-                <% if (userRole === 'Interpreter') { %>
-                    <h4 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Reputation</h4>
-                    <table class="table table-borderless mt-4">
-                        <tr>
-                            <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Value:</th>
-                            <td>PENDIENTE</td>
-                        </tr>
-                        <tr>
-                            <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Votes sent:</th>
-                            <td>PENDIENTE</td>
-                        </tr>
-                        <tr>
-                            <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Votes received:</th>
-                            <td>PENDIENTE</td>
-                        </tr>
-
-                    </table>
-
-                <% } else { %>
-                    <h4 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Likes</h4>
-                    <table class="table table-borderless mt-4">
-                        <tr>
-                            <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Value:</th>
-                            <td>PENDIENTE</td>
-                        </tr>
-                        <tr>
-                            <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Votes sent:</th>
-                            <td>PENDIENTE</td>
-                        </tr>
-                        <tr>
-                            <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Votes received:</th>
-                            <td>PENDIENTE</td>
-                        </tr>
-                    </table>
-                <% } %>
+                
             </div>
+                
         </div>
 
         <!-- Botones -->

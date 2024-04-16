@@ -45,7 +45,7 @@ module.exports = {
       },
       {
         id: 5,
-        details: "",
+        details: "Very good work",
         from_id: 20,
         to_id: 30,
         from_type: 'Consultant',
@@ -85,7 +85,7 @@ module.exports = {
       },
       {
         id: 9,
-        details: "",
+        details: "Good",
         from_id: 2,
         to_id: 25,
         from_type: 'Consultant',
@@ -95,7 +95,7 @@ module.exports = {
       },
       {
         id: 10,
-        details: "",
+        details: "It could be better",
         from_id: 2,
         to_id: 24,
         from_type: 'Consultant',
@@ -115,7 +115,7 @@ module.exports = {
       },
       {
         id: 12,
-        details: "",
+        details: "Excelent",
         from_id: 2,
         to_id: 30,
         from_type: 'Consultant',

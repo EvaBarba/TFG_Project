@@ -37,7 +37,7 @@ module.exports = {
       {
         id: 7,
         interpreter_id: 30,
-        value: 2
+        value: 4
       },
       {
         id: 8,
