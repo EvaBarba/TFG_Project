@@ -78,7 +78,13 @@ Language.belongsToMany(Interpreter, { as: 'interpreters', through: 'Languageknow
 Interpreter.belongsToMany(Language, { as: 'languages', through: 'Languageknown', foreignKey: 'interpreter_id', otherKey: 'language_id' });
 
 
-//(PENDIENTE) Relacion Like
+// Relationships for like: 1-to-N (like-user) (like-room) ---------------------
+User.hasMany(Like, { foreignKey: 'id', as: 'likes' });
+Like.belongsTo(User, { foreignKey: 'id', as: 'user' });
+
+Room.hasMany(Like, { foreignKey: 'id', as: 'likes' });
+Like.belongsTo(User, { foreignKey: 'id', as: 'room' });
+
 
 
 

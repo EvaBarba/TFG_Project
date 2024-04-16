@@ -181,10 +181,6 @@ exports.destroyLanguageKnown = async function (req, res, next) {
         const interpreterId = req.params.userId;
         const languageId = req.params.languageId;
 
-        // console.log("interpreterId = " + interpreterId);
-        // console.log("languageId = " + languageId);
-
-
         // Eliminar las booth con el language que se ha eliminado
         const languageknownLanguage = await models.Language.findOne({ where: { id: languageId } });
         const boothAssignmentInterpreter = await models.Boothassignment.findAll({ where: { interpreter_id: interpreterId } });

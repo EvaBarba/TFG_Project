@@ -11,7 +11,9 @@ module.exports = {
         references: {
           model: 'Interpreters',
           key: 'id',
-        }
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       language_id: {
         type: Sequelize.INTEGER,
@@ -19,7 +21,9 @@ module.exports = {
         references: {
           model: 'Languages',
           key: 'id',
-        }
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
     });
   },

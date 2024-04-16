@@ -24,6 +24,8 @@
                     <div>
                         <% if (room.date > new Date()) { %>
                             <a href="/rooms/<%= room.id %>/edit" class="btn btn-primary btn-sm">Edit Room</a>
+                        <% } else { %>
+                            <a href="/rooms/<%= room.id %>/votes" class="btn btn-secondary btn-sm">Votes</a>
                         <% } %>
                         <a href="/rooms/<%= room.id %>/delete" class="btn btn-danger btn-sm ml-2">Delete Room</a>
                     </div>

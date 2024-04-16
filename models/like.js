@@ -39,11 +39,11 @@ Like.init(
             },
         },
         from_type: {
-            type: DataTypes.ENUM('Consultant', 'Coordinator', 'Operator', 'Technician'),
+            type: DataTypes.ENUM('Consultant'),
             allowNull: false
         },
         to_type: {
-            type: DataTypes.ENUM('Consultant', 'Coordinator', 'Operator', 'Technician'),
+            type: DataTypes.ENUM('Coordinator', 'Operator', 'Technician', 'Interpreter'),
             allowNull: false
         },
         value: {

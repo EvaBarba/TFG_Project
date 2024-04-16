@@ -9,6 +9,7 @@ const roomController = require('../controllers/room_controller');
 const boothController = require('../controllers/booth_controller');
 const rolesController = require('../controllers/roles_controller');
 const languageController = require('../controllers/language_controller');
+const likesController = require('../controllers/likes_controller');
 
 //-----------------------------------------------------------
 // Autologout
@@ -267,13 +268,29 @@ router.delete('/rooms/:roomId(\\d+)/booths/:boothId(\\d+)',
 router.get('/rooms/:roomId(\\d+)/booths/:boothId(\\d+)/selectInterpreter',
   boothController.selectBoothInterpreter);
 
-// Update Technician (after select)
+// Update Interpreter (after select)
 router.put('/rooms/:roomId(\\d+)/booths/:boothId(\\d+)/selectInterpreter',
   boothController.updateBoothInterpreter);
 
-// Delete User
+// Delete Interpreter of the Booth
 router.delete('/rooms/:roomId(\\d+)/booths/:boothId(\\d+)/selectInterpreter',
   boothController.deleteBoothInterpreter);
+
+
+
+
+// Routes for the resource /likes ---------------------------------------
+
+// CREATE New Booth (Sign up form)
+router.get('/rooms/:roomId(\\d+)/votes',
+  likesController.getLikes);
+
+router.get('/rooms/:roomId(\\d+)/votes/edit',
+  //sessionController.loginRequired,
+  likesController.editLikes);
+
+router.put('/rooms/:roomId(\\d+)/votes',
+  likesController.updateLikes);
 
 
 

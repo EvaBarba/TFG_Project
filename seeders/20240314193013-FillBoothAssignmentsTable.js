@@ -65,10 +65,6 @@ module.exports = {
       },
       {
         interpreter_id: 33,
-        booth_id: 13
-      },
-      {
-        interpreter_id: 33,
         booth_id: 14
       }
     ]);

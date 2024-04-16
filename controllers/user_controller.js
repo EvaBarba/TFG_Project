@@ -189,15 +189,6 @@ exports.update = async function (req, res, next) {
         req.user.passwordUpdate = new Date();
         req.user.verifyKeyExpire = new Date();
 
-
-        // Obtener el nuevo role seleccionado por el usuario desde el formulario
-        // const newRole = req.body.role;
-        // // Eliminar al usuario de la tabla del antiguo role (si existe)
-        // await deleteUserFromOldRole(req.user.id);
-        // Agregar al usuario a la tabla del nuevo role
-        // await addUserToNewRole(req.user.id, newRole);
-
-
         // Verifica si se marcó "yes" en el campo de administrador
         if (req.body.admin === 'yes') {
             if (!req.user.admin_id) {
@@ -247,48 +238,6 @@ exports.update = async function (req, res, next) {
         }
     }
 };
-
-/* Funciones destruir y añadir nuevo role...
-// Función para eliminar al usuario de la tabla del antiguo role
-async function deleteUserFromOldRole(userId) {
-    await Promise.all([
-        models.Client.destroy({ where: { id: userId } }),
-        models.Consultant.destroy({ where: { id: userId } }),
-        models.Coordinator.destroy({ where: { id: userId } }),
-        models.Operator.destroy({ where: { id: userId } }),
-        models.Technician.destroy({ where: { id: userId } }),
-        models.Interpreter.destroy({ where: { id: userId } })
-    ]);
-}
-
-// Función para agregar al usuario a la tabla del nuevo role
-async function addUserToNewRole(userId, newRole) {
-    // Insertar el usuario en la tabla de roles correspondiente según la selección del usuario
-    switch (newRole) {
-        case 'client':
-            await models.Client.create({ id: userId });
-            break;
-        case 'consultant':
-            await models.Consultant.create({ id: userId });
-            break;
-        case 'coordinator':
-            await models.Coordinator.create({ id: userId });
-            break;
-        case 'operator':
-            await models.Operator.create({ id: userId });
-            break;
-        case 'technician':
-            await models.Technician.create({ id: userId });
-            break;
-        case 'interpreter':
-            await models.Interpreter.create({ id: userId });
-            break;
-        default:
-            // Manejar caso por defecto si no se selecciona un rol válido
-            break;
-    }
-}
-*/
 
 
 // DELETE CONFIRMATION /users/:userId/delete

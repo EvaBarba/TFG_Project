@@ -16,6 +16,8 @@
             <div>
                 <% if (room.date > new Date()) { %>
                     <a href="/rooms/<%= room.id %>/edit" class="btn btn-primary btn-sm">Edit Room</a>
+                <% } else { %>
+                    <a href="/rooms/<%= room.id %>/votes" class="btn btn-secondary btn-sm">Votes</a>
                 <% } %>
                 <a href="/rooms/<%= room.id %>/delete" class="btn btn-danger btn-sm ml-2">Delete Room</a>
             </div>
@@ -202,7 +204,7 @@
                                 <td>Booth <%= booth.id %></td>
                                 <td><%= booth.language %></td>
                                 <td><%= booth.language_a %></td>
-                                <td>
+                                <td style="width: 30%;">
                                     <% 
                                         const interpreters = booth.interpreters.map(interpreter => interpreter.User.username);
                                     %>
@@ -300,8 +302,9 @@
                                             </tr>
                                         <% }); %>
                                         <% if (room.date > new Date()) { %>
-                                            <th><a href="/rooms/<%= room.id %>/selectInterpreter" class="btn btn-secondary btn-sm">Manage</a></th>
-                                        <td></td>
+                                        <td>
+                                            <a href="/rooms/<%= room.id %>/booths/<%= booth.id %>/selectInterpreter" class="btn btn-secondary btn-sm">Manage</a>
+                                        </td>
                                         <% } %>
                                     
                                     <% } else { %>
@@ -309,7 +312,7 @@
                                             <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 20%;">Interpreters...</th>
                                             <% if (room.date > new Date()) { %>
                                                 <td colspan="2">
-                                                    <a href="/rooms/<%= room.id %>/selectInterpreter" class="btn btn-secondary btn-sm">Add Interpreters</a>
+                                                    <a href="/rooms/<%= room.id %>/booths/<%= booth.id %>/selectInterpreter" class="btn btn-secondary btn-sm">Add Interpreters</a>
                                                 </td>
                                             <% } %>
                                         </tr>

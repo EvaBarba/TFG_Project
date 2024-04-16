@@ -35,13 +35,13 @@ module.exports = {
         onDelete: 'CASCADE',
       },
       from_type: {
-        type: Sequelize.ENUM('Consultant', 'Coordinator', 'Operator', 'Technician'),
+        type: Sequelize.ENUM('Consultant'),
         allowNull: false,
       },
       to_type: {
-        type: Sequelize.ENUM('Consultant', 'Coordinator', 'Operator', 'Technician'),
+        type: Sequelize.ENUM('Consultant', 'Coordinator', 'Operator', 'Technician', 'Interpreter'),
         allowNull: false,
-      },
+      },      
       value: {
         type: Sequelize.INTEGER,
         allowNull: false,
