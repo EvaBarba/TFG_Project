@@ -22,7 +22,8 @@ const seederFiles = [
     '20240314193013-FillBoothAssignmentsTable.js',
     '20240314193014-FillLikesTable.js',
     '20240314193015-FillLanguagesTable.js',
-    '20240314193016-FillLanguageknownsTable.js'
+    '20240314193016-FillLanguageknownsTable.js',
+    '20240314193017-FillTimeslotsTable.js'
 ];
 
 console.log('Start seeding...');

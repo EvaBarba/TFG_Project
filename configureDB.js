@@ -22,7 +22,8 @@ const migrationFiles = [
     '20240314192013-CreateBoothAssignmentsTable.js',
     '20240314192014-CreateLikesTable.js',
     '20240314192015-CreateLanguagesTable.js',
-    '20240314192016-CreateLanguagesknownsTable.js'
+    '20240314192016-CreateLanguagesknownsTable.js',
+    '20240314192017-CreateTimeslotsTable.js'
 ];
 
 // Lista de nombres de archivos de seeders en el orden deseado
@@ -42,7 +43,8 @@ const seederFiles = [
     '20240314193013-FillBoothAssignmentsTable.js',
     '20240314193014-FillLikesTable.js',
     '20240314193015-FillLanguagesTable.js',
-    '20240314193016-FillLanguageknownsTable.js'
+    '20240314193016-FillLanguageknownsTable.js',
+    '20240314193017-FillTimeslotsTable.js'
 ];
 
 

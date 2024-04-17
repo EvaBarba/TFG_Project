@@ -19,16 +19,17 @@ const Boothassignment = require('./boothAssignment');
 const Like = require('./like');
 const Language = require('./language');
 const Languageknown = require('./languageknown');
+const Timeslot = require('./timeslot');
 
 
 // Configuration of the Connection to the DATABASE
 const sequelize = new Sequelize(config.development);
 
-// Relationships for Admin: N-to-1  (User-Admin) -------------------------
+// Relationships for Admin: N-to-1  (User-Admin) -------------------------------------------------
 User.belongsTo(Admin, { foreignKey: 'admin_id', as: 'Admins' });
 Admin.hasMany(User, { foreignKey: 'admin_id', as: 'users' });
 
-// Relationships for Roles: 1-to-1 (User-role) ---------------------------------------
+// Relationships for Roles: 1-to-1 (User-role) ---------------------------------------------------
 User.hasOne(Client, { foreignKey: 'id', as: 'clients', onDelete: 'CASCADE' });
 Client.belongsTo(User, { foreignKey: 'id', as: 'User', onDelete: 'CASCADE' });
 
@@ -47,11 +48,11 @@ Operator.belongsTo(User, { foreignKey: 'id', as: 'User', onDelete: 'CASCADE' });
 User.hasOne(Technician, { foreignKey: 'id', as: 'technicians', onDelete: 'CASCADE' });
 Technician.belongsTo(User, { foreignKey: 'id', as: 'User', onDelete: 'CASCADE' });
 
-// Relationships for reputation: 1-to-1 (reputation-interpreter) ---------------------
+// Relationships for reputation: 1-to-1 (reputation-interpreter) ---------------------------------
 Interpreter.hasOne(Reputation, { foreignKey: 'interpreter_id', as: 'reputation' });
 Reputation.belongsTo(Interpreter, { foreignKey: 'interpreter_id', as: 'interpreterReputation' });
 
-// Relationships for room: 1-to-N (role-room) ----------------------------------------
+// Relationships for room: 1-to-N (role-room) ----------------------------------------------------
 Consultant.hasMany(Room, { foreignKey: 'consultant_id', as: 'consultantRoomDetails' });
 Room.belongsTo(Consultant, { foreignKey: 'consultant_id', as: 'consultantOfRoom' });
 
@@ -64,21 +65,21 @@ Room.belongsTo(Operator, { foreignKey: 'operator_id', as: 'operatorOfRoom' });
 Technician.hasMany(Room, { foreignKey: 'technician_id', as: 'technicianRoomDetails' });
 Room.belongsTo(Technician, { foreignKey: 'technician_id', as: 'technicianOfRoom' });
 
-// Relationships for booth: 1-to-N (room-booth) --------------------------------------
+// Relationships for booth: 1-to-N (room-booth) ---------------------------------------------------
 Room.hasMany(Booth, { foreignKey: 'room_id', as: 'boothsDetails' });
 Booth.belongsTo(Room, { foreignKey: 'room_id' });
 
 
-// Relationships for interpreter: N-to-M (interpreter-boothassignment-booth) ---------
+// Relationships for interpreter: N-to-M (interpreter-boothassignment-booth) -----------------------
 Booth.belongsToMany(Interpreter, { as: 'interpreters', through: 'Boothassignment', foreignKey: 'booth_id', otherKey: 'interpreter_id' });
 Interpreter.belongsToMany(Booth, { as: 'booths', through: 'Boothassignment', foreignKey: 'interpreter_id', otherKey: 'booth_id' });
 
-// Relationships for languages: N-to-M (interpreter-languageknown-language) ---------
+// Relationships for languages: N-to-M (interpreter-languageknown-language) -------------------------
 Language.belongsToMany(Interpreter, { as: 'interpreters', through: 'Languageknown', foreignKey: 'language_id', otherKey: 'interpreter_id' });
 Interpreter.belongsToMany(Language, { as: 'languages', through: 'Languageknown', foreignKey: 'interpreter_id', otherKey: 'language_id' });
 
 
-// Relationships for like: 1-to-N (like-user) (like-room) ---------------------
+// Relationships for like: 1-to-N (like-user) (like-room) -------------------------------------------
 User.hasMany(Like, { foreignKey: 'id', as: 'likes' });
 Like.belongsTo(User, { foreignKey: 'id', as: 'user' });
 
@@ -86,10 +87,15 @@ Room.hasMany(Like, { foreignKey: 'id', as: 'likes' });
 Like.belongsTo(User, { foreignKey: 'id', as: 'room' });
 
 
+// Relationships for timeslot: 1-to-N (interpreter-timeslot) ----------------------------------------
+Interpreter.hasMany(Timeslot, { foreignKey: 'id', as: 'timeslot' });
+Timeslot.belongsTo(Interpreter, { foreignKey: 'id', as: 'interpreterTimeslot' });
+
+
 
 
 // DATABASE Object
-const db = { sequelize, User, Admin, Client, Consultant, Coordinator, Interpreter, Operator, Technician, Reputation, Room, Booth, Boothassignment, Like, Language, Languageknown };
+const db = { sequelize, User, Admin, Client, Consultant, Coordinator, Interpreter, Operator, Technician, Reputation, Room, Booth, Boothassignment, Like, Language, Languageknown, Timeslot };
 
 // Close the Sequelize connection when the Node.js process is closed
 process.on('exit', () => {

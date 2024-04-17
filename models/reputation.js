@@ -6,7 +6,7 @@ const sequelize = require('../config/database');
 const Interpreter = require('./interpreter');
 
 // Model definition
-class Reputation extends Model {}
+class Reputation extends Model { }
 
 // Model initiation
 Reputation.init(
