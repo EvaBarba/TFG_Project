@@ -26,15 +26,15 @@ Timeslot.init(
                 key: Interpreter.id,
             },
         },
-        dayOfWeek: {
+        day_of_week: {
             type: DataTypes.ENUM('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'),
             allowNull: false
         },
-        startTime: {
+        start_time: {
             type: DataTypes.TIME,
             allowNull: false
         },
-        endTime: {
+        end_time: {
             type: DataTypes.TIME,
             allowNull: false
         }

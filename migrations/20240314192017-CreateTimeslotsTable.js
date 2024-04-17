@@ -20,15 +20,15 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
-      dayOfWeek: {
+      day_of_week: {
         type: Sequelize.ENUM('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'),
         allowNull: false
       },
-      startTime: {
+      start_time: {
         type: Sequelize.TIME,
         allowNull: false
       },
-      endTime: {
+      end_time: {
         type: Sequelize.TIME,
         allowNull: false
       }
