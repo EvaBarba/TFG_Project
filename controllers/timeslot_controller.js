@@ -3,41 +3,31 @@
 var models = require('../models');
 var Sequelize = require('sequelize');
 
-
-// GET likes
-exports.getLikes = async function (req, res, next) {
+// GET /timeslots Edit
+exports.editTimeslots = async function (req, res, next) {
     try {
-        const roomId = req.params.roomId;
-        const room = await models.Room.findByPk(roomId, {
+        // Obtener el usuario desde la base de datos
+        const user = await models.User.findByPk(req.params.userId, {
             include: [
-                { model: models.Consultant, as: 'consultantOfRoom', include: { model: models.User, as: 'User' } },
-                { model: models.Coordinator, as: 'coordinatorOfRoom', include: { model: models.User, as: 'User' } },
-                { model: models.Operator, as: 'operatorOfRoom', include: { model: models.User, as: 'User' } },
-                { model: models.Technician, as: 'technicianOfRoom', include: { model: models.User, as: 'User' } },
-                {
-                    model: models.Booth, as: 'boothsDetails', include: {
-                        model: models.Interpreter,
-                        as: 'interpreters',
-                        include: { model: models.User, as: 'User' }
-                    }
-                },
-            ]
+                { model: models.Interpreter, as: 'interpreters', include: [{ model: models.Language, as: 'languages' }, { model: models.Reputation, as: 'reputation' }, { model: models.Timeslot, as: 'timeslot' }] },
+                { model: models.Like, as: 'likes' }
+            ],
         });
 
-        const likeOfCoordinator = await models.Like.findOne({ where: { room_id: roomId, from_id: room.consultant_id, to_id: room.coordinator_id } });
-        const likeOfOperator = await models.Like.findOne({ where: { room_id: roomId, from_id: room.consultant_id, to_id: room.operator_id } });
-        const likeOfTechnician = await models.Like.findOne({ where: { room_id: roomId, from_id: room.consultant_id, to_id: room.technician_id } });
+        // Obtener likes
+        const likes = await models.Like.findAll({ where: { to_id: user.id  }});
 
-        // Recopilar los likes de los intérpretes para la sala actual
-        const interpreterLikes = [];
-        for (const booth of room.boothsDetails) {
-            for (const interpreter of booth.interpreters) {
-                const like = await models.Like.findOne({ where: { room_id: roomId, from_id: room.consultant_id, to_id: interpreter.id } });
-                interpreterLikes.push({ interpreter, like });
-            }
-        }
+        // Obtener horarios
+        const TSMonday = await models.Timeslot.findOne({ where: { interpreter_id: user.id, day_of_week: 'Monday'  }});
+        const TSTuesday = await models.Timeslot.findOne({ where: { interpreter_id: user.id, day_of_week: 'Tuesday'  }});
+        const TSWednesday = await models.Timeslot.findOne({ where: { interpreter_id: user.id, day_of_week: 'Wednesday'  }});
+        const TSThursday = await models.Timeslot.findOne({ where: { interpreter_id: user.id, day_of_week: 'Thursday'  }});
+        const TSFriday = await models.Timeslot.findOne({ where: { interpreter_id: user.id, day_of_week: 'Friday'  }});
+        const TSSaturday = await models.Timeslot.findOne({ where: { interpreter_id: user.id, day_of_week: 'Saturday'  }});
+        const TSSunday = await models.Timeslot.findOne({ where: { interpreter_id: user.id, day_of_week: 'Sunday'  }});
 
-        res.render('rooms/votes/index', { room, likeOfCoordinator, likeOfOperator, likeOfTechnician, interpreterLikes });
+        // Renderizar la vista del perfil con los datos del usuario
+        res.render('users/manageSchedule', { user, TSMonday, TSTuesday, TSWednesday, TSThursday, TSFriday, TSSaturday, TSSunday });
     } catch (error) {
         next(error);
     }
@@ -45,44 +35,8 @@ exports.getLikes = async function (req, res, next) {
 
 
 
-
-// GET /likes Edit
-exports.editLikes = async function (req, res, next) {
-    try {
-        const roomId = req.params.roomId;
-        const room = await models.Room.findByPk(roomId, {
-            include: [
-                { model: models.Consultant, as: 'consultantOfRoom', include: { model: models.User, as: 'User' } },
-                { model: models.Coordinator, as: 'coordinatorOfRoom', include: { model: models.User, as: 'User' } },
-                { model: models.Operator, as: 'operatorOfRoom', include: { model: models.User, as: 'User' } },
-                { model: models.Technician, as: 'technicianOfRoom', include: { model: models.User, as: 'User' } },
-                { model: models.Booth, as: 'boothsDetails', include: { model: models.Interpreter, as: 'interpreters', include: { model: models.User, as: 'User' } } },
-            ]
-        });
-
-        const likeOfCoordinator = await models.Like.findOne({ where: { room_id: roomId, from_id: room.consultant_id, to_id: room.coordinator_id } });
-        const likeOfOperator = await models.Like.findOne({ where: { room_id: roomId, from_id: room.consultant_id, to_id: room.operator_id } });
-        const likeOfTechnician = await models.Like.findOne({ where: { room_id: roomId, from_id: room.consultant_id, to_id: room.technician_id } });
-
-        // Recopilar los likes de los intérpretes para la sala actual
-        const interpreterLikes = [];
-        for (const booth of room.boothsDetails) {
-            for (const interpreter of booth.interpreters) {
-                const like = await models.Like.findOne({ where: { room_id: roomId, from_id: room.consultant_id, to_id: interpreter.id } });
-                interpreterLikes.push({ interpreter, like });
-            }
-        }
-
-        res.render('rooms/votes/edit', { room, likeOfCoordinator, likeOfOperator, likeOfTechnician, interpreterLikes });
-    } catch (error) {
-        next(error);
-    }
-};
-
-
-
-// PUT /likes
-exports.updateLikes = async function (req, res, next) {
+// PUT /timeslots
+exports.updateTimeslots = async function (req, res, next) {
     try {
         const roomId = req.params.roomId;
         const room = await models.Room.findByPk(roomId, {
@@ -249,13 +203,58 @@ exports.updateLikes = async function (req, res, next) {
     }
 };
 
+// DELETE /timeslot
+exports.destroyTimeslot = async function (req, res, next) {
+    try {
+        // Obtener el ID del intérprete y el ID del idioma desde la solicitud
+        const interpreterId = req.params.userId;
+        const languageId = req.params.languageId;
 
-async function findAvailableLikeId() {
+        // Eliminar las booth con el language que se ha eliminado
+        const languageknownLanguage = await models.Language.findOne({ where: { id: languageId } });
+        const boothAssignmentInterpreter = await models.Boothassignment.findAll({ where: { interpreter_id: interpreterId } });
+        // const boothsOfInterpreter = await models.Booth.findAll({ where: { id: boothAssignmentInterpreter.booth_id } });
+
+        for (const assignment of boothAssignmentInterpreter) {
+            const booths = await models.Booth.findAll({ where: { id: assignment.booth_id } });
+            for (const booth of booths) {
+                // Verificar si la fecha de la habitación es posterior a la actual
+                const room = await models.Room.findOne({ where: { id: booth.room_id } });
+
+                if (room.date > new Date()) {
+                    // Verificar si el idioma conocido coincide con el idioma de la cabina
+                    if (languageknownLanguage.language_from === booth.language && languageknownLanguage.language_to === booth.language_a) {
+                        // Eliminar la asignación de la cabina
+                        await models.Boothassignment.destroy({ where: { interpreter_id: interpreterId, booth_id: booth.id } });
+                    }
+                }
+            }
+        }
+
+        // Eliminar la relación Languageknown
+        await models.Languageknown.destroy({
+            where: {
+                interpreter_id: interpreterId,
+                language_id: languageId
+            }
+        });
+
+        req.flash('success', 'Language relation successfully deleted.');
+        res.redirect('/users/' + req.user.id + '/profile');
+    } catch (error) {
+        next(error);
+    }
+};
+
+
+
+
+async function findAvailableTimeslotId() {
     // Encuentra el primer ID disponible que no está en uso
     let id = 1;
     while (true) {
-        const like = await models.Like.findOne({ where: { id: id } });
-        if (!like) {
+        const timeslot = await models.Timeslot.findOne({ where: { id: id } });
+        if (!timeslot) {
             return id;
         }
         id++;

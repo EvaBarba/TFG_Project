@@ -133,7 +133,7 @@ exports.profile = async function (req, res, next) {
         // Obtener el usuario desde la base de datos
         const user = await models.User.findByPk(req.params.userId, {
             include: [
-                { model: models.Interpreter, as: 'interpreters', include: [{ model: models.Language, as: 'languages' }, { model: models.Reputation, as: 'reputation' }] },
+                { model: models.Interpreter, as: 'interpreters', include: [{ model: models.Language, as: 'languages' }, { model: models.Reputation, as: 'reputation' }, { model: models.Timeslot, as: 'timeslot' }] },
                 { model: models.Like, as: 'likes' }
             ],
         });
@@ -144,8 +144,17 @@ exports.profile = async function (req, res, next) {
         // Obtener likes
         const likes = await models.Like.findAll({ where: { to_id: user.id  }});
 
+        // Obtener horarios
+        const TSMonday = await models.Timeslot.findOne({ where: { interpreter_id: user.id, day_of_week: 'Monday'  }});
+        const TSTuesday = await models.Timeslot.findOne({ where: { interpreter_id: user.id, day_of_week: 'Tuesday'  }});
+        const TSWednesday = await models.Timeslot.findOne({ where: { interpreter_id: user.id, day_of_week: 'Wednesday'  }});
+        const TSThursday = await models.Timeslot.findOne({ where: { interpreter_id: user.id, day_of_week: 'Thursday'  }});
+        const TSFriday = await models.Timeslot.findOne({ where: { interpreter_id: user.id, day_of_week: 'Friday'  }});
+        const TSSaturday = await models.Timeslot.findOne({ where: { interpreter_id: user.id, day_of_week: 'Saturday'  }});
+        const TSSunday = await models.Timeslot.findOne({ where: { interpreter_id: user.id, day_of_week: 'Sunday'  }});
+
         // Renderizar la vista del perfil con los datos del usuario
-        res.render('users/profile', { user, userRole, likes });
+        res.render('users/profile', { user, userRole, likes, TSMonday, TSTuesday, TSWednesday, TSThursday, TSFriday, TSSaturday, TSSunday });
     } catch (error) {
         // Manejar los errores
         next(error);

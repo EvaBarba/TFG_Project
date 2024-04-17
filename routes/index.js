@@ -10,6 +10,7 @@ const boothController = require('../controllers/booth_controller');
 const rolesController = require('../controllers/roles_controller');
 const languageController = require('../controllers/language_controller');
 const likesController = require('../controllers/likes_controller');
+const timeslotController = require('../controllers/timeslot_controller');
 
 //-----------------------------------------------------------
 // Autologout
@@ -292,6 +293,18 @@ router.get('/rooms/:roomId(\\d+)/votes/edit',
 router.put('/rooms/:roomId(\\d+)/votes',
   likesController.updateLikes);
 
+
+// Routes for the resource /timeslots ---------------------------------------
+
+router.get('/users/:userId(\\d+)/manageSchedule',
+  timeslotController.editTimeslots);
+
+router.put('/users/:userId(\\d+)/profile',
+  timeslotController.updateTimeslots);
+
+// Delete Languageknown
+router.post('/users/:userId/manageSchedule/:timeslotId/delete',
+  timeslotController.destroyTimeslot);
 
 
 module.exports = router;
