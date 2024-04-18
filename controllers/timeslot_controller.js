@@ -15,16 +15,16 @@ exports.editTimeslots = async function (req, res, next) {
         });
 
         // Obtener likes
-        const likes = await models.Like.findAll({ where: { to_id: user.id  }});
+        const likes = await models.Like.findAll({ where: { to_id: user.id } });
 
         // Obtener horarios
-        const TSMonday = await models.Timeslot.findOne({ where: { interpreter_id: user.id, day_of_week: 'Monday'  }});
-        const TSTuesday = await models.Timeslot.findOne({ where: { interpreter_id: user.id, day_of_week: 'Tuesday'  }});
-        const TSWednesday = await models.Timeslot.findOne({ where: { interpreter_id: user.id, day_of_week: 'Wednesday'  }});
-        const TSThursday = await models.Timeslot.findOne({ where: { interpreter_id: user.id, day_of_week: 'Thursday'  }});
-        const TSFriday = await models.Timeslot.findOne({ where: { interpreter_id: user.id, day_of_week: 'Friday'  }});
-        const TSSaturday = await models.Timeslot.findOne({ where: { interpreter_id: user.id, day_of_week: 'Saturday'  }});
-        const TSSunday = await models.Timeslot.findOne({ where: { interpreter_id: user.id, day_of_week: 'Sunday'  }});
+        const TSMonday = await models.Timeslot.findOne({ where: { interpreter_id: user.id, day_of_week: 'Monday' } });
+        const TSTuesday = await models.Timeslot.findOne({ where: { interpreter_id: user.id, day_of_week: 'Tuesday' } });
+        const TSWednesday = await models.Timeslot.findOne({ where: { interpreter_id: user.id, day_of_week: 'Wednesday' } });
+        const TSThursday = await models.Timeslot.findOne({ where: { interpreter_id: user.id, day_of_week: 'Thursday' } });
+        const TSFriday = await models.Timeslot.findOne({ where: { interpreter_id: user.id, day_of_week: 'Friday' } });
+        const TSSaturday = await models.Timeslot.findOne({ where: { interpreter_id: user.id, day_of_week: 'Saturday' } });
+        const TSSunday = await models.Timeslot.findOne({ where: { interpreter_id: user.id, day_of_week: 'Sunday' } });
 
         // Renderizar la vista del perfil con los datos del usuario
         res.render('users/manageSchedule', { user, TSMonday, TSTuesday, TSWednesday, TSThursday, TSFriday, TSSaturday, TSSunday });
@@ -38,215 +38,199 @@ exports.editTimeslots = async function (req, res, next) {
 // PUT /timeslots
 exports.updateTimeslots = async function (req, res, next) {
     try {
-        const roomId = req.params.roomId;
-        const room = await models.Room.findByPk(roomId, {
+        
+        const userId = req.params.userId;
+        // Obtener el usuario desde la base de datos
+        const user = await models.User.findByPk(userId, {
             include: [
-                { model: models.Consultant, as: 'consultantOfRoom', include: { model: models.User, as: 'User' } },
-                { model: models.Coordinator, as: 'coordinatorOfRoom', include: { model: models.User, as: 'User' } },
-                { model: models.Operator, as: 'operatorOfRoom', include: { model: models.User, as: 'User' } },
-                { model: models.Technician, as: 'technicianOfRoom', include: { model: models.User, as: 'User' } },
-                { model: models.Booth, as: 'boothsDetails', include: { model: models.Interpreter, as: 'interpreters', include: { model: models.User, as: 'User' } } },
+                { model: models.Interpreter, as: 'interpreters', include: { model: models.Timeslot, as: 'timeslot' } }
             ]
         });
-        const { coordinatorLike, operatorLike, technicianLike } = req.body;
+        const { start_time_monday, end_time_monday, start_time_tuesday, end_time_tuesday, start_time_wednesday, end_time_wednesday, start_time_thursday, end_time_thursday, start_time_friday, end_time_friday, start_time_saturday, end_time_saturday, start_time_sunday, end_time_sunday } = req.body;
 
-        // Actualizar la puntuación del coordinador si se proporciona
-        if (coordinatorLike) {
-            if (coordinatorLike === "0") {
-                await models.Like.destroy({
+        // MONDAY
+        if (start_time_monday && end_time_monday) {
+            const existingTSMonday = await models.Timeslot.findOne({ where: { interpreter_id: userId, day_of_week: 'Monday' } });
+            if (existingTSMonday) {
+                await models.Timeslot.update({ start_time: start_time_monday, end_time: end_time_monday }, {
                     where: {
-                        room_id: roomId,
-                        from_id: room.consultant_id,
-                        to_id: room.coordinator_id
+                        interpreter_id: userId,
+                        day_of_week: 'Monday'
                     }
                 });
             } else {
-                const existingCoordinatorVote = await models.Like.findOne({ where: { room_id: roomId, from_id: room.consultant_id, to_id: room.coordinator_id } });
-                if (existingCoordinatorVote) {
-                    await models.Like.update({ value: coordinatorLike }, {
-                        where: {
-                            room_id: roomId,
-                            from_id: room.consultant_id,
-                            to_id: room.coordinator_id
-                        }
-                    });
-                } else {
-                    const availableId = await findAvailableLikeId();
-                    await models.Like.create({
-                        id: availableId,
-                        room_id: roomId,
-                        from_type: 'Consultant',
-                        to_type: 'Coordinator',
-                        from_id: room.consultant_id,
-                        to_id: room.coordinator_id,
-                        value: coordinatorLike
-                    });
-                }
+                const availableId = await findAvailableTimeslotId();
+                await models.Timeslot.create({
+                    id: availableId,
+                    interpreter_id: userId,
+                    day_of_week: 'Monday',
+                    start_time: start_time_monday,
+                    end_time: end_time_monday
+                });
             }
+
+        } else {
+            await models.Timeslot.destroy({ where: { interpreter_id: userId, day_of_week: 'Monday' } });
         }
 
-        // Actualizar la puntuación del operador si se proporciona
-        if (operatorLike) {
-            if (operatorLike === "0") {
-                await models.Like.destroy({
+        // TUESDAY
+        if (start_time_tuesday && end_time_tuesday) {
+            const existingTSTuesday = await models.Timeslot.findOne({ where: { interpreter_id: userId, day_of_week: 'Tuesday' } });
+            if (existingTSTuesday) {
+                await models.Timeslot.update({ start_time: start_time_tuesday, end_time: end_time_tuesday }, {
                     where: {
-                        room_id: roomId,
-                        from_id: room.consultant_id,
-                        to_id: room.operator_id
+                        interpreter_id: userId,
+                        day_of_week: 'Tuesday'
                     }
                 });
             } else {
-                const existingOperatorVote = await models.Like.findOne({ where: { room_id: roomId, from_id: room.consultant_id, to_id: room.operator_id } });
-                if (existingOperatorVote) {
-                    await models.Like.update({ value: operatorLike }, {
-                        where: {
-                            room_id: roomId,
-                            from_id: room.consultant_id,
-                            to_id: room.operator_id
-                        }
-                    });
-                } else {
-                    const availableId = await findAvailableLikeId();
-                    await models.Like.create({
-                        id: availableId,
-                        room_id: roomId,
-                        from_type: 'Consultant',
-                        to_type: 'Operator',
-                        from_id: room.consultant_id,
-                        to_id: room.operator_id,
-                        value: operatorLike
-                    });
-                }
+                const availableId = await findAvailableTimeslotId();
+                await models.Timeslot.create({
+                    id: availableId,
+                    interpreter_id: userId,
+                    day_of_week: 'Tuesday',
+                    start_time: start_time_tuesday,
+                    end_time: end_time_tuesday
+                });
             }
+
+        } else {
+            await models.Timeslot.destroy({ where: { interpreter_id: userId, day_of_week: 'Tuesday' } });
         }
 
-        // Actualizar la puntuación del técnico si se proporciona
-        if (technicianLike) {
-            if (technicianLike === "0") {
-                await models.Like.destroy({
+         // WEDNESDAY
+         if (start_time_wednesday && end_time_wednesday) {
+            const existingTSWednesday = await models.Timeslot.findOne({ where: { interpreter_id: userId, day_of_week: 'Wednesday' } });
+            if (existingTSWednesday) {
+                await models.Timeslot.update({ start_time: start_time_wednesday, end_time: end_time_wednesday }, {
                     where: {
-                        room_id: roomId,
-                        from_id: room.consultant_id,
-                        to_id: room.technician_id
+                        interpreter_id: userId,
+                        day_of_week: 'Wednesday'
                     }
                 });
             } else {
-                const existingTechnicianVote = await models.Like.findOne({ where: { room_id: roomId, from_id: room.consultant_id, to_id: room.technician_id } });
-                if (existingTechnicianVote) {
-                    await models.Like.update({ value: technicianLike }, {
-                        where: {
-                            room_id: roomId,
-                            from_id: room.consultant_id,
-                            to_id: room.technician_id
-                        }
-                    });
-                } else {
-                    const availableId = await findAvailableLikeId();
-                    await models.Like.create({
-                        id: availableId,
-                        room_id: roomId,
-                        from_type: 'Consultant',
-                        to_type: 'Technician',
-                        from_id: room.consultant_id,
-                        to_id: room.technician_id,
-                        value: technicianLike
-                    });
-                }
+                const availableId = await findAvailableTimeslotId();
+                await models.Timeslot.create({
+                    id: availableId,
+                    interpreter_id: userId,
+                    day_of_week: 'Wednesday',
+                    start_time: start_time_wednesday,
+                    end_time: end_time_wednesday
+                });
             }
+
+        } else {
+            await models.Timeslot.destroy({ where: { interpreter_id: userId, day_of_week: 'Wednesday' } });
         }
 
-        // Iterar sobre los intérpretes y actualizar o eliminar los likes según corresponda
-        for (const booth of room.boothsDetails) {
-            for (const interpreter of booth.interpreters) {
-                const interpreterLike = req.body[`interpreterLike_${interpreter.id}`];
-                if (interpreterLike) {
-                    if (interpreterLike === "0") {
-                        await models.Like.destroy({
-                            where: {
-                                room_id: roomId,
-                                from_id: room.consultant_id,
-                                to_id: interpreter.id
-                            }
-                        });
-                    } else {
-                        const existingInterpreterVote = await models.Like.findOne({ where: { room_id: roomId, from_id: room.consultant_id, to_id: interpreter.id } });
-                        if (existingInterpreterVote) {
-                            await models.Like.update({ value: interpreterLike }, {
-                                where: {
-                                    room_id: roomId,
-                                    from_id: room.consultant_id,
-                                    to_id: interpreter.id
-                                }
-                            });
-                        } else {
-                            const availableId = await findAvailableLikeId();
-                            await models.Like.create({
-                                id: availableId,
-                                room_id: roomId,
-                                from_type: 'Consultant',
-                                to_type: 'Interpreter',
-                                from_id: room.consultant_id,
-                                to_id: interpreter.id,
-                                value: interpreterLike
-                            });
-                        }
+         // THURSDAY
+         if (start_time_thursday && end_time_thursday) {
+            const existingTSThursday = await models.Timeslot.findOne({ where: { interpreter_id: userId, day_of_week: 'Thursday' } });
+            if (existingTSThursday) {
+                await models.Timeslot.update({ start_time: start_time_thursday, end_time: end_time_thursday }, {
+                    where: {
+                        interpreter_id: userId,
+                        day_of_week: 'Thursday'
                     }
-                }
+                });
+            } else {
+                const availableId = await findAvailableTimeslotId();
+                await models.Timeslot.create({
+                    id: availableId,
+                    interpreter_id: userId,
+                    day_of_week: 'Thursday',
+                    start_time: start_time_thursday,
+                    end_time: end_time_thursday
+                });
             }
+
+        } else {
+            await models.Timeslot.destroy({ where: { interpreter_id: userId, day_of_week: 'Thursday' } });
+        }
+
+         // FRIDAY
+         if (start_time_friday && end_time_friday) {
+            const existingTSFriday = await models.Timeslot.findOne({ where: { interpreter_id: userId, day_of_week: 'Friday' } });
+            if (existingTSFriday) {
+                await models.Timeslot.update({ start_time: start_time_friday, end_time: end_time_friday }, {
+                    where: {
+                        interpreter_id: userId,
+                        day_of_week: 'Friday'
+                    }
+                });
+            } else {
+                const availableId = await findAvailableTimeslotId();
+                await models.Timeslot.create({
+                    id: availableId,
+                    interpreter_id: userId,
+                    day_of_week: 'Friday',
+                    start_time: start_time_friday,
+                    end_time: end_time_friday
+                });
+            }
+
+        } else {
+            await models.Timeslot.destroy({ where: { interpreter_id: userId, day_of_week: 'Friday' } });
+        }
+
+         // SATURDAY
+         if (start_time_saturday && end_time_saturday) {
+            const existingTSSaturday = await models.Timeslot.findOne({ where: { interpreter_id: userId, day_of_week: 'Saturday' } });
+            if (existingTSSaturday) {
+                await models.Timeslot.update({ start_time: start_time_saturday, end_time: end_time_saturday }, {
+                    where: {
+                        interpreter_id: userId,
+                        day_of_week: 'Saturday'
+                    }
+                });
+            } else {
+                const availableId = await findAvailableTimeslotId();
+                await models.Timeslot.create({
+                    id: availableId,
+                    interpreter_id: userId,
+                    day_of_week: 'Saturday',
+                    start_time: start_time_saturday,
+                    end_time: end_time_saturday
+                });
+            }
+
+        } else {
+            await models.Timeslot.destroy({ where: { interpreter_id: userId, day_of_week: 'Saturday' } });
+        }
+
+         // SUNDAY
+         if (start_time_sunday && end_time_sunday) {
+            const existingTSSunday = await models.Timeslot.findOne({ where: { interpreter_id: userId, day_of_week: 'Sunday' } });
+            if (existingTSSunday) {
+                await models.Timeslot.update({ start_time: start_time_sunday, end_time: end_time_sunday }, {
+                    where: {
+                        interpreter_id: userId,
+                        day_of_week: 'Sunday'
+                    }
+                });
+            } else {
+                const availableId = await findAvailableTimeslotId();
+                await models.Timeslot.create({
+                    id: availableId,
+                    interpreter_id: userId,
+                    day_of_week: 'Sunday',
+                    start_time: start_time_sunday,
+                    end_time: end_time_sunday
+                });
+            }
+
+        } else {
+            await models.Timeslot.destroy({ where: { interpreter_id: userId, day_of_week: 'Sunday' } });
         }
 
 
-        // Redirigir de vuelta a la página de detalles de la sala
-        res.redirect('/rooms/' + roomId + '/votes');
+
+        console.log("Finish updating-------------------------------------------------------------------------------------------------------")
+        res.redirect('/users/' + userId + '/profile');
     } catch (error) {
         next(error);
     }
 };
-
-// DELETE /timeslot
-exports.destroyTimeslot = async function (req, res, next) {
-    try {
-        // Obtener el ID del intérprete y el ID del idioma desde la solicitud
-        const interpreterId = req.params.userId;
-        const languageId = req.params.languageId;
-
-        // Eliminar las booth con el language que se ha eliminado
-        const languageknownLanguage = await models.Language.findOne({ where: { id: languageId } });
-        const boothAssignmentInterpreter = await models.Boothassignment.findAll({ where: { interpreter_id: interpreterId } });
-        // const boothsOfInterpreter = await models.Booth.findAll({ where: { id: boothAssignmentInterpreter.booth_id } });
-
-        for (const assignment of boothAssignmentInterpreter) {
-            const booths = await models.Booth.findAll({ where: { id: assignment.booth_id } });
-            for (const booth of booths) {
-                // Verificar si la fecha de la habitación es posterior a la actual
-                const room = await models.Room.findOne({ where: { id: booth.room_id } });
-
-                if (room.date > new Date()) {
-                    // Verificar si el idioma conocido coincide con el idioma de la cabina
-                    if (languageknownLanguage.language_from === booth.language && languageknownLanguage.language_to === booth.language_a) {
-                        // Eliminar la asignación de la cabina
-                        await models.Boothassignment.destroy({ where: { interpreter_id: interpreterId, booth_id: booth.id } });
-                    }
-                }
-            }
-        }
-
-        // Eliminar la relación Languageknown
-        await models.Languageknown.destroy({
-            where: {
-                interpreter_id: interpreterId,
-                language_id: languageId
-            }
-        });
-
-        req.flash('success', 'Language relation successfully deleted.');
-        res.redirect('/users/' + req.user.id + '/profile');
-    } catch (error) {
-        next(error);
-    }
-};
-
-
 
 
 async function findAvailableTimeslotId() {

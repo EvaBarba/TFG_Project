@@ -1,4 +1,4 @@
-<!-- views/users/editProfile.ejs -->
+<!-- views/users/manageSchedule.ejs -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +15,7 @@
         <h2 class="mb-0" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Manage Schedule</h2>
         <br>
         <br>
-        <form method="post" action="/users/<%= user.id %>/profile?_method=PUT">
+        <form method="post" action="/users/<%= user.id %>/manageScheduleOK?_method=PUT">
         <div>
             <table class="table table-striped table-bordered table-sm">
                     
@@ -23,8 +23,7 @@
                     <tr>
                         <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; width: 35%;">Day of the week</th>
                         <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Start time</th>
-                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Finish time</th>      
-                        <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Delete</th>
+                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Finish time</th>
                     </tr>
                 </thead>
                 
@@ -55,9 +54,6 @@
                                 </select>
                             </div>
                         </td>
-                        <td style="text-align: center;">
-                            <button class="btn btn-danger btn-sm" onclick='deleteTimeslot("<%= user.id %>", "Monday")'>Delete</button>
-                        </td>
                     </tr>
 
                     <tr>
@@ -85,9 +81,6 @@
                                     <% } %>
                                 </select>
                             </div>
-                        </td>
-                        <td style="text-align: center;">
-                            <button class="btn btn-danger btn-sm" onclick='deleteTimeslot("<%= user.id %>", "Tuesday")'>Delete</button>
                         </td>
                     </tr>
 
@@ -117,9 +110,6 @@
                                 </select>
                             </div>
                         </td>
-                        <td style="text-align: center;">
-                            <button class="btn btn-danger btn-sm" onclick='deleteTimeslot("<%= user.id %>", "Wednesday")'>Delete</button>
-                        </td>
                     </tr>
 
                     <tr>
@@ -148,9 +138,6 @@
                                 </select>
                             </div>
                         </td>
-                        <td style="text-align: center;">
-                            <button class="btn btn-danger btn-sm" onclick='deleteTimeslot("<%= user.id %>", "Thursday")'>Delete</button>
-                        </td>
                     </tr>
                     
                     <tr>
@@ -178,9 +165,6 @@
                                     <% } %>
                                 </select>
                             </div>
-                        </td>
-                        <td style="text-align: center;">
-                            <button class="btn btn-danger btn-sm" onclick='deleteTimeslot("<%= user.id %>", "Friday")'>Delete</button>
                         </td>
                     </tr>
                     
@@ -211,9 +195,6 @@
                                 </select>
                             </div>
                         </td>
-                        <td style="text-align: center;">
-                            <button class="btn btn-danger btn-sm" onclick='deleteTimeslot("<%= user.id %>", "Saturday")'>Delete</button>
-                        </td>
                     </tr>
                     
                     <tr>
@@ -242,13 +223,7 @@
                                 </select>
                             </div>
                         </td>
-                        <td style="text-align: center;">
-                            <button class="btn btn-danger btn-sm" onclick='deleteTimeslot("<%= user.id %>", "Sunday")'>Delete</button>
-                        </td>
                     </tr>
-
-
-
                             
                 </tbody>
                 

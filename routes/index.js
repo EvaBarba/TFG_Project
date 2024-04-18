@@ -299,12 +299,7 @@ router.put('/rooms/:roomId(\\d+)/votes',
 router.get('/users/:userId(\\d+)/manageSchedule',
   timeslotController.editTimeslots);
 
-router.put('/users/:userId(\\d+)/profile',
+router.put('/users/:userId(\\d+)/manageScheduleOK',
   timeslotController.updateTimeslots);
-
-// Delete Languageknown
-router.post('/users/:userId/manageSchedule/:timeslotId/delete',
-  timeslotController.destroyTimeslot);
-
 
 module.exports = router;
