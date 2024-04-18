@@ -14,9 +14,6 @@ exports.editTimeslots = async function (req, res, next) {
             ],
         });
 
-        // Obtener likes
-        const likes = await models.Like.findAll({ where: { to_id: user.id } });
-
         // Obtener horarios
         const TSMonday = await models.Timeslot.findOne({ where: { interpreter_id: user.id, day_of_week: 'Monday' } });
         const TSTuesday = await models.Timeslot.findOne({ where: { interpreter_id: user.id, day_of_week: 'Tuesday' } });
@@ -46,7 +43,17 @@ exports.updateTimeslots = async function (req, res, next) {
                 { model: models.Interpreter, as: 'interpreters', include: { model: models.Timeslot, as: 'timeslot' } }
             ]
         });
+
         const { start_time_monday, end_time_monday, start_time_tuesday, end_time_tuesday, start_time_wednesday, end_time_wednesday, start_time_thursday, end_time_thursday, start_time_friday, end_time_friday, start_time_saturday, end_time_saturday, start_time_sunday, end_time_sunday } = req.body;
+
+        // if ((start_time_monday >= end_time_monday) || (start_time_tuesday >= end_time_tuesday) || (start_time_wednesday >= end_time_wednesday) || (start_time_thursday >= end_time_thursday) || (start_time_friday >= end_time_friday) || (start_time_saturday >= end_time_saturday) || (start_time_sunday >= end_time_sunday))  {
+        //     const errorMessage = 'End hour cannot be earlier than start hour.';
+        //     req.flash('error', errorMessage);
+        //     const errorMessages = req.flash('error');
+        //     console.log("errorMessages: " + errorMessages);
+        //     return res.render('users/manageSchedule', { error_msg: errorMessages });
+        // }
+
 
         // MONDAY
         if (start_time_monday && end_time_monday) {
@@ -228,7 +235,15 @@ exports.updateTimeslots = async function (req, res, next) {
         console.log("Finish updating-------------------------------------------------------------------------------------------------------")
         res.redirect('/users/' + userId + '/profile');
     } catch (error) {
-        next(error);
+        if (error instanceof Sequelize.ValidationError) {
+            req.flash('error', 'Errors in the form:');
+            for (let i in error.errors) {
+                req.flash('error', error.errors[i].message);
+            }
+            res.render('users/manageSchedule', { user: req.body });
+        } else {
+            next(error);
+        }
     }
 };
 

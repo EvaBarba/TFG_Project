@@ -110,7 +110,7 @@ exports.create = async function (req, res, next) {
 
         // Comprobar que la fecha de finalización sea posterior a la de iniciación
         if (req.body.time_finish < req.body.time_start) {
-            const errorMessage = 'End date cannot be earlier than start date.';
+            const errorMessage = 'End hour cannot be earlier than start hour.';
             req.flash('error', errorMessage);
             const errorMessages = req.flash('error');
             console.log("errorMessages: " + errorMessages);
