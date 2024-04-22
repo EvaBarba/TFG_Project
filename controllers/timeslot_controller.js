@@ -56,7 +56,7 @@ exports.updateTimeslots = async function (req, res, next) {
 
 
         // MONDAY
-        if (start_time_monday && end_time_monday) {
+        if (start_time_monday && end_time_monday && (start_time_monday <= end_time_monday)) {
             const existingTSMonday = await models.Timeslot.findOne({ where: { interpreter_id: userId, day_of_week: 'Monday' } });
             if (existingTSMonday) {
                 await models.Timeslot.update({ start_time: start_time_monday, end_time: end_time_monday }, {
@@ -81,7 +81,7 @@ exports.updateTimeslots = async function (req, res, next) {
         }
 
         // TUESDAY
-        if (start_time_tuesday && end_time_tuesday) {
+        if (start_time_tuesday && end_time_tuesday && (start_time_tuesday <= end_time_tuesday)) {
             const existingTSTuesday = await models.Timeslot.findOne({ where: { interpreter_id: userId, day_of_week: 'Tuesday' } });
             if (existingTSTuesday) {
                 await models.Timeslot.update({ start_time: start_time_tuesday, end_time: end_time_tuesday }, {
@@ -106,7 +106,7 @@ exports.updateTimeslots = async function (req, res, next) {
         }
 
          // WEDNESDAY
-         if (start_time_wednesday && end_time_wednesday) {
+         if (start_time_wednesday && end_time_wednesday && (start_time_wednesday <= end_time_wednesday)) {
             const existingTSWednesday = await models.Timeslot.findOne({ where: { interpreter_id: userId, day_of_week: 'Wednesday' } });
             if (existingTSWednesday) {
                 await models.Timeslot.update({ start_time: start_time_wednesday, end_time: end_time_wednesday }, {
@@ -131,7 +131,7 @@ exports.updateTimeslots = async function (req, res, next) {
         }
 
          // THURSDAY
-         if (start_time_thursday && end_time_thursday) {
+         if (start_time_thursday && end_time_thursday && (start_time_thursday <= end_time_thursday)) {
             const existingTSThursday = await models.Timeslot.findOne({ where: { interpreter_id: userId, day_of_week: 'Thursday' } });
             if (existingTSThursday) {
                 await models.Timeslot.update({ start_time: start_time_thursday, end_time: end_time_thursday }, {
@@ -156,7 +156,7 @@ exports.updateTimeslots = async function (req, res, next) {
         }
 
          // FRIDAY
-         if (start_time_friday && end_time_friday) {
+         if (start_time_friday && end_time_friday && (start_time_friday <= end_time_friday)) {
             const existingTSFriday = await models.Timeslot.findOne({ where: { interpreter_id: userId, day_of_week: 'Friday' } });
             if (existingTSFriday) {
                 await models.Timeslot.update({ start_time: start_time_friday, end_time: end_time_friday }, {
@@ -181,7 +181,7 @@ exports.updateTimeslots = async function (req, res, next) {
         }
 
          // SATURDAY
-         if (start_time_saturday && end_time_saturday) {
+         if (start_time_saturday && end_time_saturday && (start_time_saturday <= end_time_saturday)) {
             const existingTSSaturday = await models.Timeslot.findOne({ where: { interpreter_id: userId, day_of_week: 'Saturday' } });
             if (existingTSSaturday) {
                 await models.Timeslot.update({ start_time: start_time_saturday, end_time: end_time_saturday }, {
@@ -206,7 +206,7 @@ exports.updateTimeslots = async function (req, res, next) {
         }
 
          // SUNDAY
-         if (start_time_sunday && end_time_sunday) {
+         if (start_time_sunday && end_time_sunday && (start_time_sunday <= end_time_sunday)) {
             const existingTSSunday = await models.Timeslot.findOne({ where: { interpreter_id: userId, day_of_week: 'Sunday' } });
             if (existingTSSunday) {
                 await models.Timeslot.update({ start_time: start_time_sunday, end_time: end_time_sunday }, {
