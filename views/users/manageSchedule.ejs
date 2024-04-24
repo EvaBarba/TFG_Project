@@ -8,28 +8,89 @@
     <title>Manage Schedule</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        .profile-header {
+            font-family: Georgia, serif;
+            color: #fff;
+            font-weight: bold;
+            letter-spacing: 3px;
+            margin-top: 20px;
+            padding: 15px 20px;
+            text-align: center;
+            background-color: #4a4a4a;
+            border-radius: 10px;
+        }
+
+        .details h4 {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #4a4a4a;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-top: 20px;
+            padding: 10px 10px;
+        }
+        
+        .form-group {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 5px;
+        }
+        .form-group p {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 5px;
+        }
+        .thead th {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #4a4a4a;
+            color: #fff;
+            text-align: center;
+            vertical-align: middle;
+            text-align: center;
+            padding: 10px;
+            border: none;
+        }
+        .table td {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #4a4a4a;
+            letter-spacing: 0.6px;
+            vertical-align: middle;
+            text-align: center;
+            border-top: 2px solid #eeeeee;
+            border-bottom: 2px solid #eeeeee;
+            border-left: none;
+            border-right: none;
+        }
+        .table {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+    </style>
 </head>
 
 <body>
     <div class="container mt-5">
-        <h2 class="mb-0" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Manage Schedule</h2>
-        <br>
+        <div class="profile-header">
+            <h2 class="card-title text-center">Manage Schedule</h2>
+        </div>
         <br>
         <form method="post" action="/users/<%= user.id %>/manageScheduleOK?_method=PUT">
         <div>
             <table class="table table-striped table-bordered table-sm">
                     
-                <thead class="thead-dark">
+                <thead class="thead">
                     <tr>
-                        <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; width: 35%;">Day of the week</th>
-                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Start time</th>
-                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Finish time</th>
+                        <th>Day of the week</th>
+                        <th>Start time</th>
+                        <th>Finish time</th>
                     </tr>
                 </thead>
                 
                 <tbody>
                     <tr>
-                        <td  style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Monday</td>
+                        <td style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Monday</td>
                         <td>
                             <div class="form-group">
                                 <select class="form-control" id="start_time_monday" name="start_time_monday">
@@ -57,7 +118,7 @@
                     </tr>
 
                     <tr>
-                        <td  style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Tuesday</td>
+                        <td style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Tuesday</td>
                         <td>
                             <div class="form-group">
                                 <select class="form-control" id="start_time_tuesday" name="start_time_tuesday">
@@ -85,7 +146,7 @@
                     </tr>
 
                     <tr>
-                        <td  style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Wednesday</td>
+                        <td style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Wednesday</td>
                         <td>
                             <div class="form-group">
                                 <select class="form-control" id="start_time_wednesday" name="start_time_wednesday">
@@ -113,7 +174,7 @@
                     </tr>
 
                     <tr>
-                        <td  style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Thursday</td>
+                        <td style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Thursday</td>
                         <td>
                             <div class="form-group">
                                 <select class="form-control" id="start_time_thursday" name="start_time_thursday">
@@ -141,7 +202,7 @@
                     </tr>
                     
                     <tr>
-                        <td  style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Friday</td>
+                        <td style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Friday</td>
                         <td>
                             <div class="form-group">
                                 <select class="form-control" id="start_time_friday" name="start_time_friday">
@@ -169,7 +230,7 @@
                     </tr>
                     
                     <tr>
-                        <td  style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Saturday</td>
+                        <td style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Saturday</td>
                         <td>
                             <div class="form-group">
                                 <select class="form-control" id="start_time_saturday" name="start_time_saturday">
@@ -198,7 +259,7 @@
                     </tr>
                     
                     <tr>
-                        <td  style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Sunday</td>
+                        <td style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Sunday</td>
                         <td>
                             <div class="form-group">
                                 <select class="form-control" id="start_time_sunday" name="start_time_sunday">

@@ -63,6 +63,7 @@
             text-transform: uppercase;
             font-weight: bold;
             letter-spacing: 1px;
+            border: 3px solid #ffffff;
         }
         .initial-table td {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -196,7 +197,7 @@
                     <% } %>
                 
                 </table>
-                <button class="btn btn-primary btn-manage"><i class="fas fa-edit"></i> Edit </button>
+                <a href="/users/<%= user.id %>/editProfile" class="btn btn-primary btn-manage"><i class="fas fa-edit"></i> Edit </a>
                 <br>
 
             </div>
@@ -270,7 +271,7 @@
                     </tr>
                 
                 </table>
-                <button class="btn btn-secondary btn-manage"><i class="fas fa-calendar-alt"></i> Manage Schedule</button>
+                    <a href="/users/<%= user.id %>/manageSchedule" class="btn btn-secondary btn-manage"><i class="fas fa-calendar-alt"></i> Manage Schedule</a>
                 <br>
 
             </div>
@@ -361,7 +362,7 @@
 
         <!-- Botones -->
         <div class="mt-3" style="text-align: center;">
-            <a href="/users/<%= user.id %>/delete" class="btn btn-danger">Delete User</a>
+            <a href="/users/<%= user.id %>/delete" class="btn btn-danger"><i class="fa-regular fa-trash-can fa-bounce"></i>   Delete User</a>
             <a href="javascript:history.go(-1)" class="btn btn-outline-dark">Back</a>
         </div>
     </div>
