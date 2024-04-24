@@ -7,10 +7,36 @@
     <title>Select Language</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        .profile-header h2 {
+            font-family: Georgia, serif;
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 3px;
+            margin-top: 20px;
+            padding: 15px 20px;
+            text-align: center;
+            background-color: #002e6b;
+            border-radius: 10px;
+        }
+         
+        .form-group {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 5px;
+        }
+ 
+    </style>
 </head>
 <body>
     <div class="container mt-5">
-        <h2 class="mb-0" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Select Language</h2>
+        <div class="profile-header">
+            <h2>Select Language</h2>
+        </div>
+        
         <form action="/users/<%= user.id %>/profile" method="POST">
             <br>
 
@@ -47,11 +73,10 @@
 
             <br>
 
-            <!-- Botón para crear language -->
-            <button type="submit" class="btn btn-primary">Add Language</button>
-
-            <!-- Botón para volver atrás -->
-            <a href="/users/<%= user.id %>/profile" class="btn btn-outline-dark">Cancel</a>
+            <div class="form-group" style="text-align: center;">
+                <button type="submit" class="btn btn-primary">Add Language</button>
+                <a href="javascript:history.go(-1)" class="btn btn-outline-dark">Cancel</a>
+            </div>
 
         </form>
     </div>

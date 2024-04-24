@@ -1,5 +1,90 @@
 <!-- views/rooms/index.ejs -->
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        
+        .subtitle h4 {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #4a4a4a;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-top: 20px;
+            padding: 7px 5px;
+        }
+        .initial-table th{
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #4a4a4a;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+            width: 22%;
+            vertical-align: middle;
+            border-radius: 5px;
+            border: 3px solid #ffffff;
+            letter-spacing: 0.7px;
+            width: 20%;
+        }
+        .initial-table td {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #4a4a4a;
+            letter-spacing: 0.6px;
+            vertical-align: middle;
+            border-radius: 5px;
+            border: 3px solid #ffffff;
+        }
+        .initial-table tbody tr:nth-of-type(odd) {
+            background-color: #f9f9f9;
+        }
+        .initial-table tbody tr:nth-of-type(even) {
+            background-color: #f9f9f9;
+        }
+        .initial-table tbody tr:hover {
+            background-color: #e9ecef;
+        }
+
+        .last-thead th {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #4a4a4a;
+            color: #fff;
+            vertical-align: middle;
+            text-align: center;
+            padding: 5px;
+        }
+
+        .last-table td {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #4a4a4a;
+            letter-spacing: 0.6px;
+            text-align: center;
+            border: 2px solid #fff;
+        }
+        .last-table {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .last-table tbody tr:nth-of-type(even) {
+            background-color: #f9f9f9;
+        }
+        .form-group {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #4a4a4a;
+            padding: 5px;
+        }
+
+    </style>
+    
+</head>
+<body>
+
 <!-- Botones de filtrado -->
 <div class="btn-group mb-3 d-flex justify-content-center">
     <button type="button" class="btn btn-outline-dark filter-btn" data-filter="all">All</button>
@@ -13,62 +98,60 @@
         <div class="card mb-3">
             <div class="card-header d-flex justify-content-between align-items-center" id="roomHeader<%= room.id %>">
                 <h4 class="card-title" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; font-weight: bold; letter-spacing: 1px;">ROOM <%= room.id %>: <%= room.name %></h4>
-                <a href="/rooms/<%= room.id %>" class="btn btn-secondary btn-sm ml-auto">View</a>
+                <a href="/rooms/<%= room.id %>" class="btn btn-secondary btn-sm ml-auto"><i class="fa-solid fa-eye"></i></a>
             </div>        
             <div class="card-body" style="display: none;" id="roomDetails<%= room.id %>">
                 <!-- Detalles de la habitación -->
-                <br>
-
-                <div class="d-flex justify-content-between align-items-center" id="roomHeader<%= room.id %>">
-                    <h4 class="card-title text-center" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; font-weight: bold; letter-spacing: 1px; margin-bottom: 0;">SUMMARY DETAILS</h4>
+                <div class="d-flex justify-content-between align-items-center subtitle" id="roomHeader<%= room.id %>">
+                    <h4 class="card-title text-center">SUMMARY DETAILS</h4>
                     <div>
                         <% if (room.date > new Date()) { %>
-                            <a href="/rooms/<%= room.id %>/edit" class="btn btn-primary btn-sm">Edit Room</a>
+                            <a href="/rooms/<%= room.id %>/edit" class="btn btn-primary btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>
                         <% } else { %>
                             <a href="/rooms/<%= room.id %>/votes" class="btn btn-secondary btn-sm">Votes</a>
                         <% } %>
-                        <a href="/rooms/<%= room.id %>/delete" class="btn btn-danger btn-sm ml-2">Delete Room</a>
+                        <a href="/rooms/<%= room.id %>/delete" class="btn btn-danger btn-sm ml-2"><i class="fa-solid fa-trash-can"></i></a>
                     </div>
                 </div>            
 
-                <br>
-
-                <table class="table table-borderless mt-8">
+                <table class="table table-borderless mt-8 initial-table">
                     <tr>
-                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 15%;">Date:</th>
+                        <th>Date:</th>
                         <td class="room-date" data-date="<%= room.date %>"><%= room.date.toLocaleDateString() %></td>
 
                     </tr>
                     <tr>
-                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 15%;">Language:</th>
+                        <th>Language:</th>
                         <td><%= room.language %></td>
                     </tr>
                     <tr>
-                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 15%;">Start Time:</th>
+                        <th>Start Time:</th>
                         <td><%= room.time_start %></td>
                     </tr>
                     <tr>
-                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 15%;">Finish Time:</th>
+                        <th>Finish Time:</th>
                         <td><%= room.time_finish %></td>
                     </tr>
 
                 </table>
 
-                <br>
+                <hr>
 
                 <!-- Tabla roles asignados -->
 
-                <h4 class="card-title text-center" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; font-weight: bold; letter-spacing: 1px;">STAFF</h4>
+                <div class="subtitle">
+                    <h4><i class="fa-solid fa-user-group"></i>    STAFF</h4>
+                </div>
 
-                <table class="table mt-3">
-                    <thead class="thead-dark">
+                <table class="table mt-3 last-table">
+                    <thead class="last-thead">
                         <tr>
-                            <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Role</th>
-                            <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">ID</th>
-                            <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Username</th>
-                            <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Email</th>
+                            <th>Role</th>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>Email</th>
                             <% if (room.date > new Date()) { %>
-                                <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Manage</th>
+                                <th>Manage</th>
                             <% } %>
                         </tr>
                     </thead>
@@ -80,14 +163,14 @@
                                 <td><%= room.consultantOfRoom.User.username %></td>
                                 <td><%= room.consultantOfRoom.User.email %></td>
                                 <% if (room.date > new Date()) { %>
-                                    <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectConsultant" class="btn btn-secondary btn-sm">Change</a></td>
+                                    <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectConsultant" class="btn btn-secondary btn-sm"><i class="fa-solid fa-user-gear"></i></a></td>
                                 <% } %>
                             <% } else { %>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <% if (room.date > new Date()) { %>
-                                    <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectConsultant" class="btn btn-primary btn-sm">Select</a></td>
+                                    <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectConsultant" class="btn btn-primary btn-sm"><i class="fa-solid fa-user-plus"></i></a></td>
                                 <% } %>
                             <% } %>
                         </tr>
@@ -98,14 +181,14 @@
                                 <td><%= room.coordinatorOfRoom.User.username %></td>
                                 <td><%= room.coordinatorOfRoom.User.email %></td>
                                 <% if (room.date > new Date()) { %>
-                                    <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectCoordinator" class="btn btn-secondary btn-sm">Change</a></td>
+                                    <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectCoordinator" class="btn btn-secondary btn-sm"><i class="fa-solid fa-user-gear"></i></a></td>
                                 <% } %>
                             <% } else { %>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <% if (room.date > new Date()) { %>
-                                    <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectCoordinator" class="btn btn-primary btn-sm">Select</a></td>
+                                    <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectCoordinator" class="btn btn-primary btn-sm"><i class="fa-solid fa-user-plus"></i></a></td>
                                 <% } %>
                             <% } %>
                         </tr>
@@ -116,14 +199,14 @@
                                 <td><%= room.operatorOfRoom.User.username %></td>
                                 <td><%= room.operatorOfRoom.User.email %></td>
                                 <% if (room.date > new Date()) { %>
-                                    <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectOperator" class="btn btn-secondary btn-sm">Change</a></td>
+                                    <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectOperator" class="btn btn-secondary btn-sm"><i class="fa-solid fa-user-gear"></i></a></td>
                                 <% } %>
                             <% } else { %>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <% if (room.date > new Date()) { %>
-                                    <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectOperator" class="btn btn-primary btn-sm">Select</a></td>
+                                    <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectOperator" class="btn btn-primary btn-sm"><i class="fa-solid fa-user-plus"></i></a></td>
                                 <% } %>
                             <% } %>
                         </tr>
@@ -134,14 +217,14 @@
                                 <td><%= room.technicianOfRoom.User.username %></td>
                                 <td><%= room.technicianOfRoom.User.email %></td>
                                 <% if (room.date > new Date()) { %>
-                                    <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectTechnician" class="btn btn-secondary btn-sm">Change</a></td>
+                                    <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectTechnician" class="btn btn-secondary btn-sm"><i class="fa-solid fa-user-gear"></i></a></td>
                                 <% } %>
                             <% } else { %>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <% if (room.date > new Date()) { %>
-                                    <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectTechnician" class="btn btn-primary btn-sm">Select</a></td>
+                                    <td style="text-align: center"><a href="/rooms/<%= room.id %>/selectTechnician" class="btn btn-primary btn-sm"><i class="fa-solid fa-user-plus"></i></a></td>
                                 <% } %>
                             <% } %>
                         </tr>
@@ -150,22 +233,22 @@
                 </table>
 
                 <br>
+                <hr>
 
                 <!-- Tabla para booths -->
 
-                <h4 class="card-title text-center" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; font-weight: bold; letter-spacing: 1px;">BOOTHS</h4>
-
-                <div class="form-group">
-                    <p class="mb-0">Number of booths associated with this room: <b><%= room.boothsDetails.length %></b></p>
+                <div class="profile-header subtitle">
+                    <h4><i class="fa-solid fa-language"></i>    Booths table</h4>
                 </div>
                 
                 <div class="form-group">
-                    <table class="table mt-3">
-                        <thead class="thead-dark">
+                    <table class="table mt-3 last-table">
+                        <thead class="last-thead">
                             <tr>
-                                <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Booths</th>
-                                <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Language To</th>
-                                <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Interpreters</th>
+                                <th>Booths</th>
+                                <th>Language From</th>
+                                <th>Language To</th>
+                                <th>Interpreters</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -174,8 +257,9 @@
                             <% room.boothsDetails.forEach(booth => { %>
                                 <tr>
                                     <td>Booth <%= booth.id %></td>
+                                    <td><%= booth.language %></td>
                                     <td><%= booth.language_a %></td>
-                                    <td>
+                                    <td style="width: 30%;">
                                         <% 
                                             const interpreters = booth.interpreters.map(interpreter => interpreter.User.username);
                                         %>
@@ -184,8 +268,13 @@
                                     <td>
                                         <% if (room.date > new Date()) { %>
                                             <div class="float-right">
-                                                <a href="/rooms/<%= room.id %>/booths/<%= booth.id %>/edit" class="btn btn-primary btn-sm">Edit</a>
-                                                <a href="/rooms/<%= room.id %>/booths/<%= booth.id %>/delete" class="btn btn-danger btn-sm">Delete</a>
+                                                <% if (booth.interpreters && booth.interpreters.length > 0) { %> 
+                                                    <a href="/rooms/<%= room.id %>/booths/<%= booth.id %>/selectInterpreter" class="btn btn-secondary btn-sm"><i class="fa-solid fa-user-gear"></i></a>
+                                                <% } else { %>
+                                                    <a href="/rooms/<%= room.id %>/booths/<%= booth.id %>/selectInterpreter" class="btn btn-secondary btn-sm"><i class="fa-solid fa-user-plus"></i></a>
+                                                <% } %>
+                                                <a href="/rooms/<%= room.id %>/booths/<%= booth.id %>/edit" class="btn btn-primary btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>
+                                                <a href="/rooms/<%= room.id %>/booths/<%= booth.id %>/delete" class="btn btn-danger btn-sm"><i class="fa-solid fa-trash-can"></i></a>
                                             </div>
                                         <% } %>
                                     </td>
@@ -197,11 +286,13 @@
                     <!-- BUTTON: new booth -->
                     <div>
                         <% if (room.date > new Date()) { %>
-                            <a href="/rooms/<%= room.id %>/booths/new" class="btn btn-success btn-sm">New Booth</a>
+                            <a href="/rooms/<%= room.id %>/booths/new" class="btn btn-success btn-sm"><i class="fa-solid fa-plus"></i>  New Booth</a>
                         <% } %>
                     </div>
                     
                 </div>
+                    
+                
                 
                 <br>
                 
@@ -215,7 +306,7 @@
 
 <!-- BUTTON: new room -->
 <div class="text-center">
-    <a href="/rooms/new" class="btn btn-success">New Room</a>
+    <a href="/rooms/new" class="btn btn-success"><i class="fa-solid fa-plus"></i>  New Room</a>
 </div>
 
 <br>
@@ -321,6 +412,8 @@
         filterRooms(filter);
       });
     });
-    </script>
+</script>
     
     
+</body>
+</html>

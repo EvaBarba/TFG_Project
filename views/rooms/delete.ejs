@@ -1,52 +1,113 @@
 <!-- views/rooms/delete.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Room</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-<h1 class="mb-0" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Delete Room Confirmation</h1>
+    <style>
+        .profile-header h2 {
+            font-family: Georgia, serif;
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 3px;
+            margin-top: 20px;
+            padding: 15px 20px;
+            text-align: center;
+            background-color: #6b0000;
+            border-radius: 10px;
+        }
 
-<br>
+        .details h4 {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #4a4a4a;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-top: 20px;
+            padding: 10px 10px;
+        }
+        
+        .form-group {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 5px;
+        }
 
-<form method="post" action="/rooms/<%= room.id %>?_method=DELETE">
-    
-    <br>
+        .thead th {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #4a4a4a;
+            color: #fff;
+            vertical-align: middle;
+            text-align: center;
+            padding: 10px;
+        }
 
-    <h4 class="card-title" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; font-weight: bold; letter-spacing: 1px;">ROOM <%= room.id %>: <%= room.name %></h4>
+        .table td {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #4a4a4a;
+            letter-spacing: 0.6px;
+            text-align: center;
+            border: 2px solid #fff;
+        }
+        .table {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .table tbody tr:nth-of-type(even) {
+            background-color: #f9f9f9;
+        }
 
-    <br>
-
-    <div class="form-group">
-        <label for="language">Language:</label>
-        <input type="language" class="form-control" id="language" name="language" value="<%= room.language %>" readonly>
+    </style>
+</head>
+<body>
+    <div class="profile-header">
+        <h2>Delete Room Confirmation</h2>
     </div>
 
-    <div class="form-group">
-        <label for="date">Date:</label>
-        <input type="date" class="form-control" id="date" name="date" value="<%= room.date.toISOString().split('T')[0] %>" readonly>
-    </div>
+    <form method="post" action="/rooms/<%= room.id %>?_method=DELETE">
 
-    <div class="form-group">
-        <label for="time_start">Start time:</label>
-        <input type="time_start" class="form-control" id="time_start" name="time_start" value="<%= room.time_start %>" readonly>
-    </div>
+        <div class="details">
+            <h4>ROOM <%= room.id %>: <%= room.name %></h4>
+        </div>
 
-    <div class="form-group">
-        <label for="time_finish">Finish Time:</label>
-        <input type="time_finish" class="form-control" id="time_finish" name="time_finish" value="<%= room.time_finish %>" readonly>
-    </div>
+        <div class="form-group">
+            <label for="language">Language:</label>
+            <input type="language" class="form-control" id="language" name="language" value="<%= room.language %>" readonly>
+        </div>
 
-    <div class="form-group">
-        <label for="place">Place:</label>
-        <input type="place" class="form-control" id="place" name="place" value="<%= room.place %>" readonly>
-    </div>
+        <div class="form-group">
+            <label for="date">Date:</label>
+            <input type="date" class="form-control" id="date" name="date" value="<%= room.date.toISOString().split('T')[0] %>" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="time_start">Start time:</label>
+            <input type="time_start" class="form-control" id="time_start" name="time_start" value="<%= room.time_start %>" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="time_finish">Finish Time:</label>
+            <input type="time_finish" class="form-control" id="time_finish" name="time_finish" value="<%= room.time_finish %>" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="place">Place:</label>
+            <input type="place" class="form-control" id="place" name="place" value="<%= room.place %>" readonly>
+        </div>
 
 
-    <!-- Agregar el número de booths y la tabla de booths -->
-    <br>
-    <div class="form-group">
-        <p>Number of booths associated with this room: <b><%= room.boothsDetails.length %></b></p>
-    </div>
-    <br>
-    <div class="form-group">
+        <!-- Agregar el número de booths y la tabla de booths -->
+        <br>
+        <div class="form-group">
+            <p>Number of booths associated with this room: <b><%= room.boothsDetails.length %></b></p>
+        </div>
         <table class="table">
-            <thead>
+            <thead class="thead">
                 <tr>
                     <th>Booths</th>
                     <th>Language To</th>
@@ -67,25 +128,22 @@
                     </tr>
                 <% }); %>
             </tbody>
-            
         </table>
-    </div>
+        <br>
+        <div class="form-group" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a;  letter-spacing: 1px; background-color: #ffd4d4;">
+            <p><i class="fas fa-exclamation-triangle"></i>  <b>If you delete the room, the booths belonging to the room will also be deleted.</b></p>
+        </div>
+        
+        <br>
+        <div class="form-group" style="text-align: center;">
+            <p>Are you sure you want to delete this room?</p>
+            <button type="submit" class="btn btn-danger">Confirm deletion</button>
+            <a href="javascript:history.go(-1)" class="btn btn-outline-dark">Cancel</a>
+        </div>
+    </form>
 
-    
-    
     <br>
     <br>
-    
-    <div>
-        <p><b>If you delete the room, the booths belonging to the room will also be deleted.</b></p>
-        <p>Are you sure you want to delete this room?</p>
-    </div>
-    <div class="form-group">
-        <button type="submit" class="btn btn-danger">Confirm deletion</button>
-        <a href="javascript:history.go(-1)" class="btn btn-outline-dark">Cancel</a>
-    </div>
-</form>
-
-<br>
-<br>
-<br>
+    <br>
+</body>
+</html>

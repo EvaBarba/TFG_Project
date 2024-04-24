@@ -8,32 +8,169 @@
     <title>User Profile</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        .profile-header h2 {
+            font-family: Georgia, serif;
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 3px;
+            margin-top: 20px;
+            padding: 15px 20px;
+            text-align: center;
+            background-color: #4a4a4a;
+            border-radius: 10px;
+        }
+
+        .details h4 {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #4a4a4a;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-top: 20px;
+            padding: 10px 20px;
+            border-bottom: 7px solid #c9d4ea;
+        }
+        .schedule h4 {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #4a4a4a;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-top: 20px;
+            padding: 10px 20px;
+            border-bottom: 7px solid #eadfc9;
+        }
+        .languages h4 {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #4a4a4a;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-top: 20px;
+            padding: 7px 5px;
+        }
+        .toggle-password {
+            cursor: pointer;
+        }
+        .initial-table th{
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #4a4a4a;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        .initial-table td {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #4a4a4a;
+            letter-spacing: 0.6px;
+            border-radius: 5px;
+            vertical-align: middle;
+            border-radius: 5px;
+            border: 3px solid #ffffff;
+
+        }
+        .initial-table tbody tr:nth-of-type(odd) {
+            background-color: #f9f9f9;
+        }
+        .initial-table tbody tr:nth-of-type(even) {
+            background-color: #f9f9f9;
+        }
+        .initial-table tbody tr:hover {
+            background-color: #e9ecef;
+        }
+
+        .language-thead {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #6a3e9d;
+            color: #fff;
+            vertical-align: middle;
+            text-align: center;
+            padding: 5px;
+            border: none;
+        }
+
+        .language-table td {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #4a4a4a;
+            letter-spacing: 0.6px;
+            text-align: center;
+            border-top: 2px solid #eeeeee;
+            border-bottom: 2px solid #eeeeee;
+            border-left: none;
+            border-right: none;
+        }
+        .language-table {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombras en la parte inferior */
+        }
+        .language-table .btn-danger {
+            color: #fff;
+        }
+        .language-table .btn-danger:hover {
+            background-color: #a30d1c;
+            border-color: #a30d1c;
+        }
+        .language-table .fa-trash-can {
+            font-size: 16px;
+        }
+
+        .like-thead {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #5986c1;
+            color: #fff;
+            vertical-align: middle;
+            text-align: center;
+            padding: 5px;
+            border: none;
+        }
+
+        .like-table td {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #4a4a4a;
+            letter-spacing: 0.6px;
+            border-top: 2px solid #eeeeee;
+            border-bottom: 2px solid #eeeeee;
+            border-left: none;
+            border-right: none;
+        }
+        .like-table {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombras en la parte inferior */
+        }
+
+    </style>
+
 </head>
 <body>
     <div class="container mt-5">
-        <h2 class="mb-0" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">User Profile</h2>
-        <br>
-        <br>
+        <div class="profile-header">
+            <h2>User Profile</h2>
+        </div>
         <div class="row">
             <!-- Columna izquierda -->
             <div class="col-md-6">
-                <h4 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Details</h4>
-                
-                <table class="table table-borderless mt-4">
+                <div class="profile-header details">
+                    <h4>Details</h4>
+                </div>
+
+                <table class="table table-borderless mt-4 initial-table">
                     <tr>
-                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Username:</th>
+                        <th>Username:</th>
                         <td><%= user.username %></td>
                     </tr>
                     <tr>
-                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Role:</th>
+                        <th>Role:</th>
                         <td><%= userRole %></td>
                     </tr>
                     <tr>
-                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Email:</th>
+                        <th>Email:</th>
                         <td><%= user.email %></td>
                     </tr>
                     <tr>
-                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Password:</th>
+                        <th>Password:</th>
                         <td>
                             <div class="row">
                                 <div class="col-md-8"> <!-- Dos tercios del ancho -->
@@ -53,17 +190,13 @@
 
                     <% if (userRole === 'Interpreter') { %>
                         <tr>
-                            <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Reputation:</th>
+                            <th>Reputation:</th>
                             <td><%= user.interpreters.reputation.value %></td>
                         </tr>
                     <% } %>
-
-                <td>
-                    <a href="/users/<%= user.id %>/editProfile" class="btn btn-primary btn-sm">Edit Details</a>
-                </td>
                 
                 </table>
-                
+                <button class="btn btn-primary btn-manage"><i class="fas fa-edit"></i> Edit </button>
                 <br>
 
             </div>
@@ -73,12 +206,14 @@
             <!-- Columna derecha -->
             <div class="col-md-6">
                 
-                <h4 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Schedule</h4>
+                <div class="profile-header schedule">
+                    <h4>Schedule</h4>
+                </div>
                 
-                <table class="table table-borderless mt-4">
+                <table class="table table-borderless mt-4 initial-table">
 
                     <tr>
-                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 25%;">Monday:</th>
+                        <th>Monday:</th>
                         <% if (TSMonday) { %>
                             <td><%= TSMonday.start_time.slice(0, -3) %> - <%= TSMonday.end_time.slice(0, -3) %> h</td>
                         <% } else { %>
@@ -86,7 +221,7 @@
                         <% } %>
                     </tr>
                     <tr>
-                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 25%;">Tuesday:</th>
+                        <th>Tuesday:</th>
                         <% if (TSTuesday) { %>
                             <td><%= TSTuesday.start_time.slice(0, -3) %> - <%= TSTuesday.end_time.slice(0, -3) %> h</td>
                         <% } else { %>
@@ -94,7 +229,7 @@
                         <% } %>
                     </tr>
                     <tr>
-                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 25%;">Wednesday:</th>
+                        <th>Wednesday:</th>
                         <% if (TSWednesday) { %>
                             <td><%= TSWednesday.start_time.slice(0, -3) %> - <%= TSWednesday.end_time.slice(0, -3) %> h</td>
                         <% } else { %>
@@ -102,7 +237,7 @@
                         <% } %>
                     </tr>
                     <tr>
-                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 25%;">Thursday:</th>
+                        <th>Thursday:</th>
                         <% if (TSThursday) { %>
                             <td><%= TSThursday.start_time.slice(0, -3) %> - <%= TSThursday.end_time.slice(0, -3) %> h</td>
                         <% } else { %>
@@ -110,7 +245,7 @@
                         <% } %>
                     </tr>
                     <tr>
-                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 25%;">Friday:</th>
+                        <th>Friday:</th>
                         <% if (TSFriday) { %>
                             <td><%= TSFriday.start_time.slice(0, -3) %> - <%= TSFriday.end_time.slice(0, -3) %> h</td>
                         <% } else { %>
@@ -118,7 +253,7 @@
                         <% } %>
                     </tr>
                     <tr>
-                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 25%;">Saturday:</th>
+                        <th>Saturday:</th>
                         <% if (TSSaturday) { %>
                             <td><%= TSSaturday.start_time.slice(0, -3) %> - <%= TSSaturday.end_time.slice(0, -3) %> h</td>
                         <% } else { %>
@@ -126,49 +261,49 @@
                         <% } %>
                     </tr>
                     <tr>
-                        <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; width: 25%;">Sunday:</th>
+                        <th>Sunday:</th>
                         <% if (TSSunday) { %>
                             <td><%= TSSunday.start_time.slice(0, -3) %> - <%= TSSunday.end_time.slice(0, -3) %> h</td>
                         <% } else { %>
                             <td>Not available</td>
                         <% } %>                        
                     </tr>
-
-                    <td>
-                        <a href="/users/<%= user.id %>/manageSchedule" class="btn btn-secondary btn-sm">Manage Schedule</a>
-                    </td>
                 
                 </table>
-                
+                <button class="btn btn-secondary btn-manage"><i class="fas fa-calendar-alt"></i> Manage Schedule</button>
                 <br>
 
             </div>
         </div>
 
         <br>
+        <br>
 
         <% if (userRole === 'Interpreter') { %>
-            <h4 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">LANGUAGES</h4>
+            <div class="profile-header languages">
+                <h4><i class="fa-solid fa-language"></i>   Languages</h4>
+            </div>
+            
             <div class="table-responsive">
-                <table class="table table-striped table-bordered table-sm">
+                <table class="table table-striped table-bordered table-sm language-table">
                     
-                    <thead class="thead-dark">
+                    <thead class="language-thead">
                         <tr>
-                            <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">ID</th>
-                            <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Language from</th>
-                            <th style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Language to</th>
-                            <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; width: 10%;">Manage</th>                                
+                            <th>ID</th>
+                            <th>Language from</th>
+                            <th>Language to</th>
+                            <th style="width: 10%;">Manage</th>                                
                         </tr>
                     </thead>
                     
                     <tbody>
                         <% user.interpreters.languages.forEach(language => { %>
                             <tr>
-                                <td style="text-align: center;"><%= language.id %></td>
+                                <td><%= language.id %></td>
                                 <td><%= language.language_from %></td>
                                 <td><%= language.language_to %></td>
-                                <td style="text-align: center;">
-                                    <button class="btn btn-danger btn-sm" onclick='deleteLanguage("<%= user.id %>", "<%= language.id %>")'>Delete</button>
+                                <td>
+                                    <button class="btn btn-danger btn-sm" onclick='deleteLanguage("<%= user.id %>", "<%= language.id %>")'><i class="fa-regular fa-trash-can fa-bounce"></i></button>
 
                                 </td>
                             </tr>
@@ -178,26 +313,29 @@
                 </table>
     
                 <div>
-                    <a href="/users/<%= user.id %>/profile/newInterpreterLanguage" class="btn btn-success btn-sm">New Language</a>
+                    <a href="/users/<%= user.id %>/profile/newInterpreterLanguage" class="btn btn-success btn-sm"><i class="fa-solid fa-plus"></i>  New Language</a>
                 </div>
     
             </div>
         <% } %>
 
-        <br>        
-        <hr class="my-4">
+        <br>
+        <br>
 
         <!-- Tabla Likes -->
         <div>
-            <h4 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Likes</h4>    
+            <div class="profile-header languages">
+                <h4><i class="fa-regular fa-thumbs-up"></i>    Likes</h4>
+            </div>
+            
             <% if (likes && likes.length > 0) { %>
-                <table class="table table-striped table-bordered table-sm">
+                <table class="table table-striped table-bordered table-sm like-table">
                         
-                    <thead class="thead-dark">
+                    <thead class="like-thead">
                         <tr>
-                            <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; width: 10%;">Room ID</th>
-                            <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; width: 10%;">Value</th>
-                            <th style="text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">Details</th>                           
+                            <th style="width: 10%;">Room ID</th>
+                            <th style="width: 10%;">Value</th>
+                            <th>Details</th>                           
                         </tr>
                     </thead>
                     
@@ -224,7 +362,7 @@
         <!-- Botones -->
         <div class="mt-3" style="text-align: center;">
             <a href="/users/<%= user.id %>/delete" class="btn btn-danger">Delete User</a>
-            <a href="javascript:history.go(-1)" class="btn btn-secondary">Back</a>
+            <a href="javascript:history.go(-1)" class="btn btn-outline-dark">Back</a>
         </div>
     </div>
 
@@ -250,12 +388,12 @@
             });
         });
     </script>
+    
 
 
 
 </body>
 </html>
-
 
 <script>
     async function deleteLanguage(userId, languageId) {
