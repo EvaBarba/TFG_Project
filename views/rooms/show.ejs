@@ -286,7 +286,7 @@
                             <tr>
                                 <td>Booth <%= booth.id %></td>
                                 <td><%= booth.language %></td>
-                                <td><%= booth.language_a %></td>
+                                <td><%= booth.language_to_translate %></td>
                                 <td style="width: 30%;">
                                     <% 
                                         const interpreters = booth.interpreters.map(interpreter => interpreter.User.username);
@@ -355,7 +355,7 @@
                                     </tr>
                                     <tr>
                                         <th>Language To:</th>
-                                        <td><%= booth.language_a %></td>
+                                        <td><%= booth.language_to_translate %></td>
                                     </tr>
                                     <tr>
                                         <th>Signs:</th>

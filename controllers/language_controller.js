@@ -20,13 +20,12 @@ exports.index = function (req, res, next) {
             return models.Language.findAll(findOptions);
         })
         .then(function (languages) {
-            res.render('languages/index', { languages: languages });
+            res.render('languages/index', { languages });
         })
         .catch(function (error) {
             next(error);
         });
 };
-
 
 
 // GET /languages/new
@@ -36,7 +35,7 @@ exports.newLanguage = async function (req, res, next) {
             language_from: "",
             language_to: "",
         };
-        res.render('languages/new', { language: language });
+        res.render('languages/new', { language });
     } catch (error) {
         next(error);
     }
@@ -46,7 +45,7 @@ exports.newLanguage = async function (req, res, next) {
 exports.createLanguage = async function (req, res, next) {
     try {
 
-        // Check that language_from is different from language_to
+        // language_from debe ser distinto a language_to
         if (req.body.language_from === req.body.language_to) {
             const errorMessage = 'The source language cannot be the same as the destination language.';
             req.flash('error', errorMessage);
@@ -89,7 +88,7 @@ exports.newInterpreterLanguage = async function (req, res, next) {
             language_from: "",
             language_to: "",
         };
-        res.render('languages/newInterpreterLanguage', { language: language, user: user });
+        res.render('languages/newInterpreterLanguage', { language, user });
     } catch (error) {
         next(error);
     }
@@ -160,21 +159,6 @@ exports.createInterpreterLanguage = async function (req, res, next) {
     }
 };
 
-
-
-async function findAvailableLanguageId() {
-    // Encuentra el primer ID disponible que no está en uso
-    let id = 1;
-    while (true) {
-        const language = await models.Language.findOne({ where: { id: id } });
-        if (!language) {
-            return id;
-        }
-        id++;
-    }
-}
-
-
 exports.destroyLanguageKnown = async function (req, res, next) {
     try {
         // Obtener el ID del intérprete y el ID del idioma desde la solicitud
@@ -194,7 +178,7 @@ exports.destroyLanguageKnown = async function (req, res, next) {
 
                 if (room.date > new Date()) {
                     // Verificar si el idioma conocido coincide con el idioma de la cabina
-                    if (languageknownLanguage.language_from === booth.language && languageknownLanguage.language_to === booth.language_a) {
+                    if (languageknownLanguage.language_from === booth.language && languageknownLanguage.language_to === booth.language_to_translate) {
                         // Eliminar la asignación de la cabina
                         await models.Boothassignment.destroy({ where: { interpreter_id: interpreterId, booth_id: booth.id } });
                     }
@@ -216,3 +200,19 @@ exports.destroyLanguageKnown = async function (req, res, next) {
         next(error);
     }
 };
+
+
+// MWs varios
+
+//Función para obtener un ID de language disponible
+async function findAvailableLanguageId() {
+    // Encuentra el primer ID disponible que no está en uso
+    let id = 1;
+    while (true) {
+        const language = await models.Language.findOne({ where: { id: id } });
+        if (!language) {
+            return id;
+        }
+        id++;
+    }
+}

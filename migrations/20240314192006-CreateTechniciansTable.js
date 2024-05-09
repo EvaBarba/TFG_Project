@@ -7,7 +7,6 @@ module.exports = {
     await queryInterface.createTable('Technicians', {
       id: {
         type: Sequelize.INTEGER,
-        autoIncrement: true,
         allowNull: false,
         references: {
           model: 'Users',

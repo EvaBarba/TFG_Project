@@ -21,18 +21,18 @@ const app = express();
 // Middleware para definir los idiomas globales
 app.use(MW_languages);
 
-// view engine setup
+// Ver configuración del motor
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// Middleware configuration
+// Middleware de configuracion
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-// Configuration of the session to store it in Redis database
+// Configuración de la sesión para almacenarla en la base de datos Redis
 app.use(session({
   secret: '1234',
   resave: false,
@@ -66,13 +66,11 @@ app.use(function (req, res, next) {
 
 // Importar las rutas de tu aplicación
 const indexRouter = require('./routes/index');
-// const usersRouter = require('./routes/users'); // No necesario(?)
 
 // Main routers
 app.use('/', indexRouter);
-// app.use('/users', usersRouter);
 
-// catch 404 and forward to error handler------------
+// catch 404 and forward to error handler
 app.use((req, res, next) => {
   next(createError(404));
 });

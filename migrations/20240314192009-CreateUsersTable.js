@@ -47,7 +47,7 @@ module.exports = {
         type: Sequelize.BOOLEAN,
       },
       extra: {
-        type: Sequelize.JSON,
+        type: Sequelize.STRING,
       },
       admin_id: {
         type: Sequelize.INTEGER,

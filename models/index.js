@@ -6,7 +6,6 @@ var config = require('../config/config');
 
 const User = require('./user');
 const Admin = require('./admin');
-const Client = require('./client');
 const Consultant = require('./consultant');
 const Coordinator = require('./coordinator');
 const Interpreter = require('./interpreter');
@@ -30,9 +29,6 @@ User.belongsTo(Admin, { foreignKey: 'admin_id', as: 'Admins' });
 Admin.hasMany(User, { foreignKey: 'admin_id', as: 'users' });
 
 // Relationships for Roles: 1-to-1 (User-role) ---------------------------------------------------
-User.hasOne(Client, { foreignKey: 'id', as: 'clients', onDelete: 'CASCADE' });
-Client.belongsTo(User, { foreignKey: 'id', as: 'User', onDelete: 'CASCADE' });
-
 User.hasOne(Consultant, { foreignKey: 'id', as: 'consultants', onDelete: 'CASCADE' });
 Consultant.belongsTo(User, { foreignKey: 'id', as: 'User', onDelete: 'CASCADE' });
 
@@ -95,7 +91,7 @@ Timeslot.belongsTo(Interpreter, { foreignKey: 'id', as: 'interpreterTimeslot' })
 
 
 // DATABASE Object
-const db = { sequelize, User, Admin, Client, Consultant, Coordinator, Interpreter, Operator, Technician, Reputation, Room, Booth, Boothassignment, Like, Language, Languageknown, Timeslot };
+const db = { sequelize, User, Admin, Consultant, Coordinator, Interpreter, Operator, Technician, Reputation, Room, Booth, Boothassignment, Like, Language, Languageknown, Timeslot };
 
 // Close the Sequelize connection when the Node.js process is closed
 process.on('exit', () => {

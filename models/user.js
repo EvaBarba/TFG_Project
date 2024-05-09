@@ -84,7 +84,7 @@ User.init(
             type: DataTypes.BOOLEAN
         },
         extra: {
-            type: DataTypes.JSON
+            type: DataTypes.STRING
         },
         admin_id: {
             type: DataTypes.INTEGER,

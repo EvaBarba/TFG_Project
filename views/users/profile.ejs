@@ -150,9 +150,134 @@
         <div class="profile-header">
             <h2>User Profile</h2>
         </div>
-        <div class="row">
-            <!-- Columna izquierda -->
-            <div class="col-md-6">
+
+            <% if (userRole === 'Interpreter') { %>
+            <div class="row">
+                <!-- Columna izquierda -->
+                <div class="col-md-6">
+                    <div class="profile-header details">
+                        <h4>Details</h4>
+                    </div>
+
+                    <table class="table table-borderless mt-4 initial-table">
+                        <tr>
+                            <th>Username:</th>
+                            <td><%= user.username %></td>
+                        </tr>
+                        <tr>
+                            <th>Role:</th>
+                            <td><%= userRole %></td>
+                        </tr>
+                        <tr>
+                            <th>Email:</th>
+                            <td><%= user.email %></td>
+                        </tr>
+                        <tr>
+                            <th>Password:</th>
+                            <td>
+                                <div class="row">
+                                    <div class="col-md-8"> <!-- Dos tercios del ancho -->
+                                        <div class="input-group">
+                                            <input type="password" class="form-control" id="password" name="password" value="<%= user.password %>" readonly>
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-secondary toggle-password" type="button" id="passwordToggle">
+                                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </td>
+                        </tr>                        
+                        <tr>
+                            <th>Reputation:</th>
+                            <td><%= user.interpreters.reputation.value %></td>
+                        </tr>
+                    
+                    </table>
+                    <a href="/users/<%= user.id %>/editProfile" class="btn btn-primary btn-manage"><i class="fas fa-edit"></i> Edit </a>
+                    <br>
+
+                </div>
+
+
+
+                <!-- Columna derecha -->
+                <div class="col-md-6">
+                    
+                    <div class="profile-header schedule">
+                        <h4>Schedule</h4>
+                    </div>
+                    
+                    <table class="table table-borderless mt-4 initial-table">
+
+                        <tr>
+                            <th>Monday:</th>
+                            <% if (TSMonday) { %>
+                                <td><%= TSMonday.start_time.slice(0, -3) %> - <%= TSMonday.end_time.slice(0, -3) %> h</td>
+                            <% } else { %>
+                                <td>Not available</td>
+                            <% } %>
+                        </tr>
+                        <tr>
+                            <th>Tuesday:</th>
+                            <% if (TSTuesday) { %>
+                                <td><%= TSTuesday.start_time.slice(0, -3) %> - <%= TSTuesday.end_time.slice(0, -3) %> h</td>
+                            <% } else { %>
+                                <td>Not available</td>
+                            <% } %>
+                        </tr>
+                        <tr>
+                            <th>Wednesday:</th>
+                            <% if (TSWednesday) { %>
+                                <td><%= TSWednesday.start_time.slice(0, -3) %> - <%= TSWednesday.end_time.slice(0, -3) %> h</td>
+                            <% } else { %>
+                                <td>Not available</td>
+                            <% } %>
+                        </tr>
+                        <tr>
+                            <th>Thursday:</th>
+                            <% if (TSThursday) { %>
+                                <td><%= TSThursday.start_time.slice(0, -3) %> - <%= TSThursday.end_time.slice(0, -3) %> h</td>
+                            <% } else { %>
+                                <td>Not available</td>
+                            <% } %>
+                        </tr>
+                        <tr>
+                            <th>Friday:</th>
+                            <% if (TSFriday) { %>
+                                <td><%= TSFriday.start_time.slice(0, -3) %> - <%= TSFriday.end_time.slice(0, -3) %> h</td>
+                            <% } else { %>
+                                <td>Not available</td>
+                            <% } %>
+                        </tr>
+                        <tr>
+                            <th>Saturday:</th>
+                            <% if (TSSaturday) { %>
+                                <td><%= TSSaturday.start_time.slice(0, -3) %> - <%= TSSaturday.end_time.slice(0, -3) %> h</td>
+                            <% } else { %>
+                                <td>Not available</td>
+                            <% } %>
+                        </tr>
+                        <tr>
+                            <th>Sunday:</th>
+                            <% if (TSSunday) { %>
+                                <td><%= TSSunday.start_time.slice(0, -3) %> - <%= TSSunday.end_time.slice(0, -3) %> h</td>
+                            <% } else { %>
+                                <td>Not available</td>
+                            <% } %>                        
+                        </tr>
+                    
+                    </table>
+                        <a href="/users/<%= user.id %>/manageSchedule" class="btn btn-secondary btn-manage"><i class="fas fa-calendar-alt"></i> Manage Schedule</a>
+                    <br>
+
+                </div>
+                
+            </div>
+        <% } else { %>
+            <div>
                 <div class="profile-header details">
                     <h4>Details</h4>
                 </div>
@@ -188,95 +313,10 @@
                             
                         </td>
                     </tr>
-
-                    <% if (userRole === 'Interpreter') { %>
-                        <tr>
-                            <th>Reputation:</th>
-                            <td><%= user.interpreters.reputation.value %></td>
-                        </tr>
-                    <% } %>
-                
                 </table>
                 <a href="/users/<%= user.id %>/editProfile" class="btn btn-primary btn-manage"><i class="fas fa-edit"></i> Edit </a>
-                <br>
-
             </div>
-
-
-
-            <!-- Columna derecha -->
-            <div class="col-md-6">
-                
-                <div class="profile-header schedule">
-                    <h4>Schedule</h4>
-                </div>
-                
-                <table class="table table-borderless mt-4 initial-table">
-
-                    <tr>
-                        <th>Monday:</th>
-                        <% if (TSMonday) { %>
-                            <td><%= TSMonday.start_time.slice(0, -3) %> - <%= TSMonday.end_time.slice(0, -3) %> h</td>
-                        <% } else { %>
-                            <td>Not available</td>
-                        <% } %>
-                    </tr>
-                    <tr>
-                        <th>Tuesday:</th>
-                        <% if (TSTuesday) { %>
-                            <td><%= TSTuesday.start_time.slice(0, -3) %> - <%= TSTuesday.end_time.slice(0, -3) %> h</td>
-                        <% } else { %>
-                            <td>Not available</td>
-                        <% } %>
-                    </tr>
-                    <tr>
-                        <th>Wednesday:</th>
-                        <% if (TSWednesday) { %>
-                            <td><%= TSWednesday.start_time.slice(0, -3) %> - <%= TSWednesday.end_time.slice(0, -3) %> h</td>
-                        <% } else { %>
-                            <td>Not available</td>
-                        <% } %>
-                    </tr>
-                    <tr>
-                        <th>Thursday:</th>
-                        <% if (TSThursday) { %>
-                            <td><%= TSThursday.start_time.slice(0, -3) %> - <%= TSThursday.end_time.slice(0, -3) %> h</td>
-                        <% } else { %>
-                            <td>Not available</td>
-                        <% } %>
-                    </tr>
-                    <tr>
-                        <th>Friday:</th>
-                        <% if (TSFriday) { %>
-                            <td><%= TSFriday.start_time.slice(0, -3) %> - <%= TSFriday.end_time.slice(0, -3) %> h</td>
-                        <% } else { %>
-                            <td>Not available</td>
-                        <% } %>
-                    </tr>
-                    <tr>
-                        <th>Saturday:</th>
-                        <% if (TSSaturday) { %>
-                            <td><%= TSSaturday.start_time.slice(0, -3) %> - <%= TSSaturday.end_time.slice(0, -3) %> h</td>
-                        <% } else { %>
-                            <td>Not available</td>
-                        <% } %>
-                    </tr>
-                    <tr>
-                        <th>Sunday:</th>
-                        <% if (TSSunday) { %>
-                            <td><%= TSSunday.start_time.slice(0, -3) %> - <%= TSSunday.end_time.slice(0, -3) %> h</td>
-                        <% } else { %>
-                            <td>Not available</td>
-                        <% } %>                        
-                    </tr>
-                
-                </table>
-                    <a href="/users/<%= user.id %>/manageSchedule" class="btn btn-secondary btn-manage"><i class="fas fa-calendar-alt"></i> Manage Schedule</a>
-                <br>
-
-            </div>
-        </div>
-
+        <% } %>
         <br>
         <br>
 
@@ -318,10 +358,10 @@
                 </div>
     
             </div>
+            <br>
+            <br>
         <% } %>
 
-        <br>
-        <br>
 
         <!-- Tabla Likes -->
         <div>

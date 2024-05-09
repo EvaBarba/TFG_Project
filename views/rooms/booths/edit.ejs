@@ -63,11 +63,11 @@
 
             <!-- Language a (String) -->
             <div class="form-group">
-                <label for="language_a">Language to:</label>
-                <select class="form-control" id="language_a" name="language_a" required>
+                <label for="language_to_translate">Language to:</label>
+                <select class="form-control" id="language_to_translate" name="language_to_translate" required>
                     <option value="" selected disabled> - Select Language - </option>
                     <% allLanguages.forEach(language => { %>
-                        <option value="<%= language.name %>" <% if (booth.language_a === language.name) { %> selected <% } %>><%= language.name %></option>
+                        <option value="<%= language.name %>" <% if (booth.language_to_translate === language.name) { %> selected <% } %>><%= language.name %></option>
                     <% }); %>
                 </select>
             </div>

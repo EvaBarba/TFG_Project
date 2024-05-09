@@ -239,7 +239,7 @@ exports.update = async function (req, res, next) {
             for (const booth of booths) {
                 await models.Boothassignment.destroy({ where: { booth_id: booth.id } });
 
-                if (booth.language_a === req.body.language) {
+                if (booth.language_to_translate === req.body.language) {
                     await booth.destroy();
                 } else {
                     booth.language = req.body.language;

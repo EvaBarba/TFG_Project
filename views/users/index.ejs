@@ -120,9 +120,7 @@
                             <td><%= user.admin_id %></td>
 
                             <td>
-                                <% if (user.clients) { %>
-                                    <span>Client</span>
-                                <% } else if (user.consultants) { %>
+                                <% if (user.consultants) { %>
                                     <span>Consultant</span>
                                 <% } else if (user.coordinators) { %>
                                     <span>Coordinator</span>

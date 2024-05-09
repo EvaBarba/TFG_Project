@@ -9,7 +9,6 @@ const sequelize = require('./config/database');
 const migrationFiles = [
     '20240314192000-CreateAdminsTable.js',
     '20240314192009-CreateUsersTable.js',
-    '20240314192001-CreateClientsTable',
     '20240314192002-CreateConsultantsTable.js',
     '20240314192003-CreateCoordinatorsTable.js',
     '20240314192004-CreateInterpretersTable.js',
@@ -30,7 +29,6 @@ const migrationFiles = [
 const seederFiles = [
     '20240314193000-FillAdminsTable.js',
     '20240314193009-FillUsersTable.js',
-    '20240314193001-FillClientsTable.js',
     '20240314193002-FillConsultantsTable.js',
     '20240314193003-FillCoordinatorsTable.js',
     '20240314193004-FillInterpretersTable.js',

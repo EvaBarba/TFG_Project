@@ -90,13 +90,20 @@
                 <label for="verifyKeyExpire">Verify Key Expire:</label>
                 <input type="text" class="form-control" id="verifyKeyExpire" name="verifyKeyExpire" value="<%= user.verifyKeyExpire %>" readonly>
             </div>
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="enabled" name="enabled" <%= user.enabled ? 'checked' : '' %>>
-                <label class="form-check-label" for="enabled">Enabled</label>
+            <div class="form-group">
+                <label>Enabled:</label>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" id="enabled_yes" name="enabled" value="yes" <%= user.enabled ? 'checked' : '' %>>
+                    <label class="form-check-label" for="enabled_yes">Yes</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" id="enabled_no" name="enabled" value="no" <%= user.enabled ? '' : 'checked' %>>
+                    <label class="form-check-label" for="enabled_no">No</label>
+                </div>
             </div>
             <div class="form-group">
                 <label for="extra">Extra:</label>
-                <textarea class="form-control" id="extra" name="extra"><%= JSON.stringify(user.extra) %></textarea>
+                <input type="text" class="form-control" id="extra" name="extra" value="<%= user.extra %>" required>
             </div>
             <div class="form-group">
                 <label>Admin:</label>

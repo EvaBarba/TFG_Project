@@ -13,7 +13,6 @@ Interpreter.init(
   {
     id: {
       type: DataTypes.INTEGER,
-      autoIncrement: true,
       allowNull: false,
       primaryKey: true,
       references: {
@@ -21,8 +20,6 @@ Interpreter.init(
         key: User.id,
       },
     },
-
-    // Languages (PENIENTE)
 
   },
   {

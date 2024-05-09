@@ -22,8 +22,8 @@ Reputation.init(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: Interpreter,     // Name of the model referred to
-        key: Interpreter.id,    // Name of the primary key in the interpreter model
+        model: Interpreter,
+        key: Interpreter.id,
       },
     },
     value: {

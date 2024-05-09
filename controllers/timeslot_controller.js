@@ -9,9 +9,8 @@ exports.editTimeslots = async function (req, res, next) {
         // Obtener el usuario desde la base de datos
         const user = await models.User.findByPk(req.params.userId, {
             include: [
-                { model: models.Interpreter, as: 'interpreters', include: [{ model: models.Language, as: 'languages' }, { model: models.Reputation, as: 'reputation' }, { model: models.Timeslot, as: 'timeslot' }] },
-                { model: models.Like, as: 'likes' }
-            ],
+                { model: models.Interpreter, as: 'interpreters', include: { model: models.Timeslot, as: 'timeslot' } }
+            ]
         });
 
         // Obtener horarios
@@ -45,15 +44,6 @@ exports.updateTimeslots = async function (req, res, next) {
         });
 
         const { start_time_monday, end_time_monday, start_time_tuesday, end_time_tuesday, start_time_wednesday, end_time_wednesday, start_time_thursday, end_time_thursday, start_time_friday, end_time_friday, start_time_saturday, end_time_saturday, start_time_sunday, end_time_sunday } = req.body;
-
-        // if ((start_time_monday >= end_time_monday) || (start_time_tuesday >= end_time_tuesday) || (start_time_wednesday >= end_time_wednesday) || (start_time_thursday >= end_time_thursday) || (start_time_friday >= end_time_friday) || (start_time_saturday >= end_time_saturday) || (start_time_sunday >= end_time_sunday))  {
-        //     const errorMessage = 'End hour cannot be earlier than start hour.';
-        //     req.flash('error', errorMessage);
-        //     const errorMessages = req.flash('error');
-        //     console.log("errorMessages: " + errorMessages);
-        //     return res.render('users/manageSchedule', { error_msg: errorMessages });
-        // }
-
 
         // MONDAY
         if (start_time_monday && end_time_monday && (start_time_monday <= end_time_monday)) {
@@ -230,9 +220,6 @@ exports.updateTimeslots = async function (req, res, next) {
             await models.Timeslot.destroy({ where: { interpreter_id: userId, day_of_week: 'Sunday' } });
         }
 
-
-
-        console.log("Finish updating-------------------------------------------------------------------------------------------------------")
         res.redirect('/users/' + userId + '/profile');
     } catch (error) {
         if (error instanceof Sequelize.ValidationError) {
@@ -248,6 +235,9 @@ exports.updateTimeslots = async function (req, res, next) {
 };
 
 
+// MWs varios
+
+//Función para obtener un ID de timeslot disponible
 async function findAvailableTimeslotId() {
     // Encuentra el primer ID disponible que no está en uso
     let id = 1;

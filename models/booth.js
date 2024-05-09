@@ -21,7 +21,7 @@ Booth.init(
         language: {
             type: DataTypes.STRING
         },
-        language_a: {
+        language_to_translate: {
             type: DataTypes.STRING
         },
         signs: {

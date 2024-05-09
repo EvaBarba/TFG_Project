@@ -9,7 +9,6 @@ const sequelize = require('./config/database');
 const seederFiles = [
     '20240314193000-FillAdminsTable.js',
     '20240314193009-FillUsersTable.js',
-    '20240314193001-FillClientsTable.js',
     '20240314193002-FillConsultantsTable.js',
     '20240314193003-FillCoordinatorsTable.js',
     '20240314193004-FillInterpretersTable.js',

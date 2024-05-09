@@ -13,7 +13,6 @@ Coordinator.init(
   {
     id: {
       type: DataTypes.INTEGER,
-      autoIncrement: true,
       allowNull: false,
       primaryKey: true,
       references: {

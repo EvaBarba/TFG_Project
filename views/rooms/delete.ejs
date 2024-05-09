@@ -118,7 +118,7 @@
                 <% room.boothsDetails.forEach(booth => { %>
                     <tr>
                         <td>Booth <%= booth.id %></td>
-                        <td><%= booth.language_a %></td>
+                        <td><%= booth.language_to_translate %></td>
                         <td>
                             <% 
                             const interpreters = booth.interpreters.map(interpreter => interpreter.User.username);

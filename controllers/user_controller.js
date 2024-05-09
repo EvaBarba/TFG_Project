@@ -32,7 +32,6 @@ exports.index = function (req, res, next) {
             var findOptions = {
                 include: [
                     { model: models.Admin, as: 'Admins' },
-                    { model: models.Client, as: 'clients' },
                     { model: models.Consultant, as: 'consultants' },
                     { model: models.Coordinator, as: 'coordinators' },
                     { model: models.Operator, as: 'operators' },
@@ -45,7 +44,7 @@ exports.index = function (req, res, next) {
             return models.User.findAll(findOptions);
         })
         .then(function (users) {
-            res.render('users/index', { users: users });
+            res.render('users/index', { users });
         })
         .catch(function (error) {
             next(error);
@@ -57,7 +56,7 @@ exports.index = function (req, res, next) {
 exports.show = async function (req, res, next) {
 
     userRole = await checkRole(req.user.id);
-    res.render('users/show', { user: req.user, userRole: userRole });
+    res.render('users/show', { user: req.user, userRole });
 };
 
 
@@ -68,7 +67,7 @@ exports.new = function (req, res, next) {
         username: "",
         password: ""
     };
-    res.render('users/new', { user: user });
+    res.render('users/new', { user });
 };
 
 
@@ -97,9 +96,6 @@ exports.create = async function (req, res, next) {
 
             // Insertar el usuario en la tabla de roles correspondiente según la selección del usuario
             switch (req.body.role) {
-                case 'client':
-                    await models.Client.create({ id: user.id });
-                    break;
                 case 'consultant':
                     await models.Consultant.create({ id: user.id });
                     break;
@@ -141,27 +137,13 @@ exports.create = async function (req, res, next) {
     }
 };
 
-async function findAvailableUserId() {
-    // Encuentra el primer ID disponible que no está en uso
-    let id = 1;
-    while (true) {
-        const user = await models.User.findOne({ where: { id: id } });
-        if (!user) {
-            return id;
-        }
-        id++;
-    }
-}
-
-
-
 
 // GET /users/:userId/edit
 exports.edit = async function (req, res, next) {
 
     userRole = await checkRole(req.user.id);
 
-    res.render('users/edit', { user: req.user, userRole: userRole });
+    res.render('users/edit', { user: req.user, userRole });
 };
 
 
@@ -169,9 +151,6 @@ exports.edit = async function (req, res, next) {
 exports.update = async function (req, res, next) {
 
     try {
-        // Actualiza los campos de username y password
-        req.user.username = req.body.username;
-        req.user.password = req.body.password;
 
         // Valida que el campo de username no esté vacío
         if (!req.body.username) {
@@ -185,9 +164,19 @@ exports.update = async function (req, res, next) {
             return res.render('users/edit', { user: req.user });
         }
 
-        // Actualiza los campos Password Update y Verify Key Expire con la fecha actual
+        // Actualiza los campos
+        req.user.username = req.body.username;
+        req.user.password = req.body.password;
+        req.user.salt = req.body.salt;
         req.user.passwordUpdate = new Date();
+        req.user.verifyKeyEmail = req.body.verifyKeyEmail;
         req.user.verifyKeyExpire = new Date();
+        if (req.body.enabled === 'yes') {
+            req.user.enabled = true;
+        } else {
+            req.user.enabled = false;
+        }
+        req.user.extra = req.body.extra;
 
         // Verifica si se marcó "yes" en el campo de administrador
         if (req.body.admin === 'yes') {
@@ -245,11 +234,11 @@ exports.showDeleteConfirmation = async function (req, res, next) {
     try {
         const user = await models.User.findByPk(req.params.userId);
         if (!user) {
-            res.status(404).send('Usuario no encontrado');
+            res.status(404).send('User not found');
             return;
         }
         userRole = await checkRole(req.user.id);
-        res.render('users/delete', { user: user, userRole: userRole });
+        res.render('users/delete', { user: user, userRole });
     } catch (error) {
         next(error);
     }
@@ -261,12 +250,11 @@ exports.destroy = async function (req, res, next) {
     try {
         const user = await models.User.findByPk(req.params.userId);
         if (!user) {
-            res.status(404).send('Usuario no encontrado');
+            res.status(404).send('User not found');
             return;
         }
 
         // Buscar roles relacionados con el usuario y eliminarlos
-        await models.Client.destroy({ where: { id: user.id } });
         await models.Consultant.destroy({ where: { id: user.id } });
         await models.Coordinator.destroy({ where: { id: user.id } });
         await models.Operator.destroy({ where: { id: user.id } });
@@ -274,7 +262,7 @@ exports.destroy = async function (req, res, next) {
         await models.Interpreter.destroy({ where: { id: user.id } });
 
         await user.destroy();
-        req.flash('success', 'Usuario eliminado con éxito.');
+        req.flash('success', 'User successfully deleted.');
         res.redirect('/users');
     } catch (error) {
         next(error);
@@ -282,17 +270,26 @@ exports.destroy = async function (req, res, next) {
 };
 
 
-
 // MWs varios
+
+//Función para obtener un ID de usuario disponible
+async function findAvailableUserId() {
+    // Encuentra el primer ID disponible que no está en uso
+    let id = 1;
+    while (true) {
+        const user = await models.User.findOne({ where: { id: id } });
+        if (!user) {
+            return id;
+        }
+        id++;
+    }
+}
+
 
 // Función para eliminar al usuario de la tabla del antiguo role
 async function checkRole(userId) {
 
     var userRole = 'Not defined';
-
-    if (await models.Client.findOne({ where: { id: userId } })) {
-        userRole = 'Client';
-    }
 
     if (await models.Consultant.findOne({ where: { id: userId } })) {
         userRole = 'Consultant';

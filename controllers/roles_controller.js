@@ -20,7 +20,7 @@ exports.getConsultants = function (req, res, next) {
             return models.Consultant.findAll(findOptions);
         })
         .then(function (consultants) {
-            res.render('users/consultants', { consultants: consultants });
+            res.render('users/consultants', { consultants });
         })
         .catch(function (error) {
             next(error);
@@ -44,7 +44,7 @@ exports.getCoordinators = function (req, res, next) {
             return models.Coordinator.findAll(findOptions);
         })
         .then(function (coordinators) {
-            res.render('users/coordinators', { coordinators: coordinators });
+            res.render('users/coordinators', { coordinators });
         })
         .catch(function (error) {
             next(error);
@@ -69,7 +69,7 @@ exports.getInterpreters = function (req, res, next) {
             return models.Interpreter.findAll(findOptions);
         })
         .then(function (interpreters) {
-            res.render('users/interpreters', { interpreters: interpreters });
+            res.render('users/interpreters', { interpreters });
         })
         .catch(function (error) {
             next(error);
@@ -93,7 +93,7 @@ exports.getOperators = function (req, res, next) {
             return models.Operator.findAll(findOptions);
         })
         .then(function (operators) {
-            res.render('users/operators', { operators: operators });
+            res.render('users/operators', { operators });
         })
         .catch(function (error) {
             next(error);
@@ -117,7 +117,7 @@ exports.getTechnicians = function (req, res, next) {
             return models.Technician.findAll(findOptions);
         })
         .then(function (technicians) {
-            res.render('users/technicians', { technicians: technicians });
+            res.render('users/technicians', { technicians });
         })
         .catch(function (error) {
             next(error);
@@ -162,15 +162,10 @@ exports.profile = async function (req, res, next) {
 };
 
 
-
-
-
 // GET /users/:userId/edit
 exports.editProfile = async function (req, res, next) {
-
     userRole = await checkRole(req.user.id);
-
-    res.render('users/editProfile', { user: req.user, userRole: userRole });
+    res.render('users/editProfile', { user: req.user, userRole });
 };
 
 
@@ -178,9 +173,6 @@ exports.editProfile = async function (req, res, next) {
 exports.updateProfile = async function (req, res, next) {
 
     try {
-        // Actualiza los campos de username y password
-        req.user.username = req.body.username;
-        req.user.password = req.body.password;
 
         // Valida que el campo de password no esté vacío
         if (!req.body.password) {
@@ -188,7 +180,9 @@ exports.updateProfile = async function (req, res, next) {
             return res.render('users/editProfile', { user: req.user });
         }
 
-        // Actualiza los campos Password Update y Verify Key Expire con la fecha actual
+        // Actualiza los campos
+        req.user.username = req.body.username;
+        req.user.password = req.body.password;
         req.user.passwordUpdate = new Date();
         req.user.verifyKeyExpire = new Date();
 
@@ -213,25 +207,10 @@ exports.updateProfile = async function (req, res, next) {
 };
 
 
-
-
-
-
-
-
-
-
-
-
-
 // Función para comprobar el role
 async function checkRole(userId) {
 
     var userRole = 'Not defined';
-
-    if (await models.Client.findOne({ where: { id: userId } })) {
-        userRole = 'Client';
-    }
 
     if (await models.Consultant.findOne({ where: { id: userId } })) {
         userRole = 'Consultant';

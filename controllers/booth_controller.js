@@ -34,7 +34,7 @@ exports.new = async function (req, res, next) {
 
         // Crear un objeto booth con los campos iniciales
         var booth = {
-            language_a: "",
+            language_to_translate: "",
             signs: false,
             deaf: false,
             single: false,
@@ -58,7 +58,7 @@ exports.create = async function (req, res, next) {
         const room = await models.Room.findByPk(roomId);
 
         // El lenguaje al que se traduce no puede ser el mismo que el original
-        if (room.language === req.body.language_a) {
+        if (room.language === req.body.language_to_translate) {
             const errorMessage = 'The language to be translated cannot be the same as the original language.';
             req.flash('error', errorMessage);
             const errorMessages = req.flash('error');
@@ -72,7 +72,7 @@ exports.create = async function (req, res, next) {
         const booth = await models.Booth.create({
             id: availableId,
             language: room.language,
-            language_a: req.body.language_a,
+            language_to_translate: req.body.language_to_translate,
             signs: req.body.signs,
             deaf: req.body.deaf,
             single: req.body.single,
@@ -132,7 +132,7 @@ exports.update = async function (req, res, next) {
 
     try {
 
-        const initialLanguage = req.booth.language_a;
+        const initialLanguage = req.booth.language_to_translate;
 
         // Obtener el ID de la habitación de req.params.roomId
         const roomId = req.params.roomId;
@@ -141,14 +141,14 @@ exports.update = async function (req, res, next) {
         const room = await models.Room.findByPk(roomId);
 
         // Actualiza los campos de la booth
-        req.booth.language_a = req.body.language_a;
+        req.booth.language_to_translate = req.body.language_to_translate;
         req.booth.signs = req.body.signs;
         req.booth.deaf = req.body.deaf;
         req.booth.single = req.body.single;
         req.booth.speech_to_text = req.body.speech_to_text;
 
         // Validaciones de campos obligatorios
-        const requiredFields = ['language', 'language_a'];
+        const requiredFields = ['language', 'language_to_translate'];
         for (const field of requiredFields) {
             if (!req.body[field]) {
                 req.flash('error', `The ${field} field cannot be empty.`);
@@ -156,7 +156,7 @@ exports.update = async function (req, res, next) {
             }
         }
 
-        if (room.language === req.body.language_a) {
+        if (room.language === req.body.language_to_translate) {
             const errorMessage = 'The language to be translated cannot be the same as the original language.';
             req.flash('error', errorMessage);
             const errorMessages = req.flash('error');
@@ -165,7 +165,7 @@ exports.update = async function (req, res, next) {
         }
 
         // MODIFICACIONES SI SE CAMBIA EL LANGUAGE: eliminar interpretes
-        if (req.body.language_a !== initialLanguage) {
+        if (req.body.language_to_translate !== initialLanguage) {
             await models.Boothassignment.destroy({ where: { booth_id: req.booth.id } });
         }
 
@@ -249,7 +249,7 @@ exports.selectBoothInterpreter = async function (req, res, next) {
         const booth = await models.Booth.findByPk(boothId);
 
         const boothLanguage = booth.language;
-        const boothLanguage_a = booth.language_a;
+        const boothlanguage_to_translate = booth.language_to_translate;
 
         const assignments = await models.Boothassignment.findAll({ where: { booth_id: boothId } });
 
@@ -279,7 +279,7 @@ exports.selectBoothInterpreter = async function (req, res, next) {
             const languagesOfInterpreter = await models.Languageknown.findAll({ where: { interpreter_id: candidateInterpreter.id } });
             for (const language of languagesOfInterpreter) {
                 const languageOfInterpreter = await models.Language.findOne({ where: { id: language.language_id } });
-                if ((languageOfInterpreter.language_from === boothLanguage) && (languageOfInterpreter.language_to === boothLanguage_a)) {
+                if ((languageOfInterpreter.language_from === boothLanguage) && (languageOfInterpreter.language_to === boothlanguage_to_translate)) {
                     possibleInterpretersSet.add(candidateInterpreter); // Agregar el intérprete al conjunto
                 }
             }

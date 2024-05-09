@@ -41,7 +41,7 @@ router.get(/(?!\/new$|\/edit$|\/play$|\/check$|\/session$|\/(\d+)$)\/[^\/]*$/, f
 
 //-----------------------------------------------------------
 
-// Login routes (PENDIENTE)
+// Login routes
 router.get('/session', sessionController.new);        // Login form
 router.post('/session', sessionController.create);    // Crteate session
 router.delete('/session', sessionController.destroy); // Destroy session

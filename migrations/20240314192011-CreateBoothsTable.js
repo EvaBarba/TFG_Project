@@ -15,7 +15,7 @@ module.exports = {
       language: {
         type: Sequelize.STRING
       },
-      language_a: {
+      language_to_translate: {
         type: Sequelize.STRING
       },
       signs: {
