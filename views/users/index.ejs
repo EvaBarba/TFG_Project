@@ -87,11 +87,11 @@
                             <th>ID</th>
                             <th>Username</th>
                             <th>Email</th>
-                            <th>Password Update</th>
+                            <!-- <th>Password Update</th> -->
                             <!-- <th>Verify Key Email</th> -->
                             <!-- <th>Verify Key Expire</th> -->
                             <th>Enabled</th>
-                            <th>Extra</th>
+                            <!-- <th>Extra</th> -->
                             <th>IsAdmin</th>
                             <th>Admin ID</th>
                             <th>Role</th>
@@ -104,11 +104,11 @@
                             <td><a href="/users/<%= user.id %>" style="color: blue;"><%= user.id %></a></td>
                             <td><a href="/users/<%= user.id %>/profile" style="color: blue;"><%= user.username %></a></td>
                             <td><%= user.email %></td>
-                            <td><%= user.passwordUpdate.toLocaleDateString() %> <%= user.passwordUpdate.toLocaleTimeString() %></td>
+                            <!-- <td><%= user.passwordUpdate.toLocaleDateString() %> <%= user.passwordUpdate.toLocaleTimeString() %></td>  -->
                             <!-- <td><%= user.verifyKeyEmail %></td> -->
                             <!-- <td><%= user.verifyKeyExpire.toLocaleDateString() %> <%= user.verifyKeyExpire.toLocaleTimeString() %></td> -->
                             <td><%= user.enabled %></td>
-                            <td><%= user.extra %></td>
+                            <!-- <td><%= user.extra %></td> -->
                             <td>
                                 <% if (user.admin_id) { %>
                                 <span class="badge badge-success">Yes</span>

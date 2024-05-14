@@ -1,6 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to the project - TFG</title>
+    <!-- Enlaces a las bibliotecas de estilos CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        /* Estilos personalizados */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+            text-align: center; /* Centrar todo el contenido */
+        }
+        .title {
+            font-family: Georgia, serif;
+            color: #000000;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 3px;
+            margin-bottom: 30px; /* Espacio debajo del título */
+        }
+        .section {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative; /* Posición relativa para poder superponer la imagen */
+        }
+        .section h2 {
+            color: #333;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+        .section p {
+            color: #666;
+            font-size: 18px;
+        }
+        .section a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .background-image {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%; /* Ancho de la imagen */
+            background-image: url('https://avantilanguageschool.com/wp-content/uploads/2015/03/bandera-idiomas.jpg'); /* Ruta de la imagen */
+            background-size: cover;
+            background-position: center;
+            filter: blur(8px); /* Difuminar la imagen */
+            z-index: -1; /* Colocar la imagen detrás del contenido */
+            opacity: 40%;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-image"></div>
+    <div class="container">
+        <div class="title">
+            <h1>interpretation management</h1>
+        </div>
+        <div class="section">
+            <h2>Users</h2>
+            <p>Manage users in the system. Add, edit, or delete user profiles.</p>
+            <a href="/users">View Users</a>
+        </div>
+        <div class="section">
+            <h2>Languages</h2>
+            <p>Manage languages supported by the application. Add, edit, or delete language options.</p>
+            <a href="/languages">View Languages</a>
+        </div>
+        <div class="section">
+            <h2>Rooms</h2>
+            <p>Manage rooms in the application. Add, edit, or delete room configurations.</p>
+            <a href="/rooms">View Rooms</a>
+        </div>
+    </div>
+</body>
+</html>
 
-<h1 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Welcome to my project</h1>
-
-<br>
-
-<h4 style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #4a4a4a; text-transform: uppercase; font-weight: bold; letter-spacing: 1px">Eva Barba Cámara</h4>

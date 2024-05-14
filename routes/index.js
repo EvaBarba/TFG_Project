@@ -42,9 +42,9 @@ router.get(/(?!\/new$|\/edit$|\/play$|\/check$|\/session$|\/(\d+)$)\/[^\/]*$/, f
 //-----------------------------------------------------------
 
 // Login routes
-router.get('/session', sessionController.new);        // Login form
-router.post('/session', sessionController.create);    // Crteate session
-router.delete('/session', sessionController.destroy); // Destroy session
+// router.get('/session', sessionController.new);        // Login form
+// router.post('/session', sessionController.create);    // Crteate session
+// router.delete('/session', sessionController.destroy); // Destroy session
 
 //-----------------------------------------------------------
 
@@ -57,7 +57,8 @@ router.get('/', function (req, res, next) {
 // Routes for the resource /users ---------------------------------------
 
 // Autoload
-router.param('userId', userController.load);
+router.param('userId',
+  userController.load);
 
 // GET all: List of users
 router.get('/users',
@@ -100,31 +101,24 @@ router.delete('/users/:userId(\\d+)',
 // Routes for the resource /roles ---------------------------------------
 
 router.get('/users/consultants',
-  //sessionController.loginRequired,
   rolesController.getConsultants);
 
 router.get('/users/coordinators',
-  //sessionController.loginRequired,
   rolesController.getCoordinators);
 
 router.get('/users/interpreters',
-  //sessionController.loginRequired,
   rolesController.getInterpreters);
 
 router.get('/users/operators',
-  //sessionController.loginRequired,
   rolesController.getOperators);
 
 router.get('/users/technicians',
-  //sessionController.loginRequired,
   rolesController.getTechnicians);
 
 router.get('/users/:userId(\\d+)/profile',
-  //sessionController.loginRequired,
   rolesController.profile);
 
 router.get('/users/:userId(\\d+)/editProfile',
-  //sessionController.loginRequired,
   rolesController.editProfile);
 
 router.put('/users/:userId(\\d+)/profile',
@@ -134,9 +128,8 @@ router.put('/users/:userId(\\d+)/profile',
 
 // Routes for the resource /language ---------------------------------------
 
-// GET all: List of users
+// GET all: List of languages
 router.get('/languages',
-  //sessionController.loginRequired,
   languageController.index);
 
 // CREATE New Language (Sign up form)
@@ -156,7 +149,8 @@ router.post('/users/:userId(\\d+)/profile',
   languageController.createInterpreterLanguage);
 
 // Delete Languageknown
-router.post('/users/:userId/languages/:languageId/delete', languageController.destroyLanguageKnown);
+router.post('/users/:userId/languages/:languageId/delete',
+  languageController.destroyLanguageKnown);
 
 
 
@@ -172,7 +166,6 @@ router.get('/rooms',
 
 // SHOW User
 router.get('/rooms/:roomId(\\d+)',
-  //sessionController.loginRequired,
   roomController.show);
 
 // CREATE New Room (Sign up form)
@@ -279,26 +272,29 @@ router.delete('/rooms/:roomId(\\d+)/booths/:boothId(\\d+)/selectInterpreter',
 
 
 
-
 // Routes for the resource /likes ---------------------------------------
 
-// CREATE New Booth (Sign up form)
+// List of Likes
 router.get('/rooms/:roomId(\\d+)/votes',
   likesController.getLikes);
 
+// Edit Likes
 router.get('/rooms/:roomId(\\d+)/votes/edit',
-  //sessionController.loginRequired,
   likesController.editLikes);
 
+// Update Likes (after edit)
 router.put('/rooms/:roomId(\\d+)/votes',
   likesController.updateLikes);
 
 
+
 // Routes for the resource /timeslots ---------------------------------------
 
+// Edit Timeslots
 router.get('/users/:userId(\\d+)/manageSchedule',
   timeslotController.editTimeslots);
 
+// Update Timeslots (after edit)
 router.put('/users/:userId(\\d+)/manageScheduleOK',
   timeslotController.updateTimeslots);
 

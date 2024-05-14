@@ -41,10 +41,6 @@ User.init(
                 notEmpty: {
                     msg: 'Email must not be empty.',
                 },
-                // unique: {
-                //     args: true,
-                //     msg: 'Email must be unique.',
-                // },
                 isEmail: {
                     msg: 'Invalid email format.',
                 },
@@ -58,11 +54,6 @@ User.init(
                     msg: 'Password must not be empty.',
                 },
             },
-            // set: function (password) {
-            //     // String aleatorio usado como salt.
-            //     this.salt = Math.round((new Date().valueOf() * Math.random())) + '';
-            //     this.setDataValue('password', encryptPassword(password, this.salt));
-            // }
         },
         salt: {
             type: DataTypes.STRING,
@@ -100,10 +91,6 @@ User.init(
         timestamps: false,
     }
 );
-
-// function encryptPassword(password, salt) {
-//     return crypto.createHmac('sha1', salt).update(password).digest('hex');
-// };
 
 // Model export
 module.exports = User;
