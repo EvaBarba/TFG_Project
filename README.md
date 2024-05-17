@@ -1,33 +1,46 @@
-TFG Proyect
+# TFG Project
 
-- Installation of the necessary dependencies and resources:
-npm install
-npm install sequelize
-npm install sequelize sqlite3
-npm install sequelize-cli
-npm install express-generator -g
-npm install connect-flash   
-npm install iso-639-1  
+## Requisitos
 
-- To create the database run:
-sequelize db:create
+Asegúrate de tener instalados los siguientes programas en tu sistema:
 
-- To configure migrations and seeders:
-node configureDB.js
+- **Gestor de paquetes Node**: [Node.js y npm](https://nodejs.org/)
+- **Sistema de control de versiones**: [Git](https://git-scm.com/)
+- **Herramienta para el arranque de un servidor MySQL**, por ejemplo [XAMPP](https://www.apachefriends.org/index.html)
+ 
+  
+## Configuración Inicial
 
+Para configurar la aplicación, sigue estos pasos:
 
-OTHER WAY FOR EXECUTING AND UPDATING MIGRATIONS AND SEEDERS
+1. **Clonación del repositorio:**
+   ```sh
+   git clone https://github.com/EvaBarba/TFG_Project.git
+ 
+2. **Acceso al repositorio:**
+   ```sh
+   cd TFG_Project
 
-1. To execute migrations run:
-node migrate.js
+3. **Instalación de las dependencias:**
+   ```sh
+   npm install
 
-2. To execute seeders run:
-node seed.js
+4. **Arranque un servidor MySQL**
 
-3. To undo seeders run:
-node undoSeeders.js
+5. **Creación de la base de datos:**
+   ```sh
+   sequelize db:create
 
+6. **Configuración de la base de datos:**
+   ```sh
+   node configureDB.js
 
+7. **Arranque de la aplicación:**
+   ```sh
+   npm start
 
-- To iniciate the aplication run:
-npm start
+## Acceso
+**Desde el navegador mediante el puerto 3000:**
+```sh
+http://localhost:3000
+
