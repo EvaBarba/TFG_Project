@@ -183,8 +183,8 @@ exports.updateProfile = async function (req, res, next) {
         // Actualiza los campos
         req.user.username = req.body.username;
         req.user.password = req.body.password;
-        req.user.passwordUpdate = new Date();
-        req.user.verifyKeyExpire = new Date();
+        req.user.password_update = new Date();
+        req.user.verify_key_expire = new Date();
 
         // Guarda el usuario con los nuevos datos
         await req.user.save();

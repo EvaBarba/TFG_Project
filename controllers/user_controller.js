@@ -88,10 +88,10 @@ exports.create = async function (req, res, next) {
                 email: req.body.email,
                 username: req.body.username,
                 password: req.body.password,
-                passwordUpdate: new Date(),
-                verifyKeyExpire: new Date(),
+                password_update: new Date(),
+                verify_key_expire: new Date(),
                 enabled: true,
-                verifyKeyEmail: "clave" + availableId
+                verify_key_email: "clave" + availableId
             });
 
             // Insertar el usuario en la tabla de roles correspondiente según la selección del usuario
@@ -168,9 +168,9 @@ exports.update = async function (req, res, next) {
         req.user.username = req.body.username;
         req.user.password = req.body.password;
         req.user.salt = req.body.salt;
-        req.user.passwordUpdate = new Date();
-        req.user.verifyKeyEmail = req.body.verifyKeyEmail;
-        req.user.verifyKeyExpire = new Date();
+        req.user.password_update = new Date();
+        req.user.verify_key_email = req.body.verify_key_email;
+        req.user.verify_key_expire = new Date();
         if (req.body.enabled === 'yes') {
             req.user.enabled = true;
         } else {

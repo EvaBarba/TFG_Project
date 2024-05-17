@@ -59,17 +59,14 @@ User.init(
             type: DataTypes.STRING,
             // allowNull: false,
         },
-        passwordUpdate: {
-            type: DataTypes.DATE,
-            field: 'password_update'
+        password_update: {
+            type: DataTypes.DATE
         },
-        verifyKeyEmail: {
-            type: DataTypes.STRING,
-            field: 'verify_key_email'
+        verify_key_email: {
+            type: DataTypes.STRING
         },
-        verifyKeyExpire: {
-            type: DataTypes.DATE,
-            field: 'verify_key_expire'
+        verify_key_expire: {
+            type: DataTypes.DATE
         },
         enabled: {
             type: DataTypes.BOOLEAN

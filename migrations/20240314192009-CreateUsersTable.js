@@ -31,17 +31,14 @@ module.exports = {
       salt: {
         type: Sequelize.STRING,
       },
-      passwordUpdate: {
-        type: Sequelize.DATE,
-        field: 'password_update',
+      password_update: {
+        type: Sequelize.DATE
       },
-      verifyKeyEmail: {
-        type: Sequelize.STRING,
-        field: 'verify_key_email',
+      verify_key_email: {
+        type: Sequelize.STRING
       },
-      verifyKeyExpire: {
-        type: Sequelize.DATE,
-        field: 'verify_key_expire',
+      verify_key_expire: {
+        type: Sequelize.DATE
       },
       enabled: {
         type: Sequelize.BOOLEAN,
