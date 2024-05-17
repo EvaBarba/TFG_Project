@@ -2,7 +2,6 @@
 
 var models = require('../models');
 var Sequelize = require('sequelize');
-const iso6391 = require('iso-639-1');
 
 // Autoload :boothId
 exports.load = function (req, res, next, boothId) {
@@ -96,23 +95,6 @@ exports.create = async function (req, res, next) {
     }
 };
 
-// Función para obtener el siguiente id disponible
-async function findAvailableBoothId() {
-    // Obtener el último booth creado
-    const lastBooth = await models.Booth.findOne({
-        order: [['id', 'DESC']]
-    });
-
-    // Si no hay ningún booth en la base de datos, comenzar desde el ID 1
-    if (!lastBooth) {
-        return 1;
-    }
-
-    // Si hay booths en la base de datos, el siguiente ID disponible será el siguiente al último ID
-    return lastBooth.id + 1;
-}
-
-
 
 // GET /booths/:boothId/edit
 exports.edit = async function (req, res, next) {
@@ -140,13 +122,6 @@ exports.update = async function (req, res, next) {
         // Obtener la habitación correspondiente al ID
         const room = await models.Room.findByPk(roomId);
 
-        // Actualiza los campos de la booth
-        req.booth.language_to_translate = req.body.language_to_translate;
-        req.booth.signs = req.body.signs;
-        req.booth.deaf = req.body.deaf;
-        req.booth.single = req.body.single;
-        req.booth.speech_to_text = req.body.speech_to_text;
-
         // Validaciones de campos obligatorios
         const requiredFields = ['language', 'language_to_translate'];
         for (const field of requiredFields) {
@@ -156,6 +131,7 @@ exports.update = async function (req, res, next) {
             }
         }
 
+        // Valida que el idioma al que se quiere traducir no sea el mismo que el idioma del evento
         if (room.language === req.body.language_to_translate) {
             const errorMessage = 'The language to be translated cannot be the same as the original language.';
             req.flash('error', errorMessage);
@@ -163,6 +139,13 @@ exports.update = async function (req, res, next) {
             console.log("errorMessages: " + errorMessages);
             return res.render('rooms/booths/edit', { booth: req.booth, room: room, error_msg: errorMessages });
         }
+
+        // Actualiza los campos de la booth
+        req.booth.language_to_translate = req.body.language_to_translate;
+        req.booth.signs = req.body.signs;
+        req.booth.deaf = req.body.deaf;
+        req.booth.single = req.body.single;
+        req.booth.speech_to_text = req.body.speech_to_text;
 
         // MODIFICACIONES SI SE CAMBIA EL LANGUAGE: eliminar interpretes
         if (req.body.language_to_translate !== initialLanguage) {
@@ -232,7 +215,7 @@ exports.destroy = async function (req, res, next) {
     } catch (error) {
         next(error);
     }
-};
+}
 
 
 
@@ -332,16 +315,30 @@ exports.deleteBoothInterpreter = async function (req, res, next) {
 
         const interpreterId = req.body.interpreterDeleteId;
 
-        console.log("Ejecutando eliminación ----------------------------------------------------");
-        console.log("boothId = " + boothId);
-        console.log("interpreterId = " + interpreterId);
-
         await models.Boothassignment.destroy({ where: { interpreter_id: interpreterId, booth_id: boothId } });
-
-
 
         res.redirect('/rooms/' + roomId + '/booths/' + boothId + '/selectInterpreter');
     } catch (error) {
         next(error);
     }
 };
+
+
+
+// MWs varios
+
+//Función para obtener un ID de cabina disponible
+async function findAvailableBoothId() {
+    // Obtener el último booth creado
+    const lastBooth = await models.Booth.findOne({
+        order: [['id', 'DESC']]
+    });
+
+    // Si no hay ningún booth en la base de datos, comenzar desde el ID 1
+    if (!lastBooth) {
+        return 1;
+    }
+
+    // Si hay booths en la base de datos, el siguiente ID disponible será el siguiente al último ID
+    return lastBooth.id + 1;
+}

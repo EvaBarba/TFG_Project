@@ -3,7 +3,6 @@
 var models = require('../models');
 var Sequelize = require('sequelize');
 
-
 // GET likes
 exports.getLikes = async function (req, res, next) {
     try {
@@ -42,7 +41,6 @@ exports.getLikes = async function (req, res, next) {
         next(error);
     }
 };
-
 
 
 
@@ -250,6 +248,9 @@ exports.updateLikes = async function (req, res, next) {
 };
 
 
+// MWs varios
+
+//Función para obtener un ID de like disponible
 async function findAvailableLikeId() {
     // Encuentra el primer ID disponible que no está en uso
     let id = 1;

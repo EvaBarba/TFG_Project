@@ -2,7 +2,6 @@
 
 var models = require('../models');
 var Sequelize = require('sequelize');
-const iso6391 = require('iso-639-1');
 
 // Autoload :roomId
 exports.load = function (req, res, next, roomId) {
@@ -153,19 +152,6 @@ exports.create = async function (req, res, next) {
     }
 };
 
-async function findAvailableRoomId() {
-    // Encuentra el primer ID disponible que no está en uso
-    let id = 1;
-    while (true) {
-        const room = await models.Room.findOne({ where: { id: id } });
-        if (!room) {
-            return id;
-        }
-        id++;
-    }
-}
-
-
 
 // GET /rooms/:roomId/edit
 exports.edit = async function (req, res, next) {
@@ -180,6 +166,15 @@ exports.update = async function (req, res, next) {
 
         const initialLanguage = req.room.language;
 
+        // Validaciones de campos obligatorios
+        const requiredFields = ['name', 'date', 'language', 'time_start', 'time_finish'];
+        for (const field of requiredFields) {
+            if (!req.body[field]) {
+                req.flash('error', `The ${field} field cannot be empty.`);
+                return res.render('rooms/edit', { room: req.room });
+            }
+        }
+
         // Actualiza los campos de la room
         req.room.name = req.body.name;
         req.room.description = req.body.description;
@@ -190,15 +185,6 @@ exports.update = async function (req, res, next) {
         req.room.on_air = req.body.on_air;
         req.room.educational = req.body.educational;
         req.room.zoom_url = req.body.zoom_url;
-
-        // Validaciones de campos obligatorios
-        const requiredFields = ['name', 'date', 'language', 'time_start', 'time_finish'];
-        for (const field of requiredFields) {
-            if (!req.body[field]) {
-                req.flash('error', `The ${field} field cannot be empty.`);
-                return res.render('rooms/edit', { room: req.room });
-            }
-        }
 
         // Comprobar si la fecha es posterior a la fecha actual
         const currentDate = new Date();
@@ -518,3 +504,20 @@ exports.updateTechnician = async function (req, res, next) {
         next(error);
     }
 };
+
+
+
+// MWs varios
+
+//Función para obtener un ID de evento disponible
+async function findAvailableRoomId() {
+    // Encuentra el primer ID disponible que no está en uso
+    let id = 1;
+    while (true) {
+        const room = await models.Room.findOne({ where: { id: id } });
+        if (!room) {
+            return id;
+        }
+        id++;
+    }
+}
