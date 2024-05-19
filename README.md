@@ -4,7 +4,7 @@
 
 Asegúrate de tener instalados los siguientes programas en tu sistema:
 
-- **Gestor de paquetes Node**: [Node.js y npm](https://nodejs.org/)
+- **Gestor de paquetes Node**: [Node.js](https://nodejs.org/)
 - **Sistema de control de versiones**: [Git](https://git-scm.com/)
 - **Herramienta para el arranque de un servidor MySQL**, por ejemplo [XAMPP](https://www.apachefriends.org/index.html)
  
