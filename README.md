@@ -1,9 +1,11 @@
 # TFG Project
 
+## Desarrollo
+El proceso de creación de la aplicación web se ha desarrollado desde un equipo con **Windows 10** con la versión de **Node.js v20.9.0**.
+
 ## Requisitos
 
-Asegúrate de tener instalados los siguientes programas en tu sistema:
-
+Para poder desplegar la aplicación, se debe tener instalado:
 - **Gestor de paquetes Node**: [Node.js](https://nodejs.org/)
 - **Sistema de control de versiones**: [Git](https://git-scm.com/)
 - **Herramienta para el arranque de un servidor MySQL**, por ejemplo [XAMPP](https://www.apachefriends.org/index.html)
