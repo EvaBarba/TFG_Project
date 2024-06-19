@@ -98,13 +98,16 @@ exports.newInterpreterLanguage = async function (req, res, next) {
 exports.createInterpreterLanguage = async function (req, res, next) {
     try {
 
+        var user = await models.User.findByPk(req.params.userId);
+        const userId = user.id;
+
         // Check that language_from is different from language_to
         if (req.body.language_from === req.body.language_to) {
             const errorMessage = 'The source language cannot be the same as the destination language.';
             req.flash('error', errorMessage);
             const errorMessages = req.flash('error');
             console.log("errorMessages: " + errorMessages);
-            return res.render('languages/new', { error_msg: errorMessages });
+            return res.render('languages/newInterpreterLanguage', { user, error_msg: errorMessages });
         }
 
         // Verificar si el idioma ya existe en la tabla Language
@@ -134,7 +137,7 @@ exports.createInterpreterLanguage = async function (req, res, next) {
             languageId = language.id;
         }
 
-        const userId = req.params.userId;
+        
 
         // Crear la relación en la tabla Languageknown
         const languageKnown = models.Languageknown.build({
@@ -145,7 +148,7 @@ exports.createInterpreterLanguage = async function (req, res, next) {
         await languageKnown.save();
 
         req.flash('success', 'Language successfully created.');
-        res.redirect('/users/' + req.user.id + '/profile');
+        res.redirect('/users/' + userId + '/profile');
     } catch (error) {
         if (error instanceof Sequelize.ValidationError) {
             req.flash('error', 'Errors in the form:');
